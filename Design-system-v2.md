@@ -417,6 +417,59 @@
   - Active: (to be defined)
   - Disabled: (to be defined)
 
+##### Primary Button with Icon (Chevron)
+
+Вариант primary button с иконкой справа (обычно chevron для action buttons).
+
+- **Padding**: pl-7 pr-3 py-3 (28px left, 12px right, 12px vertical)
+- **Radius**: rounded-[32px]
+- **Layout**: inline-flex justify-center items-center gap-3
+- **Overflow**: overflow-hidden
+- **Text**:
+  - Font: text-sm, font-semibold, leading-4, tracking-tight
+  - Color: text-Text-Light
+- **Icon**:
+  - Container: w-6 h-6, relative overflow-hidden
+  - Chevron: w-1 h-2, positioned [16px, 10px], origin-top-left rotate-90
+  - Outline: outline-[1.50px] outline-offset-[-0.75px] outline-Text-Light
+  - Direction: pointing right (rotate-90)
+
+**Light Mode Variant**:
+- Background: bg-gradient-to-b from-white to-neutral-200
+- Shadow: shadow-[inset_2px_0px_8px_2px_rgba(24,24,24,0.20)]
+- Border: outline-[1.50px] outline-offset-[-1.50px] outline-white/60
+- Text: text-Text-Light (может быть темный текст)
+- Icon: outline-Text-Light
+
+**Dark Mode Variant**:
+- Background: bg-gradient-to-b from-zinc-800 to-zinc-800
+- Shadow: shadow-[inset_2px_0px_8px_2px_rgba(248,248,248,0.20)]
+- Border: outline-[1.50px] outline-offset-[-1.50px] outline-white/40
+- Text: text-Text-Light
+- Icon: outline-Text-Light
+
+**Common Labels**: "Publish now", "Continue", "Next", "Submit"
+
+##### Пример использования
+
+```jsx
+// Dark mode variant
+<div className="pl-7 pr-3 py-3 bg-gradient-to-b from-zinc-800 to-zinc-800 rounded-[32px] shadow-[inset_2px_0px_8px_2px_rgba(248,248,248,0.20)] outline outline-[1.50px] outline-offset-[-1.50px] outline-white/40 inline-flex justify-center items-center gap-3 overflow-hidden">
+  <div className="justify-start text-Text-Light text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">Publish now</div>
+  <div className="w-6 h-6 relative overflow-hidden">
+    <div className="w-1 h-2 left-[16px] top-[10px] absolute origin-top-left rotate-90 rounded-sm outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Light" />
+  </div>
+</div>
+
+// Light mode variant
+<div className="pl-7 pr-3 py-3 bg-gradient-to-b from-white to-neutral-200 rounded-[32px] shadow-[inset_2px_0px_8px_2px_rgba(24,24,24,0.20)] outline outline-[1.50px] outline-offset-[-1.50px] outline-white/60 inline-flex justify-center items-center gap-3 overflow-hidden">
+  <div className="justify-start text-Text-Light text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">Publish now</div>
+  <div className="w-6 h-6 relative overflow-hidden">
+    <div className="w-1 h-2 left-[16px] top-[10px] absolute origin-top-left rotate-90 rounded-sm outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Light" />
+  </div>
+</div>
+```
+
 #### Icon Button (Round)
 
 - **Size**: w-12 h-12 (48x48px)
@@ -792,6 +845,141 @@
 </div>
 ```
 
+#### Tags Input (Multi-select Input)
+
+Компонент для ввода множественных тегов/значений с возможностью добавления и удаления.
+
+- **Container**:
+  - Padding: p-2 или p-2.5 (8px или 10px)
+  - Radius: rounded-[32px] (Light) или rounded-[20px] (некоторые варианты)
+  - Border: outline-[1.50px] outline-offset-[-1.50px]
+  - Layout: inline-flex justify-start items-center gap-1.5 flex-wrap content-center
+  - Overflow: overflow-hidden
+
+##### Container States
+
+**Default (Empty)**:
+- Border: outline-Stroke-Stroke2
+- Placeholder: opacity-50, text-Text-Secondary
+- Font: text-sm, font-normal, leading-5, tracking-tight
+- Placeholder position: left-[10px] top-[4px]
+- Example: "i.e. Dashboard, Light, Responsive"
+
+**Hover**:
+- Border: outline-shade07-50/50
+- Placeholder: text-Text-Secondary
+
+**Focus/Active (Empty)**:
+- Border: outline-shade07-50/50
+- Cursor: w-0.5 h-4 bg-Text-Blue visible
+- Cursor positioned с placeholder text
+
+**Focus with Text**:
+- Border: outline-shade07-50/50
+- Cursor: visible после текста
+- Может показывать частично введенный текст
+- Highlight введенного текста: text-Text-Primary
+- Остаток placeholder: text-Text-Secondary, opacity-50
+
+**With Tags (Filled)**:
+- Border: outline-Stroke-Stroke2 или outline-Stroke-BorderBorder
+- Contains multiple tag chips
+- Tags layout: flex-wrap
+- Gap: gap-1.5 между тегами
+- Может содержать cursor или новый placeholder
+
+##### Content Layout
+
+**Empty State**:
+- w-72 h-7 relative container с placeholder
+
+**With Single Tag + Cursor**:
+- Tag chip (см. Tag/Chip specs)
+- Cursor: w-0.5 h-4 bg-Text-Blue
+
+**With Multiple Tags**:
+- Multiple tag chips wrapped
+- Each tag: h-8 px-3 bg-Backgrounds-surface1 rounded-[32px]
+- Gap: gap-1.5 между элементами
+- Может показывать частично введенный текст
+
+##### Input Field Inside
+
+- **Placeholder**: opacity-50, text-Text-Secondary
+- **Input Text**: text-Text-Primary (при вводе)
+- **Cursor**: w-0.5 h-4 bg-Text-Blue rounded-sm
+- **Font**: text-sm, font-normal, leading-5, tracking-tight
+
+##### Пример использования
+
+```jsx
+// Empty state
+<div className="self-stretch p-2.5 rounded-[32px] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 inline-flex justify-start items-center gap-1.5 flex-wrap content-center overflow-hidden">
+  <div className="w-72 h-7 relative">
+    <div className="left-[10px] top-[4px] absolute opacity-50 justify-center text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">i.e. Dashboard, Light, Responsive</div>
+  </div>
+</div>
+
+// Focus with cursor
+<div className="self-stretch p-2.5 rounded-[32px] outline outline-[1.50px] outline-offset-[-1.50px] outline-shade07-50/50 inline-flex justify-start items-center gap-1.5 flex-wrap content-center overflow-hidden">
+  <div className="w-72 h-7 relative">
+    <div className="h-5 py-0.5 left-[10px] top-[4px] absolute inline-flex justify-start items-center">
+      <div className="w-0.5 h-4 bg-Text-Blue rounded-sm" />
+      <div className="opacity-50 justify-center text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">i.e. Dashboard, Light, Responsive</div>
+    </div>
+  </div>
+</div>
+
+// With single tag and cursor
+<div className="self-stretch p-2 rounded-[32px] outline outline-[1.50px] outline-offset-[-1.50px] outline-shade07-50/50 inline-flex justify-start items-center gap-1.5 flex-wrap content-center overflow-hidden">
+  <div className="h-8 px-3 bg-Backgrounds-surface1 rounded-[32px] flex justify-start items-center gap-1.5 overflow-hidden">
+    <div className="justify-center text-Text-Primary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">Dashboard</div>
+    <div className="w-3 h-3 relative overflow-hidden">
+      <div className="w-2 h-2 left-[2.38px] top-[2.38px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Tertiary" />
+    </div>
+  </div>
+  <div className="w-0.5 h-4 bg-Text-Blue rounded-sm" />
+</div>
+
+// Typing with partial text
+<div className="self-stretch p-2 relative rounded-[32px] outline outline-[1.50px] outline-offset-[-1.50px] outline-shade07-50/50 inline-flex justify-start items-center gap-1.5 flex-wrap content-center overflow-hidden">
+  <div className="h-8 px-3 bg-Backgrounds-surface1 rounded-[32px] flex justify-start items-center gap-1.5 overflow-hidden">
+    <div className="justify-center text-Text-Primary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">Dashboard</div>
+    <div className="w-3 h-3 relative overflow-hidden">
+      <div className="w-2 h-2 left-[2.38px] top-[2.38px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Tertiary" />
+    </div>
+  </div>
+  <div className="opacity-50 justify-center">
+    <span className="text-Text-Primary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">Res</span>
+    <span className="text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">ponsive</span>
+  </div>
+  <div className="w-0.5 h-4 left-[142px] top-[16px] absolute bg-Text-Blue rounded-sm" />
+</div>
+
+// With multiple tags
+<div className="self-stretch p-2 rounded-[20px] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 inline-flex justify-start items-center gap-1.5 flex-wrap content-center overflow-hidden">
+  <div className="h-8 px-3 bg-Backgrounds-surface1 rounded-[32px] flex justify-start items-center gap-1.5 overflow-hidden">
+    <div className="justify-center text-Text-Primary text-sm font-normal">Dashboard</div>
+    <div className="w-3 h-3 relative overflow-hidden">
+      <div className="w-2 h-2 left-[2.38px] top-[2.38px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Tertiary" />
+    </div>
+  </div>
+  <div className="h-8 px-3 bg-Backgrounds-surface1 rounded-[32px] flex justify-start items-center gap-1.5 overflow-hidden">
+    <div className="justify-center text-Text-Primary text-sm font-normal">Light</div>
+    <div className="w-3 h-3 relative overflow-hidden">
+      <div className="w-2 h-2 left-[2.38px] top-[2.38px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Tertiary" />
+    </div>
+  </div>
+  <div className="h-8 px-3 bg-Backgrounds-surface1 rounded-[32px] flex justify-start items-center gap-1.5 overflow-hidden">
+    <div className="justify-center text-Text-Primary text-sm font-normal">Responsive</div>
+    <div className="w-3 h-3 relative overflow-hidden">
+      <div className="w-2 h-2 left-[2.38px] top-[2.38px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Tertiary" />
+    </div>
+  </div>
+  {/* More tags... */}
+</div>
+```
+
 ---
 
 ### 4. Badges & Tags
@@ -850,12 +1038,66 @@
   - **Trend Down**: bg-red-400/5, outline-red-400/20, text-red-400, arrow down
 - **Example**: "36.8%" с стрелкой
 
-#### Tag
+#### Tag / Chip
 
-- **Padding**: (to be defined)
-- **Radius**: (to be defined)
-- **Font Size**: (to be defined)
-- **Close Button**: (to be defined)
+Компактный компонент для отображения меток, тегов или выбранных элементов с возможностью удаления.
+
+- **Size**: h-8 px-3 (32px height, 12px horizontal padding)
+- **Radius**: rounded-[32px] (полностью скругленный)
+- **Background**: bg-Backgrounds-surface1
+- **Layout**: flex justify-start items-center gap-1.5
+- **Overflow**: overflow-hidden
+- **Font**: text-sm, font-normal, leading-5, tracking-tight
+- **Color**: text-Text-Primary
+
+##### Close Icon (X)
+- **Container**: w-3 h-3 (12x12px)
+- **Icon**: w-2 h-2 (8x8px), positioned [2.38px, 2.38px]
+- **Outline**: outline-[1.50px] outline-offset-[-0.75px]
+- **States**:
+  - **Default**: outline-Text-Tertiary (серый)
+  - **Hover/Active**: outline-Text-Primary (темный/активный)
+
+##### Tag States
+
+**Default**:
+- Background: bg-Backgrounds-surface1
+- Text: text-Text-Primary
+- Close icon: outline-Text-Tertiary
+
+**Hover**:
+- Close icon может измениться на Text-Primary
+- Может появиться subtle shadow
+- Background: может слегка подсветиться
+
+**Active/Interactive**:
+- Close icon: outline-Text-Primary
+- Может быть более выраженная обводка
+
+**Disabled**:
+- Opacity: opacity-50
+- Close icon: может быть скрыт
+- Cursor: not-allowed
+
+##### Пример использования
+
+```jsx
+// Default tag
+<div className="h-8 px-3 bg-Backgrounds-surface1 rounded-[32px] flex justify-start items-center gap-1.5 overflow-hidden">
+  <div className="justify-center text-Text-Primary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">Dashboard</div>
+  <div className="w-3 h-3 relative overflow-hidden">
+    <div className="w-2 h-2 left-[2.38px] top-[2.38px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Tertiary" />
+  </div>
+</div>
+
+// Active/Hover tag
+<div className="h-8 px-3 bg-Backgrounds-surface1 rounded-[32px] flex justify-start items-center gap-1.5 overflow-hidden">
+  <div className="justify-center text-Text-Primary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">Dashboard</div>
+  <div className="w-3 h-3 relative overflow-hidden">
+    <div className="w-2 h-2 left-[2.38px] top-[2.38px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Primary" />
+  </div>
+</div>
+```
 
 ---
 
@@ -2731,6 +2973,124 @@ Chevron иконки используются для навигации и ра�
 - Offset позиционирование: left-[3px] top-[3px] или left-[4px] top-[4px] внутри контейнера
 - Для иконок используется outline style с offset для создания эффекта обводки
 - Rotation применяется с origin-top-left для правильного вращения
+
+### Brand Icons / Social Icons
+
+Коллекция цветных иконок для брендов, социальных сетей и популярных сервисов.
+
+- **Size**: w-4 h-4 (16x16px) - стандартный размер
+- **Style**: filled/colored icons с градиентами и фирменными цветами
+- **Usage**: для отображения социальных ссылок, интеграций, платформ
+
+#### Common Brand Icons
+
+**Filled Icons** (простые заливки):
+- **Star** (filled): w-3.5 h-3.5, bg-Text-Primary
+- **Heart** (filled): w-4 h-3.5, bg-Text-Primary
+- **Generic Icon**: w-4 h-4, bg-Text-Primary
+
+**Colored Brand Icons**:
+
+##### Instagram
+- w-4 h-4, gradient background
+- Outer: bg-orange-500 или gradient
+- Inner ring: bg-stone-900
+- Center circle: bg-orange-500
+- Pattern: nested circles with brand colors
+
+##### Facebook
+- w-4 h-4
+- Background: bg-gradient-to-b from-blue-600 to-blue-800
+- 'f' letter: bg-white
+
+##### Twitter/X
+- w-4 h-4
+- Background: bg-cyan-400
+- Inner: bg-emerald-950
+- X shape: bg-cyan-400
+
+##### Windows
+- w-4 h-4 разделен на 4 квадрата
+- Градиенты: from-sky-300 to-sky-400, from-cyan-400 to-sky-500, from-blue-600 to-sky-500
+- Pattern: 4 separated squares forming window
+
+##### YouTube
+- w-4 h-4
+- Background: bg-orange-700
+- Play button: bg-white
+
+##### Figma
+- w-4 h-4 из 5 цветных кругов
+- Colors: emerald-500, purple-500, orange-600, red-400, cyan-400
+- Pattern: 5 circles in specific positions
+
+##### Crown (Premium)
+- w-4 h-4
+- Colors: amber-600, amber-500, amber-400, yellow-100
+- Complex shape с градиентами
+
+##### Generic/Placeholder
+- img placeholders: placehold.co/16x16
+
+##### Monochrome Icons
+- w-4 h-4 простые фигуры
+- bg-Text-Primary
+- Различные shapes (filled squares, circles, etc.)
+
+#### Icon with Badge
+- w-4 h-4 base icon
+- Small badge/dot positioned: w-1 h-1, bg-sky-800
+- Example: notification badge on icon
+
+#### Purple Variant
+- w-4 h-4
+- Background: bg-purple-300
+- Inner: bg-slate-900
+- Center: bg-purple-300
+
+#### Usage Notes
+
+- Brand icons должны использовать официальные цвета брендов
+- Для placeholder используйте generic monochrome icons
+- Размер 16x16px оптимален для inline использования
+- Для больших размеров используйте пропорциональное масштабирование
+- Соблюдайте brand guidelines при использовании логотипов
+
+#### Пример использования
+
+```jsx
+// Generic filled icon
+<div className="w-4 h-4 relative overflow-hidden">
+  <div className="w-3.5 h-3.5 left-[1.33px] top-[1.10px] absolute bg-Text-Primary" />
+</div>
+
+// Instagram icon
+<div className="w-4 h-4 relative">
+  <div className="w-4 h-4 left-0 top-0 absolute bg-orange-500" />
+  <div className="w-3.5 h-3.5 left-[1px] top-[1px] absolute bg-stone-900" />
+  <div className="w-2 h-2 left-[4.09px] top-[4.33px] absolute bg-orange-500" />
+</div>
+
+// Facebook icon
+<div className="w-4 h-4 relative">
+  <div className="w-4 h-4 left-0 top-0 absolute bg-gradient-to-b from-blue-600 to-blue-800" />
+  <div className="w-2.5 h-1.5 left-[2.50px] top-[4.93px] absolute bg-white" />
+</div>
+
+// Figma icon (5 circles)
+<div className="w-4 h-4 relative">
+  <div className="w-1.5 h-1.5 left-[3px] top-[10.67px] absolute bg-emerald-500" />
+  <div className="w-1.5 h-1.5 left-[3px] top-[5.33px] absolute bg-purple-500" />
+  <div className="w-1.5 h-1.5 left-[3px] top-0 absolute bg-orange-600" />
+  <div className="w-1.5 h-1.5 left-[8.33px] top-0 absolute bg-red-400" />
+  <div className="w-1.5 h-1.5 left-[8.33px] top-[5.33px] absolute bg-cyan-400" />
+</div>
+
+// Image placeholder
+<div className="w-4 h-4 relative overflow-hidden">
+  <img className="w-4 h-4 left-0 top-0 absolute" src="https://placehold.co/16x16" />
+</div>
+```
 
 ---
 
