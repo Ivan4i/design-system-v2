@@ -4439,6 +4439,819 @@ Chevron иконки используются для навигации и ра�
 
 ---
 
+## 34. Simplified Table Row / Simple Product Row
+
+### Описание / Description
+
+Упрощенная версия строки таблицы продуктов с базовой информацией: категория с иконкой, цена и дата. Более компактная альтернатива полной строке с метриками.
+
+Simplified version of product table row with basic info: category with icon, price, and date. More compact alternative to full metrics row.
+
+### Спецификация / Specification
+
+#### Базовая структура / Base Structure
+
+```
+Container (w-[1148px] p-4)
+├── Left Section (w-96 h-16)
+│   ├── Checkbox (w-6 h-6)
+│   ├── Product Image (w-16 h-16)
+│   └── Product Info
+│       ├── Title (text-base font-semibold)
+│       └── URL (text-sm opacity-80)
+└── Right Section (flex-1 py-2)
+    ├── Category (icon + text)
+    ├── Price Badge (bg-green-600/5)
+    └── Date/Time (text-sm)
+```
+
+#### Dimensions
+
+- Container width: `w-[1148px]`
+- Container padding: `p-4` (16px all sides)
+- Row height: `h-16` (64px)
+- Product image: `w-16 h-16` (64x64px)
+- Checkbox: `w-6 h-6` (24x24px)
+- Category icon: `w-6 h-6`
+- Price badge: `w-12 h-7` (48x28px)
+- Spacing between sections: `gap-6` (24px)
+- Spacing within sections: `gap-5` (20px)
+
+#### Typography
+
+**Product Title:**
+- Font: `font-['Inter_Display']`
+- Size: `text-base` (16px)
+- Weight: `font-semibold` (600)
+- Line height: `leading-6` (24px)
+- Letter spacing: `tracking-tight`
+- Color: `text-Text-Primary`
+- Truncation: `line-clamp-1`
+
+**Product URL:**
+- Font: `font-['Inter_Display']`
+- Size: `text-sm` (14px)
+- Weight: `font-normal` (400)
+- Line height: `leading-5` (20px)
+- Letter spacing: `tracking-tight`
+- Color: `text-Text-Secondary`
+- Opacity: `opacity-80`
+
+**Category Text:**
+- Font: `font-['Inter_Display']`
+- Size: `text-sm` (14px)
+- Weight: `font-normal` (400)
+- Color: `text-Text-Primary`
+- Width: `w-32` (128px)
+
+**Price:**
+- Font: `font-['Inter_Display']`
+- Size: `text-sm` (14px)
+- Weight: `font-semibold` (600)
+- Line height: `leading-4` (16px)
+- Color: `text-Primary-primary02` (green)
+
+**Date/Time:**
+- Font: `font-['Inter_Display']`
+- Size: `text-sm` (14px)
+- Weight: `font-normal` (400)
+- Color: `text-Text-Secondary`
+- Width: `w-40` (160px)
+
+#### Colors
+
+**Checkbox (placeholder):**
+- Border: `border-2 border-Stroke-Stroke2`
+- Border radius: `rounded-md`
+
+**Product Image:**
+- Border radius: `rounded-xl`
+
+**Price Badge:**
+- Background: `bg-green-600/5` (5% opacity green)
+- Outline: `outline-[1.50px] outline-offset-[-1.50px] outline-green-600/20`
+- Border radius: `rounded-lg`
+- Padding: `px-3 py-1.5`
+
+**Category Icon:**
+- Outline: `outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary`
+
+#### Layout
+
+**Left Section:**
+- Display: `flex justify-start items-center`
+- Gap: `gap-5` (20px)
+- Contains: checkbox, image, product info
+
+**Right Section:**
+- Display: `flex justify-start items-center`
+- Gap: `gap-12` (48px)
+- Padding: `py-2`
+- Contains: category, price, date
+
+**Product Info Column:**
+- Display: `inline-flex flex-col justify-center items-start`
+- Flex: `flex-1` (takes remaining space)
+
+#### States
+
+##### Default State
+- Checkbox: placeholder state с `data-status="placeholder"`
+- Image: loaded с placeholder fallback
+- Text: полная видимость
+- Price badge: зеленый фон с outline
+
+##### Hover State (optional)
+- Background: легкое выделение строки
+- Cursor: pointer при наведении на интерактивные элементы
+
+##### Selected State (via checkbox)
+- Checkbox: checked appearance
+- Возможно выделение всей строки
+
+#### Responsive Behavior
+
+- Fixed width: `w-[1148px]` для desktop layouts
+- Overflow handling: `overflow-hidden`
+- Mobile: требует адаптации (stack vertical или scroll horizontal)
+
+#### Пример использования / Usage Example
+
+```jsx
+// Simplified Product Row
+<div className="w-[1148px] p-4 inline-flex justify-start items-start gap-6 overflow-hidden">
+  {/* Left Section: Checkbox + Image + Info */}
+  <div className="w-96 h-16 flex justify-start items-center gap-5">
+    {/* Checkbox */}
+    <div data-status="placeholder" className="w-6 h-6 relative overflow-hidden">
+      <div className="w-6 h-6 left-0 top-0 absolute rounded-md border-2 border-Stroke-Stroke2" />
+    </div>
+
+    {/* Product Image */}
+    <img
+      className="w-16 h-16 relative rounded-xl"
+      src="https://placehold.co/64x64"
+    />
+
+    {/* Product Info */}
+    <div className="flex-1 self-stretch inline-flex flex-col justify-center items-start">
+      <div className="self-stretch justify-start text-Text-Primary text-base font-semibold font-['Inter_Display'] leading-6 tracking-tight line-clamp-1">
+        Bento Matte 3D Illustration
+      </div>
+      <div className="self-stretch opacity-80 justify-start text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">
+        ui8.net/product/product-link
+      </div>
+    </div>
+  </div>
+
+  {/* Right Section: Category + Price + Date */}
+  <div className="flex-1 py-2 flex justify-start items-center gap-12">
+    {/* Category with Icon */}
+    <div className="flex justify-start items-center gap-2">
+      <div className="w-6 h-6 relative overflow-hidden">
+        <div className="w-4 h-4 left-[3.75px] top-[3.75px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+      </div>
+      <div className="w-32 justify-start text-Text-Primary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">
+        UI Design Kit
+      </div>
+    </div>
+
+    {/* Price Badge */}
+    <div className="w-28 h-7 relative">
+      <div
+        data-property-1="Default"
+        className="w-12 px-3 py-1.5 left-0 top-0 absolute bg-green-600/5 rounded-lg outline outline-[1.50px] outline-offset-[-1.50px] outline-green-600/20 inline-flex justify-center items-center gap-1"
+      >
+        <div className="justify-start text-Primary-primary02 text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">
+          $98
+        </div>
+      </div>
+    </div>
+
+    {/* Date and Time */}
+    <div className="w-40 justify-start text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">
+      Apr 9, 2044 at 3:55 PM
+    </div>
+  </div>
+</div>
+```
+
+#### Usage Notes
+
+- Используется для компактных списков продуктов без подробной статистики
+- Checkbox позволяет множественный выбор строк
+- Price badge с зеленым цветом подчеркивает ценность
+- Category icon помогает быстро идентифицировать тип продукта
+- Date/Time формат: "MMM D, YYYY at H:MM AM/PM"
+- Можно комбинировать с полными строками (section 33) в одной таблице
+- Подходит для Product Lists, Order History, Purchase Records
+
+---
+
+## 35. Comments / Products Toolbar
+
+### Описание / Description
+
+Универсальная панель инструментов для списков комментариев или продуктов. Имеет два состояния: по умолчанию (с поиском и сортировкой) и режим выбора (с bulk actions).
+
+Universal toolbar for comments or products lists. Has two states: default (with search and sorting) and selection mode (with bulk actions).
+
+### Спецификация / Specification
+
+#### Базовая структура / Base Structure
+
+```
+Container (w-[1180px] p-3)
+├── Default State
+│   ├── Left Section
+│   │   ├── Counter (e.g., "8 new comments")
+│   │   └── Search Input
+│   └── Right Section
+│       └── Sort Dropdown
+└── Selection State
+    ├── Left Section
+    │   ├── Selection Counter (e.g., "3 comments selected")
+    │   └── Deselect Button
+    └── Right Section
+        ├── Delete Button
+        └── Primary Action Button
+```
+
+#### Dimensions
+
+- Container width: `w-[1180px]`
+- Container padding: `p-3` (12px all sides)
+- Height: `h-12` (48px) для кнопок и inputs
+- Search input: `w-72` (288px)
+- Sort dropdown: `w-44` (176px)
+- Icon size: `w-6 h-6` (24x24px)
+- Gap between sections: `gap-6` (24px)
+- Gap between buttons: `gap-2` (8px)
+
+#### Typography
+
+**Counter / Title:**
+- Font: `font-['Inter_Display']`
+- Size: `text-xl` (20px)
+- Weight: `font-semibold` (600)
+- Line height: `leading-7` (28px)
+- Letter spacing: `tracking-tight`
+- Color: `text-Text-Primary`
+
+**Search Placeholder:**
+- Font: `font-['Inter_Display']`
+- Size: `text-sm` (14px)
+- Weight: `font-normal` (400)
+- Line height: `leading-5` (20px)
+- Color: `text-Text-Secondary`
+
+**Dropdown Text:**
+- Font: `font-['Inter_Display']`
+- Size: `text-sm` (14px)
+- Weight: `font-normal` (400)
+- Color: `text-Text-Secondary`
+
+**Button Text:**
+- Font: `font-['Inter_Display']`
+- Size: `text-sm` (14px)
+- Weight: `font-semibold` (600)
+- Line height: `leading-4` (16px)
+- Letter spacing: `tracking-tight`
+
+#### Colors
+
+**Default State - Search Input:**
+- Background: `bg-Backgrounds-surface1`
+- Border radius: `rounded-[90px]`
+- Padding: `pl-3 pr-5 py-3`
+- Icon: `outline-Text-Secondary`
+
+**Default State - Sort Dropdown:**
+- Background: `bg-Backgrounds-surface2`
+- Border radius: `rounded-[90px]`
+- Outline: `outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2`
+- Padding: `pl-5 pr-3 py-3`
+
+**Selection State - Secondary Buttons:**
+- Background: transparent
+- Border radius: `rounded-[32px]`
+- Outline: `outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2`
+- Padding: `px-7 py-3.5`
+- Text color: `text-Text-Secondary`
+
+**Selection State - Primary Button (Light Mode):**
+- Background: `bg-gradient-to-b from-zinc-800 to-zinc-800`
+- Border radius: `rounded-[32px]`
+- Shadow: `shadow-[inset_2px_0px_8px_2px_rgba(248,248,248,0.20)]`
+- Outline: `outline-[1.50px] outline-offset-[-1.50px] outline-white/40`
+- Padding: `px-7 py-4`
+- Text color: `text-Text-Light`
+
+#### States
+
+##### Default State (No Selection)
+
+**Layout:**
+- Display: `inline-flex justify-between items-center`
+- Left section: counter + search input (`gap-6`)
+- Right section: sort dropdown
+
+**Components:**
+- Counter showing number of items ("8 new comments")
+- Search input с иконкой поиска
+- Sort dropdown с chevron down icon ("Newest first", "Oldest first", etc.)
+
+**Search Input:**
+- Icon: search icon (круг с handle)
+- Placeholder: "Search comments" или "Search products"
+- Background: surface1
+- Rounded: pill shape (`rounded-[90px]`)
+
+**Sort Dropdown:**
+- Icon: chevron down
+- Text: sorting option
+- Background: surface2 с outline
+- Rounded: pill shape
+
+##### Selection State (Items Selected)
+
+**Layout:**
+- Display: `inline-flex justify-between items-center`
+- Left section: selection counter + deselect button (`gap-6`)
+- Right section: delete + primary action (`gap-2`)
+
+**Components:**
+- Selection counter ("3 comments selected")
+- "Deselect" button (secondary)
+- "Delete" button (secondary)
+- Primary action button ("Mark as read", "Archive", etc.)
+
+**Selection Counter:**
+- Same styling as default counter
+- Dynamic number based on selection
+
+**Deselect Button:**
+- Outline style
+- Secondary appearance
+- Text: "Deselect"
+
+**Delete Button:**
+- Outline style
+- Secondary appearance
+- Text: "Delete"
+
+**Primary Action Button:**
+- Gradient background (dark in light mode, light in dark mode)
+- Inset shadow for depth
+- Prominent appearance
+- Text varies: "Mark as read", "Archive", "Approve", etc.
+
+#### Icon Specifications
+
+**Search Icon:**
+- Circle: `w-3 h-3` (12x12px)
+- Handle: `w-1 h-1` (4x4px)
+- Outline: `outline-[1.50px] outline-offset-[-0.75px]`
+- Color: `outline-Text-Secondary`
+- Position: круг centered, handle positioned down-left
+
+**Chevron Down Icon:**
+- Size: `w-2 h-[3.38px]`
+- Outline: `outline-[1.50px] outline-offset-[-0.75px]`
+- Color: `outline-Text-Secondary`
+- Position: centered в icon container
+
+#### Responsive Behavior
+
+- Fixed width: `w-[1180px]` для desktop
+- Mobile: stack vertically или adjust widths
+- Search input может сокращаться first
+- Buttons сохраняют padding но могут уменьшить text
+
+#### Пример использования / Usage Example
+
+```jsx
+// Default State (No Selection)
+<div className="w-[1180px] p-3 inline-flex justify-between items-center">
+  {/* Left Section: Counter + Search */}
+  <div className="h-12 pl-5 flex justify-center items-center gap-6">
+    {/* Counter */}
+    <div className="justify-start text-Text-Primary text-xl font-semibold font-['Inter_Display'] leading-7 tracking-tight">
+      8 new comments
+    </div>
+
+    {/* Search Input */}
+    <div
+      data-light-mode="True"
+      data-state="default"
+      className="w-72 pl-3 pr-5 py-3 bg-Backgrounds-surface1 rounded-[90px] flex justify-start items-center gap-2 overflow-hidden"
+    >
+      <div className="w-6 h-6 relative overflow-hidden">
+        <div className="w-3 h-3 left-[6.75px] top-[4.48px] absolute rounded-full outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+        <div className="w-1 h-1 left-[4.87px] top-[15.60px] absolute rounded-sm outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+      </div>
+      <div className="justify-start text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">
+        Search comments
+      </div>
+    </div>
+  </div>
+
+  {/* Right Section: Sort Dropdown */}
+  <div
+    data-light-mode="True"
+    data-state="default"
+    className="w-44 h-12 pl-5 pr-3 py-3 bg-Backgrounds-surface2 rounded-[90px] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 flex justify-between items-center overflow-hidden"
+  >
+    <div className="justify-start text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">
+      Newest first
+    </div>
+    <div className="w-6 h-6 relative overflow-hidden">
+      <div className="w-2 h-[3.38px] left-[8px] top-[10px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+    </div>
+  </div>
+</div>
+
+// Selection State (Items Selected)
+<div className="w-[1180px] p-3 inline-flex justify-between items-center">
+  {/* Left Section: Selection Counter + Deselect */}
+  <div className="h-12 pl-5 flex justify-center items-center gap-6">
+    {/* Selection Counter */}
+    <div className="justify-start text-Text-Primary text-xl font-semibold font-['Inter_Display'] leading-7 tracking-tight">
+      3 comments selected
+    </div>
+
+    {/* Deselect Button */}
+    <div className="self-stretch px-7 py-3.5 rounded-[32px] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 flex justify-center items-center gap-2 overflow-hidden">
+      <div className="text-center justify-start text-Text-Secondary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">
+        Deselect
+      </div>
+    </div>
+  </div>
+
+  {/* Right Section: Delete + Primary Action */}
+  <div className="flex justify-start items-start gap-2">
+    {/* Delete Button */}
+    <div className="h-12 px-7 py-3.5 rounded-[32px] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 flex justify-center items-center gap-2 overflow-hidden">
+      <div className="text-center justify-start text-Text-Secondary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">
+        Delete
+      </div>
+    </div>
+
+    {/* Primary Action Button */}
+    <div
+      data-light-mode="True"
+      data-state="Default"
+      data-style="Button"
+      className="px-7 py-4 bg-gradient-to-b from-zinc-800 to-zinc-800 rounded-[32px] shadow-[inset_2px_0px_8px_2px_rgba(248,248,248,0.20)] outline outline-[1.50px] outline-offset-[-1.50px] outline-white/40 flex justify-center items-center gap-2.5 overflow-hidden"
+    >
+      <div className="justify-start text-Text-Light text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">
+        Mark as read
+      </div>
+    </div>
+  </div>
+</div>
+
+// For Products Toolbar - just change text content
+<div className="w-[1180px] p-3 inline-flex justify-between items-center">
+  <div className="h-12 pl-5 flex justify-center items-center gap-6">
+    <div className="justify-start text-Text-Primary text-xl font-semibold font-['Inter_Display'] leading-7 tracking-tight">
+      245 products
+    </div>
+    {/* Search with placeholder "Search products" */}
+  </div>
+  {/* Sort dropdown with options like "Best selling", "Price: Low to High", etc. */}
+</div>
+```
+
+#### Usage Notes
+
+- Toolbar переключается между Default и Selection states
+- Counter динамически обновляется (количество items или selected items)
+- Search input может быть активным или placeholder
+- Sort dropdown может показывать разные опции:
+  - Comments: "Newest first", "Oldest first", "Most likes"
+  - Products: "Best selling", "Price: Low to High", "Rating"
+- Primary action button text зависит от контекста:
+  - Comments: "Mark as read", "Approve", "Archive"
+  - Products: "Add to collection", "Export", "Publish"
+- Delete button всегда destructive action
+- Deselect button снимает выбор со всех items
+- В mobile версии возможно collapse в menu или vertical stack
+
+---
+
+## 36. Table Container / Product Table
+
+### Описание / Description
+
+Полноценный контейнер таблицы с заголовком, строками, поиском и пагинацией. Комбинирует toolbar (section 35) и table rows (sections 33-34) в единый компонент. Поддерживает light/dark режимы.
+
+Complete table container with header, rows, search, and pagination. Combines toolbar (section 35) and table rows (sections 33-34) into unified component. Supports light/dark modes.
+
+### Спецификация / Specification
+
+#### Базовая структура / Base Structure
+
+```
+Container (w-[1180px] bg-Backgrounds-surface2)
+├── Header Section
+│   ├── Title + Search + View Toggle
+│   └── Controls (Grid/List buttons)
+├── Table Header Row
+│   ├── Checkbox (select all)
+│   └── Column Headers (Product, Status, Price, Sales, Ratings, Views)
+├── Table Body
+│   ├── Table Row 1 (section 33 or 34 pattern)
+│   ├── Table Row 2
+│   └── ... (multiple rows)
+└── Footer Section
+    └── "Show more" Button
+```
+
+#### Dimensions
+
+- Container width: `w-[1180px]`
+- Border radius: `rounded-[32px]`
+- Total structure creates cohesive table component
+- Header padding: `p-3` (12px)
+- Table rows: varies by type (sections 33/34)
+- Footer button: full width centered
+
+#### Typography
+
+**Section Title (Header):**
+- Font: `font-['Inter_Display']`
+- Size: `text-xl` (20px)
+- Weight: `font-semibold` (600)
+- Line height: `leading-7` (28px)
+- Color: `text-Text-Primary`
+
+**Column Headers:**
+- Font: `font-['Inter_Display']`
+- Size: `text-sm` (14px)
+- Weight: `font-medium` (500)
+- Color: `text-Text-Secondary`
+- Uppercase: optional
+
+**"Show more" Button:**
+- Font: `font-['Inter_Display']`
+- Size: `text-sm` (14px)
+- Weight: `font-semibold` (600)
+- Line height: `leading-4` (16px)
+- Color: light mode = `text-Text-Light`, dark mode = `text-Text-Primary`
+
+#### Colors and Theming
+
+**Container (Light Mode):**
+- Background: `bg-Backgrounds-surface2`
+- Border radius: `rounded-[32px]`
+- Shadow: `shadow-[0px_5px_1.5px_-4px_rgba(8,8,8,0.09)]`
+- Outline: `outline-offset-[-1.50px]` (subtle border effect)
+- Border: `border-Stroke-Subtle/10`
+
+**Container (Dark Mode):**
+- Background: `bg-Backgrounds-surface2` (darker in dark mode via CSS vars)
+- Shadow: `shadow-[0px_5px_1.5px_-4px_rgba(8,8,8,0.50)]` (stronger shadow)
+- Outline: `outline-white`
+- Border: `border-Stroke-Subtle` (more visible in dark)
+
+**"Show more" Button (Light Mode):**
+- Background: `bg-gradient-to-b from-zinc-800 to-zinc-800`
+- Shadow: `shadow-[inset_2px_0px_8px_2px_rgba(248,248,248,0.20)]`
+- Outline: `outline-[1.50px] outline-offset-[-1.50px] outline-white/40`
+- Text: `text-Text-Light` (white)
+- Border radius: `rounded-[32px]`
+- Padding: `px-7 py-4`
+
+**"Show more" Button (Dark Mode):**
+- Background: `bg-gradient-to-b from-white to-neutral-200`
+- Shadow: similar structure but adjusted for light background
+- Outline: adjusted for light button
+- Text: `text-Text-Primary` (dark)
+- Same border radius and padding
+
+#### Layout Structure
+
+**Header Section:**
+- Contains toolbar from section 35
+- Includes title, search input, sort dropdown, view toggles
+- Padding: `p-3`
+- Background: same as container
+
+**Table Header Row:**
+- Column headers: Product, Status, Price, Sales, Ratings, Views
+- Select all checkbox on left
+- Sticky header: optional `sticky top-0`
+- Background: `bg-Backgrounds-surface2`
+- Border bottom: subtle separator
+
+**Table Body:**
+- Multiple table rows (sections 33 or 34)
+- Each row: full width
+- Dividers: subtle borders between rows
+- Scrollable: if content exceeds max height
+
+**Footer Section:**
+- "Show more" button centered
+- Padding: `p-4` или `p-6`
+- Background: same as container
+- Button: full width or centered with max-width
+
+#### States
+
+##### Empty State
+- Показывает placeholder: "No products yet" или "No comments"
+- Icon: empty state illustration
+- CTA button: "Add product" или создать первый item
+
+##### Loading State
+- Skeleton loaders для rows
+- Shimmer effect
+- Preserves layout structure
+
+##### Loaded State
+- Displays all table rows
+- Toolbar active
+- "Show more" button если есть pagination
+
+##### Filtered/Searched State
+- Rows фильтруются по search query
+- Counter обновляется: "8 results" вместо "245 products"
+- Возможно "No results found" state
+
+##### Selection State
+- Toolbar переключается на selection mode (section 35)
+- Selected rows highlighted
+- Bulk actions доступны
+
+#### Shadow Stacking (Depth)
+
+**Light Mode:**
+- Container shadow: `0px 5px 1.5px -4px rgba(8,8,8,0.09)`
+- Button inset shadow: `inset 2px 0px 8px 2px rgba(248,248,248,0.20)`
+- Creates subtle depth and layering
+
+**Dark Mode:**
+- Container shadow: `0px 5px 1.5px -4px rgba(8,8,8,0.50)` (stronger)
+- Button shadow adjusted for light button on dark surface
+- More pronounced contrast
+
+#### Responsive Behavior
+
+- Desktop: full `w-[1180px]` width
+- Tablet: может использовать `max-w-full` с horizontal scroll
+- Mobile: возможно vertical card layout вместо table
+- "Show more" button: всегда visible и centered
+- Columns могут скрываться на меньших экранах (priority: Product > Price > Status > others)
+
+#### Пример использования / Usage Example
+
+```jsx
+// Complete Table Container (Light Mode)
+<div className="w-[1180px] bg-Backgrounds-surface2 rounded-[32px] shadow-[0px_5px_1.5px_-4px_rgba(8,8,8,0.09)] outline outline-offset-[-1.50px] border border-Stroke-Subtle/10">
+
+  {/* Header / Toolbar Section */}
+  <div className="w-full p-3 inline-flex justify-between items-center">
+    <div className="h-12 pl-5 flex justify-center items-center gap-6">
+      <div className="justify-start text-Text-Primary text-xl font-semibold font-['Inter_Display'] leading-7 tracking-tight">
+        245 products
+      </div>
+
+      {/* Search Input */}
+      <div className="w-72 pl-3 pr-5 py-3 bg-Backgrounds-surface1 rounded-[90px] flex justify-start items-center gap-2">
+        <div className="w-6 h-6 relative overflow-hidden">
+          <div className="w-3 h-3 left-[6.75px] top-[4.48px] absolute rounded-full outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+          <div className="w-1 h-1 left-[4.87px] top-[15.60px] absolute rounded-sm outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+        </div>
+        <div className="text-Text-Secondary text-sm font-normal font-['Inter_Display']">
+          Search products
+        </div>
+      </div>
+    </div>
+
+    {/* View Toggle / Sort */}
+    <div className="flex items-center gap-2">
+      {/* Grid/List toggle buttons could go here */}
+      <div className="w-44 h-12 pl-5 pr-3 py-3 bg-Backgrounds-surface2 rounded-[90px] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 flex justify-between items-center">
+        <div className="text-Text-Secondary text-sm font-normal font-['Inter_Display']">
+          Best selling
+        </div>
+        <div className="w-6 h-6 relative overflow-hidden">
+          <div className="w-2 h-[3.38px] left-[8px] top-[10px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {/* Table Header Row */}
+  <div className="w-full px-4 py-2 flex items-center border-b border-Stroke-Subtle/10">
+    <div className="w-6 h-6 relative overflow-hidden">
+      <div className="w-6 h-6 rounded-md border-2 border-Stroke-Stroke2" />
+    </div>
+    <div className="flex-1 flex items-center gap-6 pl-6">
+      <div className="w-96 text-Text-Secondary text-sm font-medium font-['Inter_Display']">Product</div>
+      <div className="w-32 text-Text-Secondary text-sm font-medium font-['Inter_Display']">Status</div>
+      <div className="w-28 text-Text-Secondary text-sm font-medium font-['Inter_Display']">Price</div>
+      <div className="w-24 text-Text-Secondary text-sm font-medium font-['Inter_Display']">Sales</div>
+      <div className="w-28 text-Text-Secondary text-sm font-medium font-['Inter_Display']">Ratings</div>
+      <div className="w-20 text-Text-Secondary text-sm font-medium font-['Inter_Display']">Views</div>
+    </div>
+  </div>
+
+  {/* Table Body - Multiple Rows */}
+  <div className="w-full">
+    {/* Row 1 - use section 33 pattern (full metrics) */}
+    <div className="w-full p-4 border-b border-Stroke-Subtle/10">
+      {/* Full table row from section 33 */}
+    </div>
+
+    {/* Row 2 - use section 34 pattern (simplified) */}
+    <div className="w-full p-4 border-b border-Stroke-Subtle/10">
+      {/* Simplified row from section 34 */}
+    </div>
+
+    {/* More rows... */}
+  </div>
+
+  {/* Footer - Show More Button */}
+  <div className="w-full p-6 flex justify-center items-center">
+    <div
+      data-light-mode="True"
+      className="px-7 py-4 bg-gradient-to-b from-zinc-800 to-zinc-800 rounded-[32px] shadow-[inset_2px_0px_8px_2px_rgba(248,248,248,0.20)] outline outline-[1.50px] outline-offset-[-1.50px] outline-white/40 flex justify-center items-center cursor-pointer"
+    >
+      <div className="text-Text-Light text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">
+        Show more
+      </div>
+    </div>
+  </div>
+
+</div>
+
+// Dark Mode Variant - adjust these properties:
+<div className="w-[1180px] bg-Backgrounds-surface2 rounded-[32px] shadow-[0px_5px_1.5px_-4px_rgba(8,8,8,0.50)] outline outline-white border border-Stroke-Subtle">
+  {/* Same structure but with dark mode styling */}
+
+  {/* Footer button in dark mode */}
+  <div className="w-full p-6 flex justify-center items-center">
+    <div className="px-7 py-4 bg-gradient-to-b from-white to-neutral-200 rounded-[32px] flex justify-center items-center cursor-pointer">
+      <div className="text-Text-Primary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">
+        Show more
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+#### Column Structure
+
+**Product Column (w-96):**
+- Checkbox + Image + Title + URL
+- Самая широкая колонка
+- Contains main product info
+
+**Status Column (w-32):**
+- Badge component (Active, Draft, Archived)
+- Uses badge from earlier sections
+- Color coded
+
+**Price Column (w-28):**
+- Price в формате $XX или $XXX
+- Green badge background
+- Semibold font
+
+**Sales Column (w-24):**
+- Number или "N/A"
+- Right-aligned: optional
+- Secondary text color
+
+**Ratings Column (w-28):**
+- Stars + count (e.g., "4.8 (234)")
+- Star icons + numeric rating
+- Compact display
+
+**Views Column (w-20):**
+- View count (e.g., "1.2k", "45.3k")
+- Secondary text
+- Abbreviated numbers
+
+#### Usage Notes
+
+- Комбинирует все предыдущие table components
+- Используйте section 35 toolbar для header
+- Используйте section 33 для full metric rows
+- Используйте section 34 для simplified rows
+- Можно миксовать row types в одной таблице
+- Light/dark mode переключается через data-attributes и CSS variables
+- "Show more" button загружает следующую страницу (pagination)
+- Sticky header: добавьте `sticky top-0 z-10` к table header row
+- Empty state: показывайте когда нет данных
+- Loading state: используйте skeleton loaders
+- Selection state: интегрируйте с toolbar selection mode
+- Responsive: на mobile переключайтесь на card layout
+- Shadow stacking создает глубину: container shadow + button inset shadow
+
+---
+
 ## Как использовать эту дизайн-систему
 
 ### Для дизайнеров
