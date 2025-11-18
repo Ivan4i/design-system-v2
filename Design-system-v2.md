@@ -962,10 +962,145 @@
 
 #### Sidebar Navigation
 
-- **Width**: (to be defined)
-- **Item Height**: (to be defined)
-- **Item Padding**: (to be defined)
-- **States**: (to be defined)
+##### Navigation Menu Item
+
+Основной элемент бокового меню навигации.
+
+- **Padding**: p-3 (12px all sides)
+- **Height**: h-11 (44px)
+- **Radius**: rounded-xl (16px)
+- **Layout**: inline-flex justify-start items-center gap-3
+- **Overflow**: overflow-hidden
+- **Font**: text-sm, font-semibold, leading-4, tracking-tight
+
+##### Menu Item Components
+
+- **Icon Container**: w-6 h-6, relative overflow-hidden
+  - Icon: w-4 h-4 (или другие размеры), positioned left-[3px] top-[3px]
+  - Outline: outline-[1.50px] outline-offset-[-0.75px]
+- **Text**: flex-1 justify-start
+  - Opacity: opacity-80 для secondary text
+- **Chevron Icon** (опционально): w-6 h-6, right aligned
+  - Down: rotate-90
+  - Right: -rotate-90
+- **Number Badge** (опционально): w-6 h-6 px-2 py-1
+
+##### Menu Item States
+
+**Default State**:
+- **Background**: transparent
+- **Text**: text-Text-Secondary, opacity-80
+- **Icon**: outline-Text-Secondary
+
+**Active/Selected State (Light Mode)**:
+- **Background**: bg-Backgrounds-pop
+- **Radius**: rounded-xl
+- **Shadow**:
+  - shadow-[0px_5px_1.5px_-4px_rgba(8,8,8,0.09)]
+  - shadow-[0px_6px_4px_-4px_rgba(8,8,8,0.05)]
+  - shadow-[0px_6px_13px_0px_rgba(8,8,8,0.03)]
+  - shadow-[0px_24px_24px_-16px_rgba(8,8,8,0.04)]
+  - shadow-[0px_2.15px_0.5px_-2px_rgba(0,0,0,0.25)]
+- **Border**: outline-1 outline-offset-[-1px] outline-neutral-200/50
+- **Text**: text-Text-Primary (no opacity)
+- **Icon**: outline-Text-Primary
+
+**Active/Selected State (Dark Mode)**:
+- Same as Light Mode but может иметь другие shadow значения
+
+**Hover State**:
+- Similar to Active but less prominent
+- Can use lighter background or subtle shadow
+
+##### Tree Navigation (Nested Items)
+
+Для вложенных пунктов меню с визуальными соединительными линиями.
+
+- **Container**: w-9 h-11 (или h-7 для top position), relative
+- **Tree Line**: w-3, variable height (h-7, h-12), positioned left-[24px]
+  - Radius: rounded-[10px]
+  - Border: outline-[1.50px] outline-offset-[-0.75px] outline-Stroke-Stroke2
+  - Positioning: top offset для соединения (top-[-6px], top-[-30px])
+- **Layout**: inline-flex с tree line container слева и content справа
+
+**Tree Line Positions**:
+- **Top item**: h-7 (28px), top-[-6px] - короткая линия сверху
+- **Middle items**: h-12 (48px), top-[-30px] - полная линия соединения
+- **Last item**: может иметь другую высоту для завершения
+
+##### Menu Group (with Dropdown)
+
+Группа меню с возможностью сворачивания/разворачивания.
+
+- **Header**: p-3, rounded-xl
+  - Layout: inline-flex justify-start items-center gap-3
+  - Icon + Title + Chevron
+- **States**:
+  - **Collapsed**: chevron pointing right (-rotate-90)
+  - **Expanded**: chevron pointing down (default или rotate-90)
+- **Children**: nested items with tree lines
+- **Active Group**: bg-Backgrounds-pop with shadow
+
+##### Number Badge (Notification)
+
+- **Size**: w-6 h-6 px-2 py-1
+- **Radius**: rounded-lg (12px)
+- **Layout**: inline-flex flex-col justify-center items-center gap-2
+- **Font**: text-sm, font-semibold, text-center
+- **Colors**:
+  - **Default (Secondary-01)**: bg-Secondary-secondary01, text-shade01-100
+  - **Alternate (Secondary-04)**: bg-Secondary-secondary04, text-shade01-100
+- **Usage**: показывает количество непрочитанных элементов, уведомлений
+- **Examples**: "2", "3", "8"
+
+#### Пример использования
+
+```jsx
+// Simple menu item (default)
+<div className="self-stretch p-3 rounded-xl inline-flex justify-start items-center gap-3 overflow-hidden">
+  <div className="w-6 h-6 relative overflow-hidden">
+    <div className="w-4 h-4 left-[3px] top-[3px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+  </div>
+  <div className="flex-1 opacity-80 justify-start text-Text-Secondary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">Dashboard</div>
+</div>
+
+// Active menu item
+<div className="self-stretch p-3 bg-Backgrounds-pop rounded-xl shadow-[0px_5px_1.5px_-4px_rgba(8,8,8,0.09)] outline outline-1 outline-offset-[-1px] outline-neutral-200/50 inline-flex justify-start items-center gap-3 overflow-hidden">
+  <div className="w-6 h-6 relative overflow-hidden">
+    <div className="w-4 h-4 left-[3px] top-[3px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Primary" />
+  </div>
+  <div className="flex-1 justify-start text-Text-Primary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">Dashboard</div>
+</div>
+
+// Menu item with number badge
+<div className="self-stretch p-3 rounded-xl inline-flex justify-start items-center gap-3 overflow-hidden">
+  <div className="flex-1 opacity-80 justify-start text-Text-Secondary text-sm font-semibold">Drafts</div>
+  <div className="w-6 h-6 px-2 py-1 bg-Secondary-secondary01 rounded-lg inline-flex flex-col justify-center items-center">
+    <div className="text-center text-shade01-100 text-sm font-semibold">3</div>
+  </div>
+</div>
+
+// Tree navigation item
+<div className="self-stretch inline-flex justify-start items-center">
+  <div className="w-9 h-11 relative">
+    <div className="w-3 h-12 left-[24px] top-[-30px] absolute rounded-[10px] outline outline-[1.50px] outline-offset-[-0.75px] outline-Stroke-Stroke2" />
+  </div>
+  <div className="flex-1 h-11 px-3 rounded-xl flex justify-start items-center gap-3">
+    <div className="flex-1 opacity-80 text-Text-Secondary text-sm font-semibold">Drafts</div>
+  </div>
+</div>
+
+// Menu group header (expandable)
+<div className="self-stretch p-3 rounded-xl inline-flex justify-start items-center gap-3 overflow-hidden">
+  <div className="w-6 h-6 relative overflow-hidden">
+    {/* Icon */}
+  </div>
+  <div className="flex-1 justify-start text-Text-Primary text-sm font-semibold">Product</div>
+  <div className="w-6 h-6 relative overflow-hidden">
+    <div className="w-1 h-2 left-[8px] top-[14px] absolute origin-top-left -rotate-90 rounded-sm outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Primary" />
+  </div>
+</div>
+```
 
 ---
 
@@ -1695,18 +1830,62 @@
 | Search | Search inputs | 24x24px (w-6 h-6) |
 | Close / X | Tooltips, modals | 16x16px (w-4 h-4) |
 | Chevron Down | Dropdowns, selects | 24x24px (w-6 h-6) |
+| Chevron Right | Tree navigation, expandable menus | 24x24px (w-6 h-6) |
 | Arrow Right | Navigation, pagination | 24x24px (w-6 h-6) |
 | Arrow Left | Navigation, pagination | 24x24px (w-6 h-6) |
+| Arrow Up | Trends, sorting | 16x16px (w-4 h-4) |
+| Arrow Down | Trends, sorting | 16x16px (w-4 h-4) |
 | Eye / Eye Off | Password visibility toggle | 16x16px (w-4 h-4) |
 | Bell | Notifications | 24x24px (w-6 h-6) |
 | Mail | Messages | 24x24px (w-6 h-6) |
 | User | Profile, avatar placeholder | 24x24px (w-6 h-6) |
 | Settings | Settings button | 16x16px (w-4 h-4) |
 
+#### Chevron/Arrow Icon Details
+
+Chevron иконки используются для навигации и раскрывающихся элементов.
+
+**Chevron Structure**:
+- **Container**: w-6 h-6, relative overflow-hidden
+- **Inner Element**: w-1 h-2 (4px width, 8px height), rounded-sm
+- **Positioning**: positioned left-[8px] top-[14px] or similar
+- **Outline**: outline-[1.50px] outline-offset-[-0.75px]
+- **Rotation** для направления:
+  - **Right**: origin-top-left -rotate-90 (collapsed state)
+  - **Down**: origin-top-left rotate-90 или default (expanded state)
+  - **Left**: origin-top-left rotate-180
+  - **Up**: no rotation or custom
+
+**Usage Examples**:
+
+```jsx
+// Chevron Right (collapsed menu)
+<div className="w-6 h-6 relative overflow-hidden">
+  <div className="w-1 h-2 left-[8px] top-[14px] absolute origin-top-left -rotate-90 rounded-sm outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+</div>
+
+// Chevron Down (expanded menu)
+<div className="w-6 h-6 relative overflow-hidden">
+  <div className="w-1 h-2 left-[8px] top-[14px] absolute origin-top-left rotate-90 rounded-sm outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+</div>
+
+// Chevron Left
+<div className="w-6 h-6 relative overflow-hidden">
+  <div className="w-1 h-2 left-[16px] top-[10px] absolute origin-top-left rotate-90 rounded-sm outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+</div>
+```
+
+**Arrow Icons** (for trends):
+- Used in trend badges
+- Smaller size: typically part of w-4 h-4 container
+- Can point up (positive trend) or down (negative trend)
+- Colors: Primary-primary02 (green, up), Primary-primary03 (red, down)
+
 **Иконки в компонентах:**
 - Icons имеют вложенную структуру: контейнер (w-6 h-6) → overflow-hidden → внутренний icon (w-4 h-4 или w-3.5)
-- Offset позиционирование: left-[4px] top-[4px] внутри контейнера
+- Offset позиционирование: left-[3px] top-[3px] или left-[4px] top-[4px] внутри контейнера
 - Для иконок используется outline style с offset для создания эффекта обводки
+- Rotation применяется с origin-top-left для правильного вращения
 
 ---
 
