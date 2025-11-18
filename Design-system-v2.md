@@ -60,14 +60,14 @@
 --color-error-border: rgba(248, 113, 113, 0.20); /* red-400/20 */
 
 /* Warning / Hot */
---color-warning: ;
---color-warning-bg: ;
---color-warning-border: ;
+--color-warning: #fb923c; /* orange-400 */
+--color-warning-bg: rgba(251, 146, 60, 0.05); /* orange-400/5 */
+--color-warning-border: rgba(251, 146, 60, 0.20); /* orange-400/20 */
 
 /* Info */
---color-info: ;
---color-info-bg: ;
---color-info-border: ;
+--color-info: #22d3ee; /* cyan-400 */
+--color-info-bg: rgba(34, 211, 238, 0.05); /* cyan-400/5 */
+--color-info-border: rgba(34, 211, 238, 0.20); /* cyan-400/20 */
 ```
 
 ### Neutral Colors
@@ -119,14 +119,14 @@
 
 ```css
 /* Для графиков и визуализации данных */
---color-chart-1: ;
---color-chart-2: ;
---color-chart-3: ;
---color-chart-4: ;
---color-chart-5: ;
---color-chart-6: ;
---color-chart-7: ;
---color-chart-8: ;
+--color-chart-1: #8b5cf6; /* purple-500 - primary chart color */
+--color-chart-2: #22d3ee; /* cyan-400 - secondary */
+--color-chart-3: #fb923c; /* orange-400 - tertiary */
+--color-chart-4: #16a34a; /* green-600 - positive */
+--color-chart-5: #f87171; /* red-400 - negative */
+--color-chart-6: #a855f7; /* purple-400 - accent */
+--color-chart-7: #06b6d4; /* cyan-500 - cool accent */
+--color-chart-8: #ea580c; /* orange-600 - warm accent */
 ```
 
 ### Gradients
@@ -143,12 +143,12 @@
 
 ```css
 /* Цвета для иконок брендов и социальных сетей */
---color-brand-facebook: ;
---color-brand-twitter: ;
---color-brand-instagram: ;
---color-brand-linkedin: ;
---color-brand-youtube: ;
---color-brand-github: ;
+--color-brand-facebook: #1877f2; /* Facebook blue */
+--color-brand-twitter: #1da1f2; /* Twitter/X blue */
+--color-brand-instagram: #e4405f; /* Instagram gradient primary */
+--color-brand-linkedin: #0a66c2; /* LinkedIn blue */
+--color-brand-youtube: #ff0000; /* YouTube red */
+--color-brand-github: #181717; /* GitHub dark */
 ```
 
 ---
@@ -516,12 +516,12 @@
 #### Card Shadows
 
 ```css
---shadow-xs: ;
---shadow-sm: ;
---shadow-base: ;
---shadow-md: ;
---shadow-lg: ;
---shadow-xl: ;
+--shadow-xs: 0px 1px 2px 0px rgba(0,0,0,0.05); /* Minimal elevation */
+--shadow-sm: 0px 1px 4px 0px rgba(0,0,0,0.05); /* Small cards, buttons */
+--shadow-base: 0px 2px 4px 0px rgba(0,0,0,0.08), 0px 1px 2px 0px rgba(0,0,0,0.04); /* Default cards */
+--shadow-md: 0px 4px 8px -2px rgba(0,0,0,0.1), 0px 2px 4px -2px rgba(0,0,0,0.06); /* Elevated cards */
+--shadow-lg: 0px 12px 16px -4px rgba(0,0,0,0.08), 0px 4px 6px -2px rgba(0,0,0,0.03); /* Modals, dropdowns */
+--shadow-xl: 0px 24px 32px -12px rgba(18,18,18,0.10), 0px 8px 16px -4px rgba(0,0,0,0.08); /* Large modals, overlays */
 
 /* Popup/Dropdown Shadows (Light Mode) */
 --shadow-popup-light: 0px 5px 1.5px -4px rgba(8,8,8,0.09),
@@ -550,16 +550,16 @@
 ```css
 --shadow-button-light: inset 2px 0px 8px 2px rgba(24, 24, 24, 0.20); /* Dark mode button */
 --shadow-button-dark: inset 2px 0px 8px 2px rgba(248, 248, 248, 0.20); /* Light mode button */
---shadow-button-hover: ;
---shadow-button-active: ;
+--shadow-button-hover: 0px 4px 8px -2px rgba(0,0,0,0.15), inset 2px 0px 8px 2px rgba(248, 248, 248, 0.25); /* Elevated on hover */
+--shadow-button-active: inset 0px 2px 4px 0px rgba(0,0,0,0.15), inset 2px 0px 6px 1px rgba(248, 248, 248, 0.15); /* Pressed state */
 ```
 
 #### Hover Shadows
 
 ```css
---shadow-hover-sm: ;
---shadow-hover-md: ;
---shadow-hover-lg: ;
+--shadow-hover-sm: 0px 2px 8px 0px rgba(0,0,0,0.08); /* Small elements hover */
+--shadow-hover-md: 0px 6px 16px -4px rgba(0,0,0,0.12); /* Card hover */
+--shadow-hover-lg: 0px 12px 24px -8px rgba(0,0,0,0.15); /* Large card hover */
 
 /* List Item Hover Shadow (Light Mode) */
 --shadow-list-hover-light: 0px 1px 4px 0px rgba(0,0,0,0.05),
@@ -2227,16 +2227,18 @@ Label с иконкой информации и tooltip для дополнит�
 #### Focus Ring
 
 ```css
---focus-ring: ;
+--focus-ring: 0 0 0 3px rgba(147, 51, 234, 0.15); /* Purple focus ring with 3px offset */
+--focus-ring-offset: 2px; /* Offset from element */
+--focus-ring-color: var(--Primary-primary03); /* Purple-500 */
 ```
 
 #### Backdrop Blur
 
 ```css
---backdrop-blur-sm: ;
---backdrop-blur-base: ;
---backdrop-blur-md: ;
---backdrop-blur-lg: ;
+--backdrop-blur-sm: blur(8px); /* Subtle blur for overlays */
+--backdrop-blur-base: blur(16px); /* Default blur */
+--backdrop-blur-md: blur(32px); /* Medium blur for modals */
+--backdrop-blur-lg: blur(50px); /* Strong blur for emphasis */
 ```
 
 ---
