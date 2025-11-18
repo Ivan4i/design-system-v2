@@ -2773,6 +2773,1055 @@ Label с иконкой информации и tooltip для дополнит�
 
 ---
 
+### 24. Emoji Picker
+
+#### Emoji Picker Component
+
+Всплывающий выборщик эмодзи с поиском и сеточной раскладкой.
+
+- **Container**:
+  - Width: w-96 max-w-96 min-w-60 (384px max, 240px min)
+  - Height: max-h-48 min-h-48 (192px fixed height)
+  - Padding: p-2
+  - Background: bg-Backgrounds-surface2
+  - Radius: rounded-[32px]
+  - Shadow:
+    - Drop shadow: shadow-[0px_24px_32px_-12px_rgba(18,18,18,0.10)]
+    - Inset glow: shadow-[inset_2px_4px_16px_0px_rgba(248,248,248,0.06)]
+  - Border: outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2
+  - Layout: inline-flex flex-col justify-start items-start gap-2
+
+##### Search Bar
+- **Container**: self-stretch p-3 bg-Backgrounds-surface1 rounded-[90px]
+- **Layout**: inline-flex justify-start items-center gap-2
+- **Icon**:
+  - Size: w-6 h-6
+  - Search icon with magnifying glass shape
+  - Circle: w-3 h-3 at [6.75px, 4.48px], outline-[1.50px] outline-Text-Secondary
+  - Handle: w-1 h-1 at [4.87px, 15.60px], rounded-sm outline-[1.50px] outline-Text-Secondary
+- **Placeholder Text**:
+  - Text: "Search emoji"
+  - Color: text-Text-Secondary
+  - Font: text-sm font-normal
+
+##### Emoji Grid
+- **Container**:
+  - Size: self-stretch h-32 max-h-32 (128px height)
+  - Layout: w-96 h-32 rounded-3xl
+  - Display: inline-flex flex-wrap content-start
+  - Overflow: overflow-hidden
+- **Emoji Item**:
+  - Size: w-11 h-11 (44x44px)
+  - Radius: rounded-[44px]
+  - Shadow: shadow-[inset_2px_4px_16px_0px_rgba(248,248,248,0.06)]
+  - Backdrop: backdrop-blur-[50px]
+  - Image: w-11 h-11 positioned absolute
+  - States:
+    - Default: no background
+    - Hover: slight bg-Backgrounds-surface1
+    - Selected: bg-shade08-70/70
+
+#### Light/Dark Mode Variants
+
+##### Light Mode
+- Container: bg-Backgrounds-surface2
+- Search bar: bg-Backgrounds-surface1
+- Text: text-Text-Secondary
+- Border: outline-Stroke-Stroke2
+
+##### Dark Mode
+- Container: bg-Backgrounds-surface2 (dark variant)
+- Search bar: bg-Backgrounds-surface1 (dark variant)
+- Text: text-Text-Secondary
+- Border: outline-Stroke-Stroke2
+- Shadows более заметные в темном режиме
+
+##### Пример использования
+
+```jsx
+// Light mode emoji picker
+<div data-light-mode="True" className="w-96 max-w-96 min-w-60 max-h-48 min-h-48 p-2 bg-Backgrounds-surface2 rounded-[32px] shadow-[0px_24px_32px_-12px_rgba(18,18,18,0.10)] shadow-[inset_2px_4px_16px_0px_rgba(248,248,248,0.06)] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 inline-flex flex-col justify-start items-start gap-2">
+  <div data-state="Default" className="self-stretch p-3 bg-Backgrounds-surface1 rounded-[90px] inline-flex justify-start items-center gap-2 overflow-hidden">
+    <div className="w-6 h-6 relative overflow-hidden">
+      <div className="w-3 h-3 left-[6.75px] top-[4.48px] absolute rounded-full outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+      <div className="w-1 h-1 left-[4.87px] top-[15.60px] absolute rounded-sm outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+    </div>
+    <div className="justify-start text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">Search emoji</div>
+  </div>
+  <div className="self-stretch h-32 max-h-32 relative">
+    <div className="w-96 h-32 left-0 top-0 absolute rounded-3xl inline-flex justify-start items-start flex-wrap content-start overflow-hidden">
+      <div data-state="default" className="w-11 h-11 relative rounded-[44px] shadow-[inset_2px_4px_16px_0px_rgba(248,248,248,0.06)] backdrop-blur-[50px] overflow-hidden">
+        <div className="w-11 h-11 left-0 top-0 absolute">
+          <img className="w-11 h-11 left-0 top-0 absolute" src="https://placehold.co/44x44" />
+        </div>
+      </div>
+      <div data-state="default" className="w-11 h-11 relative rounded-[44px] shadow-[inset_2px_4px_16px_0px_rgba(248,248,248,0.06)] backdrop-blur-[50px] overflow-hidden">
+        <div className="w-11 h-11 left-0 top-0 absolute">
+          <img className="w-11 h-11 left-0 top-0 absolute" src="https://placehold.co/44x44" />
+        </div>
+      </div>
+      <div data-state="default" className="w-11 h-11 relative rounded-[44px] shadow-[inset_2px_4px_16px_0px_rgba(248,248,248,0.06)] backdrop-blur-[50px] overflow-hidden">
+        <div className="w-11 h-11 left-0 top-0 absolute">
+          <img className="w-11 h-11 left-0 top-0 absolute" src="https://placehold.co/44x44" />
+        </div>
+      </div>
+      <div data-state="default" className="w-11 h-11 relative rounded-[44px] shadow-[inset_2px_4px_16px_0px_rgba(248,248,248,0.06)] backdrop-blur-[50px] overflow-hidden">
+        <div className="w-11 h-11 left-0 top-0 absolute">
+          <img className="w-11 h-11 left-0 top-0 absolute" src="https://placehold.co/44x44" />
+        </div>
+      </div>
+      <div data-state="default" className="w-11 h-11 relative rounded-[44px] shadow-[inset_2px_4px_16px_0px_rgba(248,248,248,0.06)] backdrop-blur-[50px] overflow-hidden">
+        <div className="w-11 h-11 left-0 top-0 absolute">
+          <img className="w-11 h-11 left-0 top-0 absolute" src="https://placehold.co/44x44" />
+        </div>
+      </div>
+      <div data-state="default" className="w-11 h-11 relative rounded-[44px] shadow-[inset_2px_4px_16px_0px_rgba(248,248,248,0.06)] backdrop-blur-[50px] overflow-hidden">
+        <div className="w-11 h-11 left-0 top-0 absolute">
+          <img className="w-11 h-11 left-0 top-0 absolute" src="https://placehold.co/44x44" />
+        </div>
+      </div>
+      <div data-state="default" className="w-11 h-11 relative rounded-[44px] shadow-[inset_2px_4px_16px_0px_rgba(248,248,248,0.06)] backdrop-blur-[50px] overflow-hidden">
+        <div className="w-11 h-11 left-0 top-0 absolute">
+          <img className="w-11 h-11 left-0 top-0 absolute" src="https://placehold.co/44x44" />
+        </div>
+      </div>
+      <div data-state="default" className="w-11 h-11 relative rounded-[44px] shadow-[inset_2px_4px_16px_0px_rgba(248,248,248,0.06)] backdrop-blur-[50px] overflow-hidden">
+        <div className="w-11 h-11 left-0 top-0 absolute">
+          <img className="w-11 h-11 left-0 top-0 absolute" src="https://placehold.co/44x44" />
+        </div>
+      </div>
+      <div data-state="default" className="w-11 h-11 relative rounded-[44px] shadow-[inset_2px_4px_16px_0px_rgba(248,248,248,0.06)] backdrop-blur-[50px] overflow-hidden">
+        <div className="w-11 h-11 left-0 top-0 absolute">
+          <img className="w-11 h-11 left-0 top-0 absolute" src="https://placehold.co/44x44" />
+        </div>
+      </div>
+      <div data-state="default" className="w-11 h-11 relative rounded-[44px] shadow-[inset_2px_4px_16px_0px_rgba(248,248,248,0.06)] backdrop-blur-[50px] overflow-hidden">
+        <div className="w-11 h-11 left-0 top-0 absolute">
+          <img className="w-11 h-11 left-0 top-0 absolute" src="https://placehold.co/44x44" />
+        </div>
+      </div>
+      <div data-state="default" className="w-11 h-11 relative rounded-[44px] shadow-[inset_2px_4px_16px_0px_rgba(248,248,248,0.06)] backdrop-blur-[50px] overflow-hidden">
+        <div className="w-11 h-11 left-0 top-0 absolute">
+          <img className="w-11 h-11 left-0 top-0 absolute" src="https://placehold.co/44x44" />
+        </div>
+      </div>
+      <div data-state="default" className="w-11 h-11 relative rounded-[44px] shadow-[inset_2px_4px_16px_0px_rgba(248,248,248,0.06)] backdrop-blur-[50px] overflow-hidden">
+        <div className="w-11 h-11 left-0 top-0 absolute">
+          <img className="w-11 h-11 left-0 top-0 absolute" src="https://placehold.co/44x44" />
+        </div>
+      </div>
+      <div data-state="default" className="w-11 h-11 relative rounded-[44px] shadow-[inset_2px_4px_16px_0px_rgba(248,248,248,0.06)] backdrop-blur-[50px] overflow-hidden">
+        <div className="w-11 h-11 left-0 top-0 absolute">
+          <img className="w-11 h-11 left-0 top-0 absolute" src="https://placehold.co/44x44" />
+        </div>
+      </div>
+      <div data-state="default" className="w-11 h-11 relative rounded-[44px] shadow-[inset_2px_4px_16px_0px_rgba(248,248,248,0.06)] backdrop-blur-[50px] overflow-hidden">
+        <div className="w-11 h-11 left-0 top-0 absolute">
+          <img className="w-11 h-11 left-0 top-0 absolute" src="https://placehold.co/44x44" />
+        </div>
+      </div>
+      <div data-state="default" className="w-11 h-11 relative rounded-[44px] shadow-[inset_2px_4px_16px_0px_rgba(248,248,248,0.06)] backdrop-blur-[50px] overflow-hidden">
+        <div className="w-11 h-11 left-0 top-0 absolute">
+          <img className="w-11 h-11 left-0 top-0 absolute" src="https://placehold.co/44x44" />
+        </div>
+      </div>
+      <div data-state="default" className="w-11 h-11 relative rounded-[44px] shadow-[inset_2px_4px_16px_0px_rgba(248,248,248,0.06)] backdrop-blur-[50px] overflow-hidden">
+        <div className="w-11 h-11 left-0 top-0 absolute">
+          <img className="w-11 h-11 left-0 top-0 absolute" src="https://placehold.co/44x44" />
+        </div>
+      </div>
+      <div data-state="default" className="w-11 h-11 relative rounded-[44px] shadow-[inset_2px_4px_16px_0px_rgba(248,248,248,0.06)] backdrop-blur-[50px] overflow-hidden">
+        <div className="w-11 h-11 left-0 top-0 absolute">
+          <img className="w-11 h-11 left-0 top-0 absolute" src="https://placehold.co/44x44" />
+        </div>
+      </div>
+      <div data-state="default" className="w-11 h-11 relative rounded-[44px] shadow-[inset_2px_4px_16px_0px_rgba(248,248,248,0.06)] backdrop-blur-[50px] overflow-hidden">
+        <div className="w-11 h-11 left-0 top-0 absolute">
+          <img className="w-11 h-11 left-0 top-0 absolute" src="https://placehold.co/44x44" />
+        </div>
+      </div>
+      <div data-state="default" className="w-11 h-11 relative rounded-[44px] shadow-[inset_2px_4px_16px_0px_rgba(248,248,248,0.06)] backdrop-blur-[50px] overflow-hidden">
+        <div className="w-11 h-11 left-0 top-0 absolute">
+          <img className="w-11 h-11 left-0 top-0 absolute" src="https://placehold.co/44x44" />
+        </div>
+      </div>
+      <div data-state="default" className="w-11 h-11 relative rounded-[44px] shadow-[inset_2px_4px_16px_0px_rgba(248,248,248,0.06)] backdrop-blur-[50px] overflow-hidden">
+        <div className="w-11 h-11 left-0 top-0 absolute">
+          <img className="w-11 h-11 left-0 top-0 absolute" src="https://placehold.co/44x44" />
+        </div>
+      </div>
+      <div data-state="default" className="w-11 h-11 relative rounded-[44px] shadow-[inset_2px_4px_16px_0px_rgba(248,248,248,0.06)] backdrop-blur-[50px] overflow-hidden">
+        <div className="w-11 h-11 left-0 top-0 absolute">
+          <img className="w-11 h-11 left-0 top-0 absolute" src="https://placehold.co/44x44" />
+        </div>
+      </div>
+      <div data-state="default" className="w-11 h-11 relative rounded-[44px] shadow-[inset_2px_4px_16px_0px_rgba(248,248,248,0.06)] backdrop-blur-[50px] overflow-hidden">
+        <div className="w-11 h-11 left-0 top-0 absolute">
+          <img className="w-11 h-11 left-0 top-0 absolute" src="https://placehold.co/44x44" />
+        </div>
+      </div>
+      <div data-state="default" className="w-11 h-11 relative rounded-[44px] shadow-[inset_2px_4px_16px_0px_rgba(248,248,248,0.06)] backdrop-blur-[50px] overflow-hidden">
+        <div className="w-11 h-11 left-0 top-0 absolute">
+          <img className="w-11 h-11 left-0 top-0 absolute" src="https://placehold.co/44x44" />
+        </div>
+      </div>
+      <div data-state="default" className="w-11 h-11 relative rounded-[44px] shadow-[inset_2px_4px_16px_0px_rgba(248,248,248,0.06)] backdrop-blur-[50px] overflow-hidden">
+        <div className="w-11 h-11 left-0 top-0 absolute">
+          <img className="w-11 h-11 left-0 top-0 absolute" src="https://placehold.co/44x44" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+// Dark mode emoji picker
+<div data-light-mode="False" className="w-96 max-w-96 min-w-60 max-h-48 min-h-48 p-2 bg-Backgrounds-surface2 rounded-[32px] shadow-[0px_24px_32px_-12px_rgba(18,18,18,0.10)] shadow-[inset_2px_4px_16px_0px_rgba(248,248,248,0.06)] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 inline-flex flex-col justify-start items-start gap-2">
+  <div data-state="Default" className="self-stretch p-3 bg-Backgrounds-surface1 rounded-[90px] inline-flex justify-start items-center gap-2 overflow-hidden">
+    <div className="w-6 h-6 relative overflow-hidden">
+      <div className="w-3 h-3 left-[6.75px] top-[4.48px] absolute rounded-full outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+      <div className="w-1 h-1 left-[4.87px] top-[15.60px] absolute rounded-sm outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+    </div>
+    <div className="justify-start text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">Search emoji</div>
+  </div>
+  <div className="self-stretch h-32 max-h-32 relative">
+    <div className="w-96 h-32 left-0 top-0 absolute rounded-3xl inline-flex justify-start items-start flex-wrap content-start overflow-hidden">
+      {/* Same grid structure as light mode */}
+    </div>
+  </div>
+</div>
+```
+
+---
+
+### 25. Date/Time Picker Inputs
+
+#### Date and Time Inputs with Floating Labels
+
+Поля ввода для даты и времени с плавающей меткой сверху.
+
+- **Container**:
+  - Width: w-52 (208px)
+  - Layout: inline-flex flex-col justify-start items-start
+  - Gap between label and input
+
+##### Floating Label
+- **Container**:
+  - Position: self-stretch px-4 (positioned above input)
+  - Layout: flex flex-col justify-start items-start gap-2
+- **Label Badge**:
+  - Size: h-5 px-1 py-0.5
+  - Background: bg-Backgrounds-surface1 (acts as mask over input border)
+  - Layout: inline-flex justify-center items-center gap-0.5
+  - Text:
+    - Opacity: opacity-80
+    - Color: text-Text-Secondary
+    - Font: text-xs font-normal
+    - Examples: "Date", "Time"
+
+##### Input Field
+- **Container**:
+  - Size: self-stretch h-12 (48px height)
+  - Padding: px-5 py-3
+  - Radius: rounded-[32px]
+  - Border: outline outline-[1.50px] outline-offset-[-1.50px]
+  - Layout: flex flex-col justify-center items-start
+  - Overflow: overflow-hidden
+
+##### Input States
+
+**Default State**:
+- Border: outline-Stroke-Stroke2
+- Text: text-Text-Primary text-sm font-normal
+- Truncation: line-clamp-1
+- Example values: "May 28, 2044", "05:00 PM"
+
+**Focus State**:
+- Border: outline-Stroke-Focus
+- Label: remains text-Text-Secondary opacity-80
+- Text input: активный курсор, text-Text-Primary
+
+##### Date Input Specifics
+- **Format**: "Month Day, Year" (e.g., "May 28, 2044")
+- **Icon**: может иметь календарь справа (optional)
+- **Picker**: открывает calendar picker при клике
+
+##### Time Input Specifics
+- **Format**: "HH:MM AM/PM" (e.g., "05:00 PM")
+- **Icon**: может иметь часы справа (optional)
+- **Picker**: открывает time picker dropdown при клике
+
+##### Пример использования
+
+```jsx
+// Date input - default state
+<div className="w-52 inline-flex flex-col justify-start items-start">
+  <div className="self-stretch px-4 flex flex-col justify-start items-start gap-2">
+    <div className="h-5 px-1 py-0.5 bg-Backgrounds-surface1 inline-flex justify-center items-center gap-0.5">
+      <div className="opacity-80 justify-start text-Text-Secondary text-xs font-normal font-['Inter_Display'] leading-5 tracking-tight">Date</div>
+    </div>
+  </div>
+  <div className="self-stretch h-12 px-5 py-3 rounded-[32px] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 flex flex-col justify-center items-start overflow-hidden">
+    <div className="justify-start text-Text-Primary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight line-clamp-1">May 28, 2044</div>
+  </div>
+</div>
+
+// Time input - default state
+<div className="w-52 inline-flex flex-col justify-start items-start">
+  <div className="self-stretch px-4 flex flex-col justify-start items-start gap-2">
+    <div className="h-5 px-1 py-0.5 bg-Backgrounds-surface1 inline-flex justify-center items-center gap-0.5">
+      <div className="opacity-80 justify-start text-Text-Secondary text-xs font-normal font-['Inter_Display'] leading-5 tracking-tight">Time</div>
+    </div>
+  </div>
+  <div className="self-stretch h-12 px-5 py-3 rounded-[32px] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 flex flex-col justify-center items-start overflow-hidden">
+    <div className="justify-start text-Text-Primary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight line-clamp-1">05:00 PM</div>
+  </div>
+</div>
+
+// Date input - focus state
+<div className="w-52 inline-flex flex-col justify-start items-start">
+  <div className="self-stretch px-4 flex flex-col justify-start items-start gap-2">
+    <div className="h-5 px-1 py-0.5 bg-Backgrounds-surface1 inline-flex justify-center items-center gap-0.5">
+      <div className="opacity-80 justify-start text-Text-Secondary text-xs font-normal font-['Inter_Display'] leading-5 tracking-tight">Date</div>
+    </div>
+  </div>
+  <div data-state="focus" className="self-stretch h-12 px-5 py-3 rounded-[32px] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Focus flex flex-col justify-center items-start overflow-hidden">
+    <div className="justify-start text-Text-Primary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight line-clamp-1">May 28, 2044</div>
+  </div>
+</div>
+
+// Time input - focus state
+<div className="w-52 inline-flex flex-col justify-start items-start">
+  <div className="self-stretch px-4 flex flex-col justify-start items-start gap-2">
+    <div className="h-5 px-1 py-0.5 bg-Backgrounds-surface1 inline-flex justify-center items-center gap-0.5">
+      <div className="opacity-80 justify-start text-Text-Secondary text-xs font-normal font-['Inter_Display'] leading-5 tracking-tight">Time</div>
+    </div>
+  </div>
+  <div data-state="focus" className="self-stretch h-12 px-5 py-3 rounded-[32px] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Focus flex flex-col justify-center items-start overflow-hidden">
+    <div className="justify-start text-Text-Primary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight line-clamp-1">05:00 PM</div>
+  </div>
+</div>
+```
+
+---
+
+### 26. Time Picker List
+
+#### Time Selection Dropdown List
+
+Выпадающий список для выбора времени с галочкой для выбранного элемента.
+
+- **Container**:
+  - Width: w-60 (240px)
+  - Layout: может быть частью dropdown menu
+  - Background: обычно bg-Backgrounds-surface2 с border
+  - Max height с overflow-y-auto для прокрутки
+
+##### List Item (Unselected)
+- **Container**:
+  - Width: w-60 (240px)
+  - Padding: p-3
+  - Layout: inline-flex justify-start items-center gap-3
+  - Overflow: overflow-hidden
+  - Background: transparent
+  - Radius: нет (или небольшой при hover)
+- **Icon Space**: w-6 h-6 (пустое пространство для галочки)
+- **Text**:
+  - Color: text-Text-Primary
+  - Font: text-sm font-normal
+  - Examples: "12:00 PM", "12:30 PM", "01:00 PM"
+  - Opacity: может быть opacity-80 для unselected
+
+##### List Item (Selected)
+- **Container**:
+  - Width: w-60 (240px)
+  - Padding: p-3
+  - Background: bg-shade08-70/70 (или bg-shade08-70 opacity-70)
+  - Radius: rounded-xl
+  - Layout: inline-flex justify-start items-center gap-3
+  - Overflow: overflow-hidden
+- **Checkmark Icon**:
+  - Container: w-6 h-6 relative overflow-hidden
+  - Checkmark shape: w-3.5 h-3 positioned at [5px, 6px]
+  - Border: outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Primary
+- **Text**:
+  - Color: text-Text-Primary
+  - Font: text-sm font-normal
+  - Full opacity (no opacity reduction)
+
+##### Hover State
+- Background: bg-Backgrounds-surface1 или slight shade
+- Cursor: pointer
+- Transition: smooth
+
+##### List Layout
+- **Gap**: небольшой gap между items (gap-1 или gap-0.5)
+- **Scrolling**: max-h-64 или max-h-80 с overflow-y-auto
+- **Padding**: p-2 для всего списка
+
+##### Пример использования
+
+```jsx
+// Time list container with items
+<div className="w-60 p-2 bg-Backgrounds-surface2 rounded-2xl flex flex-col gap-1">
+  {/* Unselected item */}
+  <div className="w-60 p-3 inline-flex justify-start items-center gap-3 overflow-hidden">
+    <div className="w-6 h-6 relative overflow-hidden" />
+    <div className="justify-start text-Text-Primary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">12:00 PM</div>
+  </div>
+
+  {/* Selected item */}
+  <div className="w-60 p-3 bg-shade08-70/70 rounded-xl inline-flex justify-start items-center gap-3 overflow-hidden">
+    <div className="w-6 h-6 relative overflow-hidden">
+      <div className="w-3.5 h-3 left-[5px] top-[6px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Primary" />
+    </div>
+    <div className="justify-start text-Text-Primary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">12:30 PM</div>
+  </div>
+
+  {/* Unselected item */}
+  <div className="w-60 p-3 inline-flex justify-start items-center gap-3 overflow-hidden">
+    <div className="w-6 h-6 relative overflow-hidden" />
+    <div className="justify-start text-Text-Primary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">01:00 PM</div>
+  </div>
+
+  {/* Unselected item */}
+  <div className="w-60 p-3 inline-flex justify-start items-center gap-3 overflow-hidden">
+    <div className="w-6 h-6 relative overflow-hidden" />
+    <div className="justify-start text-Text-Primary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">01:30 PM</div>
+  </div>
+
+  {/* Unselected item */}
+  <div className="w-60 p-3 inline-flex justify-start items-center gap-3 overflow-hidden">
+    <div className="w-6 h-6 relative overflow-hidden" />
+    <div className="justify-start text-Text-Primary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">02:00 PM</div>
+  </div>
+
+  {/* Unselected item */}
+  <div className="w-60 p-3 inline-flex justify-start items-center gap-3 overflow-hidden">
+    <div className="w-6 h-6 relative overflow-hidden" />
+    <div className="justify-start text-Text-Primary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">02:30 PM</div>
+  </div>
+</div>
+
+// Individual selected item variant
+<div className="w-60 p-3 bg-shade08-70/70 rounded-xl inline-flex justify-start items-center gap-3 overflow-hidden">
+  <div className="w-6 h-6 relative overflow-hidden">
+    <div className="w-3.5 h-3 left-[5px] top-[6px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Primary" />
+  </div>
+  <div className="justify-start text-Text-Primary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">03:00 PM</div>
+</div>
+
+// Individual unselected item variant
+<div className="w-60 p-3 inline-flex justify-start items-center gap-3 overflow-hidden hover:bg-Backgrounds-surface1 rounded-xl transition-colors cursor-pointer">
+  <div className="w-6 h-6 relative overflow-hidden" />
+  <div className="opacity-80 justify-start text-Text-Primary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">03:30 PM</div>
+</div>
+```
+
+---
+
+### 27. Connect Button (Integration Button)
+
+#### Integration Connection Button
+
+Кнопка для подключения к внешним сервисам и интеграциям.
+
+- **Container**:
+  - Width: w-52 min-w-52 (208px minimum)
+  - Padding: p-3
+  - Radius: rounded-[48px]
+  - Layout: inline-flex justify-center items-center gap-2
+  - Overflow: overflow-hidden
+
+##### Default State (Inactive)
+- **Background**: bg-Backgrounds-surface2
+- **Shadow Stack**:
+  - shadow-[0px_5px_1.5px_-4px_rgba(8,8,8,0.09)]
+  - shadow-[0px_6px_4px_-4px_rgba(8,8,8,0.05)]
+  - shadow-[0px_6px_13px_0px_rgba(8,8,8,0.03)]
+  - shadow-[0px_24px_24px_-16px_rgba(8,8,8,0.04)]
+  - shadow-[0px_2.1500000953674316px_0.5px_-2px_rgba(0,0,0,0.25)]
+- **Border**: outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2
+- **Backdrop**: backdrop-blur-[32px]
+
+##### Focus/Active State
+- **Border**: outline outline-2 outline-offset-[-2px] outline-Stroke-Focus
+- **Background**: transparent (no bg-Backgrounds-surface2)
+- **No shadow stack**
+- **No backdrop-blur**
+
+##### Icon + Text Variant
+- **Icon Container**: w-6 h-6 relative
+  - Inner container: w-5 h-5 at [2px, 2px] overflow-hidden
+  - Icon: w-4 h-4 at [1.67px, 1.38px] bg-Text-Primary
+- **Text**: flex-1 text-Text-Primary text-sm font-semibold leading-4 tracking-tight
+- **Gap**: gap-2
+
+##### Icon Only Variant
+- **Same sizing**: w-52 min-w-52 p-3
+- **No text element**
+- **Centered icon**: justify-center items-center
+
+##### Пример использования
+
+```jsx
+// Default state with icon and text
+<div className="w-52 min-w-52 p-3 bg-Backgrounds-surface2 rounded-[48px] shadow-[0px_5px_1.5px_-4px_rgba(8,8,8,0.09)] shadow-[0px_6px_4px_-4px_rgba(8,8,8,0.05)] shadow-[0px_6px_13px_0px_rgba(8,8,8,0.03)] shadow-[0px_24px_24px_-16px_rgba(8,8,8,0.04)] shadow-[0px_2.1500000953674316px_0.5px_-2px_rgba(0,0,0,0.25)] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 backdrop-blur-[32px] inline-flex justify-center items-center gap-2 overflow-hidden">
+  <div className="w-6 h-6 relative">
+    <div className="w-5 h-5 left-[2px] top-[2px] absolute overflow-hidden">
+      <div className="w-4 h-4 left-[1.67px] top-[1.38px] absolute bg-Text-Primary" />
+    </div>
+  </div>
+  <div className="flex-1 justify-center text-Text-Primary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">Notion</div>
+</div>
+
+// Focus/Active state with icon and text
+<div className="w-52 min-w-52 p-3 rounded-[48px] outline outline-2 outline-offset-[-2px] outline-Stroke-Focus inline-flex justify-center items-center gap-2 overflow-hidden">
+  <div className="w-6 h-6 relative">
+    <div className="w-5 h-5 left-[2px] top-[2px] absolute overflow-hidden">
+      <div className="w-4 h-4 left-[1.67px] top-[1.38px] absolute bg-Text-Primary" />
+    </div>
+  </div>
+  <div className="flex-1 justify-center text-Text-Primary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">Notion</div>
+</div>
+
+// Icon only - default state
+<div className="w-52 min-w-52 p-3 bg-Backgrounds-surface2 rounded-[48px] shadow-[0px_5px_1.5px_-4px_rgba(8,8,8,0.09)] shadow-[0px_6px_4px_-4px_rgba(8,8,8,0.05)] shadow-[0px_6px_13px_0px_rgba(8,8,8,0.03)] shadow-[0px_24px_24px_-16px_rgba(8,8,8,0.04)] shadow-[0px_2.1500000953674316px_0.5px_-2px_rgba(0,0,0,0.25)] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 backdrop-blur-[32px] inline-flex justify-center items-center gap-2 overflow-hidden">
+  <div className="w-6 h-6 relative">
+    <div className="w-5 h-5 left-[2px] top-[2px] absolute overflow-hidden">
+      <div className="w-4 h-4 left-[1.67px] top-[1.38px] absolute bg-Text-Primary" />
+    </div>
+  </div>
+</div>
+
+// Icon only - focus state
+<div className="w-52 min-w-52 p-3 rounded-[48px] outline outline-2 outline-offset-[-2px] outline-Stroke-Focus inline-flex justify-center items-center gap-2 overflow-hidden">
+  <div className="w-6 h-6 relative">
+    <div className="w-5 h-5 left-[2px] top-[2px] absolute overflow-hidden">
+      <div className="w-4 h-4 left-[1.67px] top-[1.38px] absolute bg-Text-Primary" />
+    </div>
+  </div>
+</div>
+```
+
+---
+
+### 28. Toolbar / Action Bar
+
+#### Product Management Toolbar
+
+Панель управления с заголовком, поиском, переключателями вида и bulk actions.
+
+- **Container**:
+  - Width: w-[1180px] (1180px)
+  - Padding: p-3
+  - Layout: inline-flex justify-between items-center
+
+##### Default Toolbar State
+
+**Left Section**:
+- **Title Container**: h-12 pl-5 flex justify-center items-center gap-6
+- **Title**: text-Text-Primary text-2xl font-medium leading-9 tracking-tight
+  - Example: "Products"
+- **Search Bar**:
+  - Width: w-72 (288px)
+  - Padding: pl-3 pr-5 py-3
+  - Background: bg-Backgrounds-surface1
+  - Radius: rounded-[90px]
+  - Layout: flex justify-start items-center gap-2
+  - Icon: w-6 h-6 search icon (magnifying glass)
+  - Placeholder: "Search products" text-Text-Secondary text-sm font-normal
+
+**Right Section**:
+- **Layout**: flex justify-start items-center gap-2
+- **View Toggle Buttons**:
+  - Grid button: p-3 rounded-[48px] (no outline when default)
+    - Icon: w-4 h-4 grid icon, outline-Text-Secondary
+  - List button: p-3 rounded-[48px] outline outline-[1.50px] outline-Stroke-Stroke2 (active)
+    - Icon: w-4 h-3.5 list icon, outline-Text-Primary
+
+##### Selection State (Bulk Actions)
+
+**Left Section**:
+- **Selection Count**: "2 products selected" text-Text-Primary text-2xl font-medium
+- **Deselect Button**:
+  - Padding: px-7 py-3.5
+  - Radius: rounded-[32px]
+  - Border: outline outline-[1.50px] outline-Stroke-Stroke2
+  - Text: text-Text-Secondary text-sm font-semibold
+  - Label: "Deselect"
+
+**Right Section** (Action Buttons):
+- **Delete Button**:
+  - Size: h-12 px-7 py-3.5
+  - Radius: rounded-[32px]
+  - Border: outline outline-[1.50px] outline-Stroke-Stroke2
+  - Text: text-Text-Secondary text-sm font-semibold "Delete"
+- **Publish Button** (Primary Dark):
+  - Padding: px-7 py-4
+  - Background: bg-gradient-to-b from-zinc-800 to-zinc-800
+  - Radius: rounded-[32px]
+  - Shadow: shadow-[inset_2px_0px_8px_2px_rgba(248,248,248,0.20)]
+  - Border: outline outline-[1.50px] outline-white/40
+  - Text: text-Text-Light text-sm font-semibold "Publish"
+
+##### Пример использования
+
+```jsx
+// Default toolbar (no selection)
+<div className="w-[1180px] p-3 inline-flex justify-between items-center">
+  <div className="h-12 pl-5 flex justify-center items-center gap-6">
+    <div className="justify-start text-Text-Primary text-2xl font-medium font-['Inter_Display'] leading-9 tracking-tight">Products</div>
+    <div data-state="default" className="w-72 pl-3 pr-5 py-3 bg-Backgrounds-surface1 rounded-[90px] flex justify-start items-center gap-2 overflow-hidden">
+      <div className="w-6 h-6 relative overflow-hidden">
+        <div className="w-3 h-3 left-[6.75px] top-[4.48px] absolute rounded-full outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+        <div className="w-1 h-1 left-[4.87px] top-[15.60px] absolute rounded-sm outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+      </div>
+      <div className="justify-start text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">Search products</div>
+    </div>
+  </div>
+  <div className="flex justify-start items-center gap-2">
+    <div data-property-1="grid" data-property-2="default" className="p-3 rounded-[48px] inline-flex flex-col justify-center items-center gap-2.5 overflow-hidden">
+      <div className="w-6 h-6 relative overflow-hidden">
+        <div className="w-4 h-4 left-[3.75px] top-[3.75px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+      </div>
+    </div>
+    <div data-property-1="list" data-property-2="active" className="p-3 rounded-[48px] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 inline-flex flex-col justify-center items-center gap-2.5 overflow-hidden">
+      <div className="w-6 h-6 relative overflow-hidden">
+        <div className="w-4 h-3.5 left-[3.75px] top-[5.25px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Primary" />
+      </div>
+    </div>
+  </div>
+</div>
+
+// Selection state with bulk actions
+<div className="w-[1180px] p-3 inline-flex justify-between items-center">
+  <div className="h-12 pl-5 flex justify-center items-center gap-6">
+    <div className="justify-start text-Text-Primary text-2xl font-medium font-['Inter_Display'] leading-9 tracking-tight">2 products selected</div>
+    <div className="self-stretch px-7 py-3.5 rounded-[32px] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 flex justify-center items-center gap-2 overflow-hidden">
+      <div className="text-center justify-start text-Text-Secondary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">Deselect</div>
+    </div>
+  </div>
+  <div className="flex justify-start items-start gap-2">
+    <div className="h-12 px-7 py-3.5 rounded-[32px] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 flex justify-center items-center gap-2 overflow-hidden">
+      <div className="text-center justify-start text-Text-Secondary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">Delete</div>
+    </div>
+    <div data-light-mode="True" data-state="Default" data-style="Button" className="px-7 py-4 bg-gradient-to-b from-zinc-800 to-zinc-800 rounded-[32px] shadow-[inset_2px_0px_8px_2px_rgba(248,248,248,0.20)] outline outline-[1.50px] outline-offset-[-1.50px] outline-white/40 flex justify-center items-center gap-2.5 overflow-hidden">
+      <div className="justify-start text-Text-Light text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">Publish</div>
+    </div>
+  </div>
+</div>
+```
+
+---
+
+### 29. Calendar / Date Picker
+
+#### Calendar Component
+
+Полноценный календарь для выбора даты с навигацией по месяцам.
+
+- **Container**:
+  - Padding: p-4
+  - Background: bg-Backgrounds-surface1
+  - Radius: rounded-[32px]
+  - Shadow Stack (same as Connect Button):
+    - shadow-[0px_5px_1.5px_-4px_rgba(8,8,8,0.09)]
+    - shadow-[0px_6px_4px_-4px_rgba(8,8,8,0.05)]
+    - shadow-[0px_6px_13px_0px_rgba(8,8,8,0.03)]
+    - shadow-[0px_24px_24px_-16px_rgba(8,8,8,0.04)]
+    - shadow-[0px_2.1500000953674316px_0.5px_-2px_rgba(0,0,0,0.25)]
+  - Border: outline outline-[1.50px] outline-offset-[-1.50px] outline-white
+  - Backdrop: backdrop-blur-[32px]
+  - Layout: inline-flex flex-col justify-start items-start gap-2
+
+##### Calendar Header
+- **Container**: self-stretch inline-flex justify-between items-center
+- **Month/Year Display**:
+  - Text: "February 2025"
+  - Font: text-Text-Primary text-base font-semibold leading-6 tracking-tight
+  - Centered
+
+**Navigation Buttons**:
+- **Previous Button** (left arrow, disabled in example):
+  - Size: w-12 h-12
+  - Radius: rounded-[90px]
+  - No outline (disabled state)
+  - Icon: rotated-180 arrow (w-1 h-2 + w-2.5 h-0 lines)
+  - Color: outline-Text-Secondary
+
+- **Next Button** (right arrow, active):
+  - Size: w-12 h-12
+  - Radius: rounded-[90px]
+  - Border: outline outline-[1.50px] outline-Stroke-Stroke2
+  - Icon: arrow pointing right
+  - Color: outline-Text-Primary
+
+##### Week Days Header
+- **Container**: w-80 flex-wrap
+- **Day Cell**: w-11 h-11 p-2 rounded-[40px]
+- **Text**:
+  - opacity-50
+  - text-Text-Secondary text-xs font-normal
+  - text-center line-clamp-1
+  - Labels: "Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"
+
+##### Date Grid
+- **Container**: w-80 relative inline-flex flex-wrap content-start
+- **Date Cell**: w-11 h-11 p-2.5 rounded-[40px]
+
+**Cell States**:
+
+1. **Disabled (other month)**:
+   - opacity-50 (visible)
+   - opacity-0 (invisible placeholders)
+   - text-Text-Secondary
+
+2. **Default (current month)**:
+   - No background
+   - text-Text-Primary text-sm font-normal
+   - text-center line-clamp-1
+
+3. **Today**:
+   - Background: bg-Backgrounds-dark1
+   - Text: text-Text-Light text-sm font-normal
+   - Radius: rounded-[40px]
+
+4. **Hover**:
+   - Border: outline outline-[1.50px] outline-Backgrounds-dark1
+   - Text: text-Text-Primary
+
+##### Пример использования
+
+```jsx
+// Full calendar component
+<div className="p-4 bg-Backgrounds-surface1 rounded-[32px] shadow-[0px_5px_1.5px_-4px_rgba(8,8,8,0.09)] shadow-[0px_6px_4px_-4px_rgba(8,8,8,0.05)] shadow-[0px_6px_13px_0px_rgba(8,8,8,0.03)] shadow-[0px_24px_24px_-16px_rgba(8,8,8,0.04)] shadow-[0px_2.1500000953674316px_0.5px_-2px_rgba(0,0,0,0.25)] outline outline-[1.50px] outline-offset-[-1.50px] outline-white backdrop-blur-[32px] inline-flex flex-col justify-start items-start gap-2 overflow-hidden">
+  {/* Header */}
+  <div className="self-stretch inline-flex justify-between items-center">
+    <div data-property-1="default" className="w-12 h-12 relative rounded-[90px] overflow-hidden">
+      <div className="w-6 h-6 left-[12px] top-[12px] absolute overflow-hidden">
+        <div className="w-1 h-2 left-[10px] top-[16px] absolute origin-top-left rotate-180 rounded-sm outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+        <div className="w-2.5 h-0 left-[18px] top-[12px] absolute origin-top-left rotate-180 rounded-sm outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+      </div>
+    </div>
+    <div className="justify-start text-Text-Primary text-base font-semibold font-['Inter_Display'] leading-6 tracking-tight">February 2025</div>
+    <div data-property-1="default" className="w-12 h-12 relative rounded-[90px] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 overflow-hidden">
+      <div className="w-6 h-6 left-[12px] top-[12px] absolute overflow-hidden">
+        <div className="w-1 h-2 left-[14px] top-[8px] absolute rounded-sm outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Primary" />
+        <div className="w-2.5 h-0 left-[6px] top-[12px] absolute rounded-sm outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Primary" />
+      </div>
+    </div>
+  </div>
+
+  {/* Week days and dates grid */}
+  <div className="w-80 relative inline-flex justify-start items-start flex-wrap content-start">
+    {/* Week days */}
+    <div data-state="week day" className="w-11 h-11 p-2 rounded-[40px] inline-flex flex-col justify-center items-center gap-2 overflow-hidden">
+      <div className="self-stretch opacity-50 text-center justify-start text-Text-Secondary text-xs font-normal font-['Inter_Display'] leading-5 tracking-tight line-clamp-1">Su</div>
+    </div>
+    <div data-state="week day" className="w-11 h-11 p-2 rounded-[40px] inline-flex flex-col justify-center items-center gap-2 overflow-hidden">
+      <div className="self-stretch opacity-50 text-center justify-start text-Text-Secondary text-xs font-normal font-['Inter_Display'] leading-5 tracking-tight line-clamp-1">Mo</div>
+    </div>
+    <div data-state="week day" className="w-11 h-11 p-2 rounded-[40px] inline-flex flex-col justify-center items-center gap-2 overflow-hidden">
+      <div className="self-stretch opacity-50 text-center justify-start text-Text-Secondary text-xs font-normal font-['Inter_Display'] leading-5 tracking-tight line-clamp-1">Tu</div>
+    </div>
+    <div data-state="week day" className="w-11 h-11 p-2 rounded-[40px] inline-flex flex-col justify-center items-center gap-2 overflow-hidden">
+      <div className="self-stretch opacity-50 text-center justify-start text-Text-Secondary text-xs font-normal font-['Inter_Display'] leading-5 tracking-tight line-clamp-1">We</div>
+    </div>
+    <div data-state="week day" className="w-11 h-11 p-2 rounded-[40px] inline-flex flex-col justify-center items-center gap-2 overflow-hidden">
+      <div className="self-stretch opacity-50 text-center justify-start text-Text-Secondary text-xs font-normal font-['Inter_Display'] leading-5 tracking-tight line-clamp-1">Th</div>
+    </div>
+    <div data-state="week day" className="w-11 h-11 p-2 rounded-[40px] inline-flex flex-col justify-center items-center gap-2 overflow-hidden">
+      <div className="self-stretch opacity-50 text-center justify-start text-Text-Secondary text-xs font-normal font-['Inter_Display'] leading-5 tracking-tight line-clamp-1">Fr</div>
+    </div>
+    <div data-state="week day" className="w-11 h-11 p-2 rounded-[40px] inline-flex flex-col justify-center items-center gap-2 overflow-hidden">
+      <div className="self-stretch opacity-50 text-center justify-start text-Text-Secondary text-xs font-normal font-['Inter_Display'] leading-5 tracking-tight line-clamp-1">Sa</div>
+    </div>
+
+    {/* Disabled dates (previous month, invisible) */}
+    <div data-state="disable" className="w-11 h-11 p-2.5 opacity-0 rounded-[40px] inline-flex flex-col justify-center items-center gap-2 overflow-hidden">
+      <div className="self-stretch opacity-50 text-center justify-start text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight line-clamp-1">8</div>
+    </div>
+
+    {/* Disabled dates (previous month, visible) */}
+    <div data-state="disable" className="w-11 h-11 p-2.5 rounded-[40px] inline-flex flex-col justify-center items-center gap-2 overflow-hidden">
+      <div className="self-stretch opacity-50 text-center justify-start text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight line-clamp-1">1</div>
+    </div>
+
+    {/* Today */}
+    <div data-state="today" className="w-11 h-11 p-2.5 bg-Backgrounds-dark1 rounded-[40px] inline-flex flex-col justify-center items-center gap-2 overflow-hidden">
+      <div className="self-stretch text-center justify-start text-Text-Light text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight line-clamp-1">7</div>
+    </div>
+
+    {/* Default date */}
+    <div data-state="default" className="w-11 h-11 p-2.5 rounded-[40px] inline-flex flex-col justify-center items-center gap-2 overflow-hidden">
+      <div className="self-stretch text-center justify-start text-Text-Primary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight line-clamp-1">8</div>
+    </div>
+
+    {/* Hover state */}
+    <div data-state="hover" className="w-11 h-11 p-2.5 rounded-[40px] outline outline-[1.50px] outline-offset-[-1.50px] outline-Backgrounds-dark1 inline-flex flex-col justify-center items-center gap-2 overflow-hidden">
+      <div className="self-stretch text-center justify-start text-Text-Primary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight line-clamp-1">12</div>
+    </div>
+  </div>
+</div>
+```
+
+---
+
+### 30. Modal / Dialog
+
+#### Reschedule Product Modal
+
+Модальное окно для переноса публикации продукта.
+
+- **Container**:
+  - Width: w-[480px] (480px)
+  - Padding: p-3
+  - Background: bg-Backgrounds-surface1
+  - Radius: rounded-[32px]
+  - Shadow Stack: (same as Calendar)
+  - Border: outline outline-1 outline-offset-[-1px]
+  - Backdrop: backdrop-blur-[32px]
+  - Layout: inline-flex flex-col justify-center items-start gap-3
+
+##### Product Preview Section
+- **Container**:
+  - self-stretch p-4
+  - Background: bg-Backgrounds-surface2
+  - Radius: rounded-[20px]
+  - Border: outline outline-[1.50px] outline-Stroke-Subtle/10
+  - Layout: inline-flex justify-start items-center gap-5
+
+**Image**:
+- Size: w-16 h-16
+- Radius: rounded-xl
+
+**Content**:
+- **Layout**: flex-1 inline-flex flex-col justify-center items-start
+- **Title Row**: inline-flex justify-between items-center
+  - Title: text-Text-Primary text-lg font-medium leading-7 line-clamp-1
+  - Price Badge: w-16 px-2 py-1.5 bg-green-600/5 rounded-lg outline-green-600/20
+    - Text: text-Primary-primary02 text-sm font-semibold "$98.00"
+- **Subtitle**: opacity-80 text-Text-Secondary text-sm font-normal
+  - Example: "UI Design Kit"
+
+##### Modal Content Section
+- **Container**: self-stretch p-5 flex flex-col gap-8
+
+**Header**:
+- **Title**: text-Text-Primary text-3xl font-semibold leading-10 tracking-tight
+  - "Reschedule product"
+- **Description**: text-Text-Tertiary text-base font-normal leading-6
+  - "Choose a day and time in the future you want your product to be published."
+
+**Form Fields**:
+- **Layout**: inline-flex justify-start items-start gap-3
+- **Date Input**: flex-1 (см. section 25)
+- **Time Input**: flex-1 (см. section 25)
+
+**Action Buttons**:
+- **Layout**: inline-flex justify-end items-center gap-3
+- **Cancel Button**:
+  - Size: h-12 px-7 py-3.5
+  - Radius: rounded-[32px]
+  - Border: outline outline-[1.50px] outline-Stroke-Stroke2
+  - Text: text-Text-Secondary text-sm font-semibold "Cancel"
+- **Reschedule Button** (Primary Dark):
+  - Padding: px-7 py-4
+  - Background: bg-gradient-to-b from-zinc-800 to-zinc-800
+  - Shadow: shadow-[inset_2px_0px_8px_2px_rgba(248,248,248,0.20)]
+  - Border: outline outline-[1.50px] outline-white/40
+  - Text: text-Text-Light text-sm font-semibold "Reschedule"
+
+##### Пример использования
+
+```jsx
+<div className="w-[480px] p-3 bg-Backgrounds-surface1 rounded-[32px] shadow-[0px_5px_1.5px_-4px_rgba(8,8,8,0.09)] shadow-[0px_6px_4px_-4px_rgba(8,8,8,0.05)] shadow-[0px_6px_13px_0px_rgba(8,8,8,0.03)] shadow-[0px_24px_24px_-16px_rgba(8,8,8,0.04)] shadow-[0px_2.1500000953674316px_0.5px_-2px_rgba(0,0,0,0.25)] outline outline-1 outline-offset-[-1px] backdrop-blur-[32px] inline-flex flex-col justify-center items-start gap-3">
+  {/* Product preview */}
+  <div className="self-stretch p-4 bg-Backgrounds-surface2 rounded-[20px] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Subtle/10 inline-flex justify-start items-center gap-5 overflow-hidden">
+    <img className="w-16 h-16 relative rounded-xl" src="https://placehold.co/64x64" />
+    <div className="flex-1 self-stretch inline-flex flex-col justify-center items-start">
+      <div className="self-stretch inline-flex justify-between items-center">
+        <div className="justify-start text-Text-Primary text-lg font-medium font-['Inter_Display'] leading-7 line-clamp-1">Fleet Travel UI Kit</div>
+        <div data-property-1="True" className="w-16 px-2 py-1.5 bg-green-600/5 rounded-lg outline outline-[1.50px] outline-offset-[-1.50px] outline-green-600/20 flex justify-center items-center gap-2 overflow-hidden">
+          <div className="justify-start text-Primary-primary02 text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">$98.00</div>
+        </div>
+      </div>
+      <div className="self-stretch opacity-80 justify-start text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">UI Design Kit</div>
+    </div>
+  </div>
+
+  {/* Modal content */}
+  <div className="self-stretch p-5 flex flex-col justify-start items-start gap-8">
+    <div className="self-stretch flex flex-col justify-start items-start gap-2">
+      <div className="self-stretch justify-start text-Text-Primary text-3xl font-semibold font-['Inter_Display'] leading-10 tracking-tight">Reschedule product</div>
+      <div className="self-stretch justify-start text-Text-Tertiary text-base font-normal font-['Inter_Display'] leading-6 tracking-tight">Choose a day and time in the future you want your product to be published.</div>
+    </div>
+
+    {/* Date/Time inputs */}
+    <div className="self-stretch inline-flex justify-start items-start gap-3">
+      <div data-input="Date" data-state="default" className="flex-1 inline-flex flex-col justify-start items-start">
+        <div className="self-stretch px-4 flex flex-col justify-start items-start gap-2">
+          <div className="h-5 px-1 py-0.5 bg-Backgrounds-surface1 inline-flex justify-center items-center gap-0.5">
+            <div className="opacity-80 justify-start text-Text-Secondary text-xs font-normal font-['Inter_Display'] leading-5 tracking-tight">Date</div>
+          </div>
+        </div>
+        <div className="self-stretch h-12 px-5 py-3 rounded-[32px] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 flex flex-col justify-center items-start overflow-hidden">
+          <div className="justify-start text-Text-Primary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight line-clamp-1">May 28, 2044</div>
+        </div>
+      </div>
+      <div data-input="Time" data-state="default" className="flex-1 inline-flex flex-col justify-start items-start">
+        <div className="self-stretch px-4 flex flex-col justify-start items-start gap-2">
+          <div className="h-5 px-1 py-0.5 bg-Backgrounds-surface1 inline-flex justify-center items-center gap-0.5">
+            <div className="opacity-80 justify-start text-Text-Secondary text-xs font-normal font-['Inter_Display'] leading-5 tracking-tight">Time</div>
+          </div>
+        </div>
+        <div className="self-stretch h-12 px-5 py-3 rounded-[32px] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 flex flex-col justify-center items-start overflow-hidden">
+          <div className="justify-start text-Text-Primary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight line-clamp-1">05:00 PM</div>
+        </div>
+      </div>
+    </div>
+
+    {/* Action buttons */}
+    <div className="self-stretch inline-flex justify-end items-center gap-3">
+      <div className="h-12 px-7 py-3.5 rounded-[32px] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 flex justify-center items-center gap-2 overflow-hidden">
+        <div className="text-center justify-start text-Text-Secondary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">Cancel</div>
+      </div>
+      <div data-light-mode="True" data-state="Default" data-style="Button" className="px-7 py-4 bg-gradient-to-b from-zinc-800 to-zinc-800 rounded-[32px] shadow-[inset_2px_0px_8px_2px_rgba(248,248,248,0.20)] outline outline-[1.50px] outline-offset-[-1.50px] outline-white/40 flex justify-center items-center gap-2.5 overflow-hidden">
+        <div className="justify-start text-Text-Light text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">Reschedule</div>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+---
+
+### 31. Time Picker Panel
+
+#### Time Selection Panel with Header
+
+Панель выбора времени с отображением выбранного времени в заголовке.
+
+- **Container**:
+  - Width: w-72 (288px)
+  - Height: h-96 (384px)
+  - Padding: p-4
+  - Background: bg-Backgrounds-surface1
+  - Radius: rounded-[32px]
+  - Shadow Stack (same as Calendar/Modal)
+  - Border: outline outline-1 outline-offset-[-1px]
+  - Backdrop: backdrop-blur-[32px]
+  - Layout: inline-flex flex-col justify-start items-start gap-2
+
+##### Header Section
+- **Container**: self-stretch h-12 inline-flex justify-between items-center
+- **Selected Time Display**:
+  - Layout: px-3 py-2.5 flex justify-start items-center gap-3
+  - **Icon**: w-6 h-6 relative overflow-hidden
+    - Clock icon: w-4 h-5 at [3.75px, 2.75px] outline-Text-Primary
+  - **Time Text**: text-Text-Primary text-base font-semibold leading-6 tracking-tight
+    - Example: "12:00 PM"
+- **Action Button** (placeholder, hidden in this design):
+  - Size: w-12 h-12 opacity-0
+  - Radius: rounded-[90px]
+
+##### Time List Section
+- **Container**: self-stretch flex flex-col justify-start items-start
+- **List Items**: self-stretch p-3
+
+**Item States**:
+
+1. **Default (Unselected)**:
+   - Padding: p-3
+   - Layout: inline-flex justify-start items-center gap-3
+   - Icon: w-6 h-6 opacity-0 (empty space)
+   - Text: text-Text-Secondary text-sm font-normal
+   - Examples: "11:30 AM", "12:30 PM", "01:30 PM"
+
+2. **Selected**:
+   - Padding: p-3
+   - Layout: inline-flex justify-start items-center gap-3
+   - **Checkmark Icon**: w-6 h-6 visible
+     - Checkmark: w-3.5 h-3 at [5px, 6px] outline-Text-Primary
+   - Text: text-Text-Primary text-sm font-normal
+   - Example: "12:00 PM"
+
+3. **Hover**:
+   - Padding: p-3
+   - Background: bg-shade08-70/70
+   - Radius: rounded-xl
+   - Layout: inline-flex justify-start items-center gap-3
+   - Icon: w-6 h-6 opacity-0
+   - Text: text-Text-Primary text-sm font-normal
+   - Example: "01:00 PM"
+
+4. **Placeholder** (bottom, hidden):
+   - opacity-0
+
+##### Пример использования
+
+```jsx
+<div className="w-72 h-96 p-4 bg-Backgrounds-surface1 rounded-[32px] shadow-[0px_5px_1.5px_-4px_rgba(8,8,8,0.09)] shadow-[0px_6px_4px_-4px_rgba(8,8,8,0.05)] shadow-[0px_6px_13px_0px_rgba(8,8,8,0.03)] shadow-[0px_24px_24px_-16px_rgba(8,8,8,0.04)] shadow-[0px_2.1500000953674316px_0.5px_-2px_rgba(0,0,0,0.25)] outline outline-1 outline-offset-[-1px] backdrop-blur-[32px] inline-flex flex-col justify-start items-start gap-2 overflow-hidden">
+  {/* Header with selected time */}
+  <div className="self-stretch h-12 inline-flex justify-between items-center">
+    <div className="px-3 py-2.5 flex justify-start items-center gap-3">
+      <div className="w-6 h-6 relative overflow-hidden">
+        <div className="w-4 h-5 left-[3.75px] top-[2.75px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Primary" />
+      </div>
+      <div className="justify-start text-Text-Primary text-base font-semibold font-['Inter_Display'] leading-6 tracking-tight">12:00 PM</div>
+    </div>
+    <div data-property-1="default" className="w-12 h-12 relative opacity-0 rounded-[90px] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 overflow-hidden">
+      <div className="w-6 h-6 left-[12px] top-[12px] absolute overflow-hidden" />
+    </div>
+  </div>
+
+  {/* Time list */}
+  <div className="self-stretch flex flex-col justify-start items-start">
+    {/* Unselected item */}
+    <div data-property-1="default" className="self-stretch p-3 inline-flex justify-start items-center gap-3">
+      <div className="w-6 h-6 relative opacity-0 overflow-hidden">
+        <div className="w-3.5 h-3 left-[5px] top-[6px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Primary" />
+      </div>
+      <div className="justify-start text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">11:30 AM</div>
+    </div>
+
+    {/* Selected item */}
+    <div data-property-1="selected" className="self-stretch p-3 inline-flex justify-start items-center gap-3">
+      <div className="w-6 h-6 relative overflow-hidden">
+        <div className="w-3.5 h-3 left-[5px] top-[6px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Primary" />
+      </div>
+      <div className="justify-start text-Text-Primary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">12:00 PM</div>
+    </div>
+
+    {/* Unselected item */}
+    <div data-property-1="default" className="self-stretch p-3 inline-flex justify-start items-center gap-3">
+      <div className="w-6 h-6 relative opacity-0 overflow-hidden">
+        <div className="w-3.5 h-3 left-[5px] top-[6px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Primary" />
+      </div>
+      <div className="justify-start text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">12:30 PM</div>
+    </div>
+
+    {/* Hover item */}
+    <div data-property-1="hover" className="self-stretch p-3 relative bg-shade08-70/70 rounded-xl inline-flex justify-start items-center gap-3 overflow-hidden">
+      <div className="w-6 h-6 relative opacity-0 overflow-hidden">
+        <div className="w-3.5 h-3 left-[5px] top-[6px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Primary" />
+      </div>
+      <div className="justify-start text-Text-Primary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">01:00 PM</div>
+    </div>
+
+    {/* More items... */}
+    <div data-property-1="default" className="self-stretch p-3 inline-flex justify-start items-center gap-3">
+      <div className="w-6 h-6 relative opacity-0 overflow-hidden">
+        <div className="w-3.5 h-3 left-[5px] top-[6px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Primary" />
+      </div>
+      <div className="justify-start text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">01:30 PM</div>
+    </div>
+  </div>
+</div>
+```
+
+---
+
 ## Паттерны
 
 ### Dashboard Layouts
