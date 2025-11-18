@@ -49,25 +49,26 @@
 ### Semantic Colors
 
 ```css
-/* Success / Trend Up */
---color-success: var(--Primary-primary02); /* Зеленый для success */
+/* Success / Trend Up / Active - используется в Active badges, price badges */
+--color-success: #16a34a; /* green-600 - Primary-primary02 */
 --color-success-bg: rgba(22, 163, 74, 0.05); /* green-600/5 */
 --color-success-border: rgba(22, 163, 74, 0.20); /* green-600/20 */
 
-/* Error / Trend Down */
---color-error: #f87171; /* red-400 */
---color-error-bg: rgba(248, 113, 113, 0.05); /* red-400/5 */
---color-error-border: rgba(248, 113, 113, 0.20); /* red-400/20 */
+/* Error / Offline / Alert - используется в Error states, Offline badges */
+--color-error: #dc2626; /* red-600 - Primary-primary03 */
+--color-error-bg: rgba(220, 38, 38, 0.05); /* red-600/5 */
+--color-error-border: rgba(220, 38, 38, 0.20); /* red-600/20 */
 
-/* Warning / Hot */
---color-warning: #fb923c; /* orange-400 */
---color-warning-bg: rgba(251, 146, 60, 0.05); /* orange-400/5 */
---color-warning-border: rgba(251, 146, 60, 0.20); /* orange-400/20 */
+/* Error Alternative (lighter) - используется в некоторых error messages */
+--color-error-alt: #f87171; /* red-400 */
+--color-error-alt-bg: rgba(248, 113, 113, 0.05); /* red-400/5 */
+--color-error-alt-border: rgba(248, 113, 113, 0.20); /* red-400/20 */
 
-/* Info */
---color-info: #22d3ee; /* cyan-400 */
---color-info-bg: rgba(34, 211, 238, 0.05); /* cyan-400/5 */
---color-info-border: rgba(34, 211, 238, 0.20); /* cyan-400/20 */
+/* Warning - currently not used in components */
+/* Reserve for future use: orange-400 #fb923c */
+
+/* Info - currently not used in components */
+/* Reserve for future use: cyan-400 #22d3ee */
 ```
 
 ### Neutral Colors
@@ -118,37 +119,35 @@
 ### Chart Colors
 
 ```css
-/* Для графиков и визуализации данных */
---color-chart-1: #8b5cf6; /* purple-500 - primary chart color */
---color-chart-2: #22d3ee; /* cyan-400 - secondary */
---color-chart-3: #fb923c; /* orange-400 - tertiary */
---color-chart-4: #16a34a; /* green-600 - positive */
---color-chart-5: #f87171; /* red-400 - negative */
---color-chart-6: #a855f7; /* purple-400 - accent */
---color-chart-7: #06b6d4; /* cyan-500 - cool accent */
---color-chart-8: #ea580c; /* orange-600 - warm accent */
+/* Для графиков и визуализации данных - не используются в текущих компонентах */
+/* Reserve for future use when adding data visualization features */
+/* Recommended: use semantic colors (success: green-600, error: red-600) + accent colors */
 ```
 
 ### Gradients
 
 ```css
-/* Градиенты для специальных элементов */
+/* Градиенты для специальных элементов - реально используются в компонентах */
 --gradient-primary-light: linear-gradient(to bottom, #ffffff, #e5e5e5); /* from-white to-neutral-200 */
---gradient-primary-dark: linear-gradient(to bottom, #262626, #262626); /* from-zinc-800 to-zinc-800 */
+--gradient-primary-dark: linear-gradient(to bottom, #262626, #262626); /* from-zinc-800 to-zinc-800 - для кнопок */
 --gradient-secondary-dark: linear-gradient(to bottom, #262626, #171717); /* from-zinc-800 to-neutral-800 */
 --gradient-progress: linear-gradient(to right, var(--shade08-100), var(--shade09-100)); /* Для progress bars */
+--gradient-facebook: linear-gradient(to bottom, #2563eb, #1e40af); /* from-blue-600 to-blue-800 - для Facebook icon */
 ```
 
 ### Brand Icon Colors
 
 ```css
-/* Цвета для иконок брендов и социальных сетей */
---color-brand-facebook: #1877f2; /* Facebook blue */
---color-brand-twitter: #1da1f2; /* Twitter/X blue */
---color-brand-instagram: #e4405f; /* Instagram gradient primary */
---color-brand-linkedin: #0a66c2; /* LinkedIn blue */
---color-brand-youtube: #ff0000; /* YouTube red */
---color-brand-github: #181717; /* GitHub dark */
+/* Цвета используемые в brand icons - только реально присутствующие */
+--color-brand-instagram: #f97316; /* orange-500 - для Instagram icon */
+--color-brand-twitter: #22d3ee; /* cyan-400 - для Twitter/X icon */
+--color-brand-figma: #d8b4fe; /* purple-300 - для Figma icon */
+--color-brand-facebook-start: #2563eb; /* blue-600 - начало градиента */
+--color-brand-facebook-end: #1e40af; /* blue-800 - конец градиента */
+
+/* Цвета НЕ используются в текущих компонентах:
+   LinkedIn, YouTube, GitHub - нет в иконках
+*/
 ```
 
 ---
