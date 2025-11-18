@@ -166,27 +166,30 @@
 ### Font Sizes
 
 ```css
---font-size-xs: 0.75rem;    /* 12px - labels, captions */
---font-size-sm: 0.875rem;   /* 14px - body, buttons */
---font-size-base: 1rem;     /* 16px - base text */
---font-size-md: 1.125rem;   /* 18px */
---font-size-lg: 1.25rem;    /* 20px */
---font-size-xl: 1.5rem;     /* 24px */
---font-size-2xl: 1.875rem;  /* 30px */
---font-size-3xl: 2rem;      /* 32px - headings */
+--font-size-overline: 0.625rem; /* 10px - overline text */
+--font-size-xs: 0.75rem;    /* 12px - caption */
+--font-size-sm: 0.875rem;   /* 14px - body 2, buttons */
+--font-size-base: 1rem;     /* 16px - body 1, subtitle 1 */
+--font-size-lg: 1.25rem;    /* 20px - H6 */
+--font-size-xl: 1.5rem;     /* 24px - H5 */
+--font-size-2xl: 1.875rem;  /* 30px - H4 */
+--font-size-3xl: 2rem;      /* 32px */
 --font-size-4xl: 2.5rem;    /* 40px */
---font-size-5xl: 3rem;      /* 48px */
+--font-size-5xl: 3rem;      /* 48px - H3 */
+--font-size-6xl: 3.75rem;   /* 60px - H2 */
+--font-size-7xl: 4.5rem;    /* 72px */
+--font-size-8xl: 6rem;      /* 96px - H1 */
 ```
 
 ### Font Weights
 
 ```css
 --font-weight-thin: 100;
---font-weight-light: 300;
---font-weight-normal: 400;   /* Основной текст */
---font-weight-medium: 500;   /* Password input text */
---font-weight-semibold: 600; /* Buttons, headings */
---font-weight-bold: 700;
+--font-weight-light: 300;    /* H1 */
+--font-weight-normal: 400;   /* Body text, Caption */
+--font-weight-medium: 500;   /* H2, H3, H5, Overline */
+--font-weight-semibold: 600; /* H4, H6, Subtitle 1, Button */
+--font-weight-bold: 700;     /* Subtitle 2 */
 --font-weight-extrabold: 800;
 --font-weight-black: 900;
 ```
@@ -194,30 +197,142 @@
 ### Line Heights
 
 ```css
---line-height-tight: 1rem;      /* 16px - leading-4 for buttons */
---line-height-snug: 1.25rem;    /* 20px - leading-5 for text */
---line-height-normal: 1.5rem;   /* 24px */
---line-height-relaxed: 2.5rem;  /* 40px - leading-10 for headings */
---line-height-loose: 3rem;      /* 48px */
+--line-height-overline: 0.625rem;  /* 10px - leading-[10px] for overline */
+--line-height-tight: 1rem;         /* 16px - leading-4 for buttons */
+--line-height-snug: 1.25rem;       /* 20px - leading-5 for body 2, caption */
+--line-height-normal: 1.5rem;      /* 24px - leading-6 for body 1 */
+--line-height-relaxed: 1.75rem;    /* 28px - leading-7 for H6 */
+--line-height-loose: 2.25rem;      /* 36px - leading-9 for H5 */
+--line-height-heading: 2.5rem;     /* 40px - leading-10 for H4 */
+--line-height-h3: 3.75rem;         /* 60px - leading-[60px] for H3 */
+--line-height-h2: 4.6875rem;       /* 75px - leading-[75px] for H2 */
+--line-height-h1: 6.9rem;          /* 110.40px - leading-[110.40px] for H1 */
 ```
 
 ### Text Styles
 
 #### Headings
 
-- **H1**: font-size: 3xl (32px), font-weight: semibold (600), line-height: 40px, tracking: tight
-- **H2**: font-size: 2xl (30px), font-weight: semibold (600), line-height: 36px
-- **H3**: font-size: xl (24px), font-weight: semibold (600)
-- **H4**: font-size: lg (20px), font-weight: semibold (600)
-- **H5**: font-size: base (16px), font-weight: semibold (600)
-- **H6**: font-size: sm (14px), font-weight: semibold (600)
+**H1 - Hero / Display:**
+- Font size: `text-8xl` (96px / 6rem)
+- Font weight: `font-light` (300)
+- Line height: `leading-[110.40px]` (110.40px)
+- Font family: `font-['Inter_Display']`
+- Usage: Hero sections, landing pages, main display text
+- Tailwind: `text-8xl font-light leading-[110.40px] font-['Inter_Display']`
+
+**H2 - Main Heading:**
+- Font size: `text-6xl` (60px / 3.75rem)
+- Font weight: `font-medium` (500)
+- Line height: `leading-[75px]` (75px)
+- Font family: `font-['Inter_Display']`
+- Usage: Page titles, major section headers
+- Tailwind: `text-6xl font-medium leading-[75px] font-['Inter_Display']`
+
+**H3 - Section Heading:**
+- Font size: `text-5xl` (48px / 3rem)
+- Font weight: `font-medium` (500)
+- Line height: `leading-[60px]` (60px)
+- Font family: `font-['Inter_Display']`
+- Usage: Section headers, content divisions
+- Tailwind: `text-5xl font-medium leading-[60px] font-['Inter_Display']`
+
+**H4 - Subsection Heading:**
+- Font size: `text-3xl` (30px / 1.875rem)
+- Font weight: `font-semibold` (600)
+- Line height: `leading-10` (40px)
+- Letter spacing: `tracking-tight`
+- Font family: `font-['Inter_Display']`
+- Usage: Subsections, card titles
+- Tailwind: `text-3xl font-semibold leading-10 tracking-tight font-['Inter_Display']`
+
+**H5 - Minor Heading:**
+- Font size: `text-2xl` (24px / 1.5rem)
+- Font weight: `font-medium` (500)
+- Line height: `leading-9` (36px)
+- Letter spacing: `tracking-tight`
+- Font family: `font-['Inter_Display']`
+- Usage: Small sections, list titles
+- Tailwind: `text-2xl font-medium leading-9 tracking-tight font-['Inter_Display']`
+
+**H6 - Smallest Heading:**
+- Font size: `text-xl` (20px / 1.25rem)
+- Font weight: `font-semibold` (600)
+- Line height: `leading-7` (28px)
+- Letter spacing: `tracking-tight`
+- Font family: `font-['Inter_Display']`
+- Usage: Component headers, inline titles, toolbar counters
+- Tailwind: `text-xl font-semibold leading-7 tracking-tight font-['Inter_Display']`
+
+#### Subtitles
+
+**Subtitle 1:**
+- Font size: `text-base` (16px / 1rem)
+- Font weight: `font-semibold` (600)
+- Line height: `leading-6` (24px)
+- Letter spacing: `tracking-tight`
+- Font family: `font-['Inter_Display']`
+- Usage: Product names, table headers, important labels
+- Tailwind: `text-base font-semibold leading-6 tracking-tight font-['Inter_Display']`
+
+**Subtitle 2:**
+- Font size: `text-sm` (14px / 0.875rem)
+- Font weight: `font-bold` (700)
+- Line height: `leading-5` (20px)
+- Letter spacing: `tracking-tight`
+- Font family: `font-['Inter_Display']`
+- Usage: Small labels, emphasized text, form labels
+- Tailwind: `text-sm font-bold leading-5 tracking-tight font-['Inter_Display']`
 
 #### Body Text
 
-- **Body Large**: font-size: base (16px), font-weight: normal (400), line-height: 24px
-- **Body**: font-size: sm (14px), font-weight: normal (400), line-height: 20px
-- **Body Small**: font-size: xs (12px), font-weight: normal (400), line-height: 16px
-- **Caption**: font-size: xs (12px), font-weight: normal (400), line-height: 20px, tracking: tight
+**Body 1 - Default:**
+- Font size: `text-base` (16px / 1rem)
+- Font weight: `font-normal` (400)
+- Line height: `leading-6` (24px)
+- Letter spacing: `tracking-tight`
+- Font family: `font-['Inter_Display']`
+- Usage: Main content, descriptions, paragraphs
+- Tailwind: `text-base font-normal leading-6 tracking-tight font-['Inter_Display']`
+
+**Body 2 - Small:**
+- Font size: `text-sm` (14px / 0.875rem)
+- Font weight: `font-normal` (400)
+- Line height: `leading-5` (20px)
+- Letter spacing: `tracking-tight`
+- Font family: `font-['Inter_Display']`
+- Usage: Secondary content, URLs, dates, metadata
+- Tailwind: `text-sm font-normal leading-5 tracking-tight font-['Inter_Display']`
+
+#### Specialized Text
+
+**Button Text:**
+- Font size: `text-sm` (14px / 0.875rem)
+- Font weight: `font-semibold` (600)
+- Line height: `leading-4` (16px)
+- Letter spacing: `tracking-tight`
+- Font family: `font-['Inter_Display']`
+- Usage: All button labels, action text
+- Tailwind: `text-sm font-semibold leading-4 tracking-tight font-['Inter_Display']`
+
+**Caption:**
+- Font size: `text-xs` (12px / 0.75rem)
+- Font weight: `font-normal` (400)
+- Line height: `leading-5` (20px)
+- Letter spacing: `tracking-tight`
+- Font family: `font-['Inter_Display']`
+- Usage: Image captions, help text, footnotes, tertiary labels
+- Tailwind: `text-xs font-normal leading-5 tracking-tight font-['Inter_Display']`
+
+**Overline:**
+- Font size: `text-[10px]` (10px / 0.625rem)
+- Font weight: `font-medium` (500)
+- Line height: `leading-[10px]` (10px)
+- Letter spacing: `tracking-tight`
+- Text transform: `uppercase`
+- Font family: `font-['Inter_Display']`
+- Usage: Category labels, small headers, kickers
+- Tailwind: `text-[10px] font-medium uppercase leading-[10px] tracking-tight font-['Inter_Display']`
 
 #### Tracking (Letter Spacing)
 
@@ -227,6 +342,131 @@
 --letter-spacing-wide: 0.025em;
 --letter-spacing-wider: 0.05em;
 ```
+
+### Typography Examples
+
+```jsx
+// Typography Showcase Component
+<div className="w-[1303px] p-20 bg-shade02-100 rounded-[32px] inline-flex flex-col justify-start items-start gap-16">
+  {/* H1 - Hero / Display */}
+  <div className="self-stretch justify-start text-white text-8xl font-light font-['Inter_Display'] leading-[110.40px]">
+    H1 - Going to put a<br/>
+    couple lines of text<br/>
+    right here.
+  </div>
+
+  {/* H2 - Main Heading */}
+  <div className="justify-start text-white text-6xl font-medium font-['Inter_Display'] leading-[75px]">
+    H2 - Going to put a<br/>
+    couple lines of text<br/>
+    right here.
+  </div>
+
+  {/* H3 - Section Heading */}
+  <div className="justify-start text-white text-5xl font-medium font-['Inter_Display'] leading-[60px]">
+    H3 - Going to put a<br/>
+    couple lines of text<br/>
+    right here.
+  </div>
+
+  {/* H4 - Subsection Heading */}
+  <div className="justify-start text-white text-3xl font-semibold font-['Inter_Display'] leading-10 tracking-tight">
+    H4 - Going to put a<br/>
+    couple lines of text<br/>
+    right here.
+  </div>
+
+  {/* H5 - Minor Heading */}
+  <div className="justify-start text-white text-2xl font-medium font-['Inter_Display'] leading-9 tracking-tight">
+    H5 - Going to put a<br/>
+    couple lines of text<br/>
+    right here.
+  </div>
+
+  {/* H6 - Smallest Heading */}
+  <div className="justify-start text-white text-xl font-semibold font-['Inter_Display'] leading-7 tracking-tight">
+    H6 - Going to put a<br/>
+    couple lines of text<br/>
+    right here.
+  </div>
+
+  {/* Subtitle 1 */}
+  <div className="justify-start text-white text-base font-semibold font-['Inter_Display'] leading-6 tracking-tight">
+    Sub Title 1 - Going to put a<br/>
+    couple lines of text<br/>
+    right here.
+  </div>
+
+  {/* Subtitle 2 */}
+  <div className="justify-start text-white text-sm font-bold font-['Inter_Display'] leading-5 tracking-tight">
+    Sub Title 2 - Going to put a<br/>
+    couple lines of text<br/>
+    right here.
+  </div>
+
+  {/* Body 1 */}
+  <div className="justify-start text-white text-base font-normal font-['Inter_Display'] leading-6 tracking-tight">
+    Body 1 - Going to put a<br/>
+    couple lines of text<br/>
+    right here.
+  </div>
+
+  {/* Body 2 */}
+  <div className="justify-start text-white text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">
+    Body 2 - Going to put a<br/>
+    couple lines of text<br/>
+    right here.
+  </div>
+
+  {/* Button Text */}
+  <div className="self-stretch justify-start text-white text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">
+    Button - Purchase Now
+  </div>
+
+  {/* Caption */}
+  <div className="justify-start text-white text-xs font-normal font-['Inter_Display'] leading-5 tracking-tight">
+    Caption - Going to put a<br/>
+    couple lines of text<br/>
+    right here.
+  </div>
+
+  {/* Overline */}
+  <div className="self-stretch justify-start text-white text-[10px] font-medium font-['Inter_Display'] uppercase leading-[10px] tracking-tight">
+    Overline - This is an overline
+  </div>
+</div>
+```
+
+### Typography Usage Notes
+
+**When to Use Each Style:**
+
+- **H1 (text-8xl)**: Only for hero sections, landing pages, and major marketing pages. One per page maximum.
+- **H2 (text-6xl)**: Main page titles, feature section headers. Typically one per major section.
+- **H3 (text-5xl)**: Large content divisions, blog post titles, product showcase headers.
+- **H4 (text-3xl)**: Subsection headers, card titles, modal headers.
+- **H5 (text-2xl)**: Small section headers, sidebar titles.
+- **H6 (text-xl)**: Inline section headers, toolbar counters ("8 new comments"), component titles.
+- **Subtitle 1 (text-base semibold)**: Product names in lists, table cell headers, important metadata.
+- **Subtitle 2 (text-sm bold)**: Form labels, emphasized secondary text, small headers.
+- **Body 1 (text-base)**: Main content, paragraph text, descriptions.
+- **Body 2 (text-sm)**: Secondary text, URLs, timestamps, metadata, helper text.
+- **Button (text-sm semibold)**: All button labels, CTAs, action links.
+- **Caption (text-xs)**: Image captions, footnotes, tertiary information.
+- **Overline (text-[10px] uppercase)**: Category labels, tags, small identifiers.
+
+**Accessibility Notes:**
+- Maintain proper heading hierarchy (H1 → H2 → H3, etc.)
+- Ensure sufficient color contrast (minimum 4.5:1 for body text, 3:1 for large text)
+- Use semantic HTML tags (`<h1>`, `<h2>`, etc.) with Tailwind classes
+- Don't skip heading levels for visual styling
+- Provide adequate line height for readability (already built into text styles)
+
+**Color Usage:**
+- Primary text: `text-Text-Primary` (default for headings and body)
+- Secondary text: `text-Text-Secondary` (for metadata, helper text)
+- Tertiary text: `text-Text-Tertiary` (for placeholders, disabled text)
+- Light text: `text-Text-Light` or `text-white` (for dark backgrounds)
 
 ---
 
