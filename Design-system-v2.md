@@ -3822,6 +3822,302 @@ Label с иконкой информации и tooltip для дополнит�
 
 ---
 
+### 32. Reaction Button / Like Counter
+
+#### Like Counter Button
+
+Кнопка для лайков/реакций с иконкой и счетчиком.
+
+- **Container**:
+  - Width: w-48 (192px)
+  - Padding: p-1
+  - Radius: rounded-[48px]
+  - Border: outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2
+  - Layout: inline-flex justify-center items-center gap-2
+  - Overflow: overflow-hidden
+
+##### Icon Container
+- **Size**: w-10 h-10 (40x40px)
+- **Background**: bg-Secondary-secondary04
+- **Radius**: rounded-[40px]
+- **Icon**:
+  - Container: w-6 h-6 at [8px, 8px]
+  - Inner: w-5 h-5 at [2.75px, 2.75px]
+  - Border: outline outline-[1.50px] outline-offset-[-0.75px] outline-black
+  - Может быть heart, thumbs-up, или другая иконка реакции
+
+##### Counter Text
+- **Layout**: flex-1
+- **Font**: text-sm font-normal leading-5 tracking-tight
+- **States**:
+  - Inactive: opacity-50 text-Text-Secondary
+  - Active: text-Text-Primary (no opacity)
+
+##### Button States
+
+**Inactive (Not Liked)**:
+- Counter: opacity-50 text-Text-Secondary
+- Icon: outline-black (or theme color)
+- Example: "98" with 50% opacity
+
+**Active (Liked)**:
+- Counter: text-Text-Primary (full opacity)
+- Icon: может быть filled вариант
+- Example: "98" with full opacity
+
+**Hover**:
+- Slight background change on container
+- Cursor: pointer
+
+##### Пример использования
+
+```jsx
+// Inactive state
+<div className="w-48 p-1 rounded-[48px] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 inline-flex justify-center items-center gap-2 overflow-hidden">
+  <div className="w-10 h-10 relative bg-Secondary-secondary04 rounded-[40px] overflow-hidden">
+    <div className="w-6 h-6 left-[8px] top-[8px] absolute overflow-hidden">
+      <div className="w-5 h-5 left-[2.75px] top-[2.75px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-black" />
+    </div>
+  </div>
+  <div className="flex-1 opacity-50 justify-center text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">98</div>
+</div>
+
+// Active state
+<div className="w-48 p-1 rounded-[48px] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 inline-flex justify-center items-center gap-2 overflow-hidden">
+  <div className="w-10 h-10 relative bg-Secondary-secondary04 rounded-[40px] overflow-hidden">
+    <div className="w-6 h-6 left-[8px] top-[8px] absolute overflow-hidden">
+      <div className="w-5 h-5 left-[2.75px] top-[2.75px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-black" />
+    </div>
+  </div>
+  <div className="flex-1 justify-center text-Text-Primary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">98</div>
+</div>
+```
+
+---
+
+### 33. Table Row / Product List Item
+
+#### Product List Row Component
+
+Строка таблицы продуктов с полной информацией и интерактивными элементами.
+
+- **Container**:
+  - Width: w-[1148px] (1148px)
+  - Padding: p-4
+  - Layout: inline-flex justify-start items-start gap-6
+  - Overflow: overflow-hidden
+
+##### Row States
+
+**Default State**:
+- No background
+- Border bottom: border-b-[1.50px] border-Stroke-Subtle/10
+- No shadows
+- Checkbox visible but no action buttons
+
+**Hover/Selected State**:
+- Background: bg-Backgrounds-highlight
+- Radius: rounded-2xl
+- Border: outline outline-[1.50px] outline-offset-[-1.50px] outline-zinc-100
+- Shadows:
+  - shadow-[0px_1px_4px_0px_rgba(0,0,0,0.05)]
+  - shadow-[0px_8px_8px_-2px_rgba(0,0,0,0.08)]
+  - shadow-[inset_0px_0px_0px_3px_rgba(255,255,255,1.00)]
+- Action buttons visible (Edit, Delete, Unpublish)
+
+**Bottom Row Variant**:
+- Border: border-b-[1.50px] border-Stroke-Subtle (более заметный)
+
+##### Left Section (Product Info)
+- **Container**: w-96 h-16 flex justify-start items-start gap-5
+
+**Checkbox**:
+- Size: w-6 h-6
+- Border: border-2 border-Stroke-Stroke2
+- Radius: rounded-md
+- Hover variant: border-Stroke-Highlight/50
+
+**Product Image**:
+- Size: w-16 h-16 (64x64px)
+- Radius: rounded-xl
+- Source: product thumbnail
+
+**Product Info**:
+- Layout: flex-1 inline-flex flex-col justify-center items-start
+- **Title**: text-Text-Primary text-base font-semibold leading-6 line-clamp-1
+  - Example: "Bento Pro v.2"
+- **Subtitle**: opacity-80 text-Text-Secondary text-sm font-normal
+  - Example: "UI Design Kit"
+
+**Action Buttons** (visible on hover):
+- Layout: inline-flex justify-start items-start gap-2
+- Button structure: pl-1 pr-1.5 py-1 rounded-md
+- Buttons:
+  - Edit: pencil icon + "Edit" text
+  - Delete: trash icon + "Delete" text
+  - Unpublish: eye-off icon + "Unpublish" text
+- Icon: w-4 h-4 with w-3 h-3 inner outline-Text-Secondary
+- Text: opacity-80 text-Text-Secondary text-sm font-semibold
+
+##### Right Section (Metrics)
+- **Container**: flex-1 py-2 flex justify-between items-center
+
+**Status Badge**:
+- Width: w-20
+- Badge: px-2 py-1.5 bg-green-600/5 rounded-lg
+- Border: outline outline-[1.50px] outline-green-600/20
+- Text: text-Primary-primary02 text-sm font-semibold "Active"
+
+**Price**:
+- Width: w-14
+- Text: text-Text-Primary text-sm font-normal "$98"
+
+**Revenue with Trend**:
+- Container: w-36 inline-flex items-center gap-2
+- **Revenue**: w-12 text-Text-Primary text-sm "$3,200"
+- **Trend Badge**:
+  - Padding: px-2 py-1.5
+  - Background: bg-green-600/5 (для роста) или bg-red-600/5 (для падения)
+  - Border: outline outline-[1.50px] outline-green-600/20
+  - Layout: flex items-center gap-1
+  - **Arrow Icon**: w-4 h-4
+    - Up arrow: -rotate-180 для роста
+    - Down arrow: normal для падения
+    - Color: outline-Primary-primary02 (green) or outline-red-600
+  - **Percentage**: text-Primary-primary02 text-sm font-semibold "+36.8%"
+
+**Rating**:
+- Container: w-20 flex items-center gap-2
+- **Star Icon**: w-5 h-5
+  - Inner: w-4 h-4 at [1.25px, 0.83px] bg-Text-Secondary
+- **Score + Count**: flex items-center gap-1
+  - Score: text-Text-Primary text-sm "4.8"
+  - Count: text-Text-Secondary text-sm "(88)"
+
+**Time Progress**:
+- Container: w-24
+- Layout: py-0.5 rounded-lg flex items-center gap-2
+- **Time Text**: w-8 text-Text-Primary text-sm "48m"
+- **Progress Bar**:
+  - Container: w-8 h-1.5 bg-shade07-40/40 rounded-sm
+  - Fill: w-3 h-1.5 bg-Chart-Green rounded-sm (positioned left-0)
+
+##### Пример использования
+
+```jsx
+// Default row state
+<div className="w-[1148px] p-4 inline-flex justify-start items-start gap-6 overflow-hidden">
+  {/* Left section */}
+  <div className="w-96 h-16 flex justify-start items-start gap-5">
+    <div data-status="placeholder" className="w-6 h-6 relative overflow-hidden">
+      <div className="w-6 h-6 left-0 top-0 absolute rounded-md border-2 border-Stroke-Stroke2" />
+    </div>
+    <img className="w-16 h-16 relative rounded-xl" src="https://placehold.co/64x64" />
+    <div className="flex-1 self-stretch inline-flex flex-col justify-center items-start">
+      <div className="self-stretch justify-start text-Text-Primary text-base font-semibold font-['Inter_Display'] leading-6 tracking-tight line-clamp-1">Bento Pro v.2</div>
+      <div className="self-stretch opacity-80 justify-start text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">UI Design Kit</div>
+    </div>
+  </div>
+
+  {/* Right section with metrics */}
+  <div className="flex-1 py-2 flex justify-between items-center">
+    {/* Status */}
+    <div className="w-20 inline-flex flex-col justify-start items-start gap-2.5">
+      <div data-property-1="True" className="px-2 py-1.5 bg-green-600/5 rounded-lg outline outline-[1.50px] outline-offset-[-1.50px] outline-green-600/20 inline-flex justify-center items-center gap-2 overflow-hidden">
+        <div className="justify-start text-Primary-primary02 text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">Active</div>
+      </div>
+    </div>
+
+    {/* Price */}
+    <div className="inline-flex flex-col justify-start items-start gap-2.5">
+      <div className="w-14 justify-start text-Text-Primary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">$98</div>
+    </div>
+
+    {/* Revenue with trend */}
+    <div className="w-36 inline-flex flex-col justify-start items-start gap-2.5">
+      <div className="inline-flex justify-start items-center gap-2">
+        <div className="w-12 justify-start text-Text-Primary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">$3,200</div>
+        <div data-trend="up" className="px-2 py-1.5 bg-green-600/5 rounded-lg outline outline-[1.50px] outline-offset-[-1.50px] outline-green-600/20 flex justify-center items-center gap-1">
+          <div className="w-4 h-4 relative overflow-hidden">
+            <div className="w-[2.67px] h-1.5 left-[5.33px] top-[6.67px] absolute origin-top-left -rotate-180 rounded-sm outline outline-[1.50px] outline-offset-[-0.75px] outline-Primary-primary02" />
+            <div className="w-2 h-0 left-[8px] top-[12px] absolute origin-top-left rotate-180 rounded-sm outline outline-[1.50px] outline-offset-[-0.75px] outline-Primary-primary02" />
+          </div>
+          <div className="justify-start text-Primary-primary02 text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">36.8%</div>
+        </div>
+      </div>
+    </div>
+
+    {/* Rating */}
+    <div className="w-20 flex justify-start items-start gap-2.5">
+      <div className="flex justify-start items-center gap-2">
+        <div className="w-5 h-5 relative overflow-hidden">
+          <div className="w-4 h-4 left-[1.25px] top-[0.83px] absolute bg-Text-Secondary" />
+        </div>
+        <div className="flex justify-start items-center gap-1">
+          <div className="justify-start text-Text-Primary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">4.8</div>
+          <div className="justify-start text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">(88)</div>
+        </div>
+      </div>
+    </div>
+
+    {/* Time progress */}
+    <div className="w-24 inline-flex flex-col justify-start items-start gap-2.5">
+      <div data-property-1="03" className="py-0.5 rounded-lg inline-flex justify-center items-center gap-2">
+        <div className="w-8 justify-start text-Text-Primary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">48m</div>
+        <div className="w-8 h-1.5 relative bg-shade07-40/40 rounded-sm">
+          <div className="w-3 h-1.5 left-0 top-0 absolute bg-Chart-Green rounded-sm" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+// Hover/Selected state with action buttons
+<div className="w-[1148px] p-4 bg-Backgrounds-highlight rounded-2xl shadow-[0px_1px_4px_0px_rgba(0,0,0,0.05)] shadow-[0px_8px_8px_-2px_rgba(0,0,0,0.08)] shadow-[inset_0px_0px_0px_3px_rgba(255,255,255,1.00)] outline outline-[1.50px] outline-offset-[-1.50px] outline-zinc-100 inline-flex justify-start items-start gap-6 overflow-hidden">
+  <div className="w-96 h-16 flex justify-start items-start gap-5">
+    <div data-status="placeholder" className="w-6 h-6 relative overflow-hidden">
+      <div className="w-6 h-6 left-0 top-0 absolute rounded-md border-2 border-Stroke-Stroke2" />
+    </div>
+    <img className="w-16 h-16 relative rounded-xl" src="https://placehold.co/64x64" />
+    <div className="flex-1 self-stretch inline-flex flex-col justify-center items-start">
+      <div className="self-stretch justify-start text-Text-Primary text-base font-semibold font-['Inter_Display'] leading-6 tracking-tight line-clamp-1">Bento Pro v.2</div>
+      {/* Action buttons visible on hover */}
+      <div className="inline-flex justify-start items-start gap-2">
+        <div data-property-1="default" className="pl-1 pr-1.5 py-1 rounded-md flex justify-start items-center gap-1">
+          <div className="w-4 h-4 relative overflow-hidden">
+            <div className="w-3 h-3 left-[2.50px] top-[2.05px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+          </div>
+          <div className="opacity-80 justify-start text-Text-Secondary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">Edit</div>
+        </div>
+        <div data-property-1="default" className="pl-1 pr-1.5 py-1 rounded-md flex justify-start items-center gap-1">
+          <div className="w-4 h-4 relative overflow-hidden">
+            <div className="w-3 h-3 left-[1.83px] top-[1.83px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+          </div>
+          <div className="opacity-80 justify-start text-Text-Secondary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">Delete</div>
+        </div>
+        <div data-property-1="default" className="pl-1 pr-1.5 py-1 rounded-md flex justify-start items-center gap-1">
+          <div className="w-4 h-4 relative overflow-hidden">
+            <div className="w-3.5 h-3 left-[1.49px] top-[1.83px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+          </div>
+          <div className="opacity-80 justify-start text-Text-Secondary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">Unpublish</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {/* Same metrics section as above */}
+  <div className="flex-1 py-2 flex justify-between items-center">
+    {/* ... */}
+  </div>
+</div>
+
+// Row with bottom border (last in section)
+<div className="w-[1148px] p-4 border-b-[1.50px] border-Stroke-Subtle inline-flex justify-start items-start gap-6 overflow-hidden">
+  {/* Same structure as default */}
+</div>
+```
+
+---
+
 ## Паттерны
 
 ### Dashboard Layouts
