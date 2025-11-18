@@ -430,6 +430,60 @@
   - Hover: (to be defined)
   - Active: (to be defined)
 
+#### Icon Button (Small)
+
+Компактная кнопка только с иконкой, без фона по умолчанию.
+
+- **Size**: p-3 (12px padding), total size варьируется
+- **Radius**: rounded-[48px]
+- **Icon Size**: w-6 h-6 (24x24px container)
+  - Inner icon: w-4 h-4 (16x16px)
+  - Positioning: left-[3.75px] top-[3.75px] или similar
+- **Layout**: inline-flex flex-col justify-center items-center gap-2.5
+- **Overflow**: overflow-hidden
+
+##### States
+
+**Default (Inactive)**:
+- Background: transparent
+- Border: none
+- Icon: outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary
+- Opacity: может быть normal
+
+**Active/Selected**:
+- Background: transparent или slight highlight
+- Border: outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2
+- Icon: outline-[1.50px] outline-offset-[-0.75px] outline-Text-Primary
+- Radius: rounded-[48px]
+
+**Hover**:
+- Background: может добавиться subtle background
+- Border: может появиться outline-Stroke-Stroke2
+- Icon: может измениться на Text-Primary
+
+**Disabled**:
+- Opacity: opacity-50
+- Cursor: not-allowed
+- Icon: Text-Secondary
+
+##### Пример использования
+
+```jsx
+// Default state
+<div className="p-3 rounded-[48px] inline-flex flex-col justify-center items-center gap-2.5 overflow-hidden">
+  <div className="w-6 h-6 relative overflow-hidden">
+    <div className="w-4 h-4 left-[3.75px] top-[3.75px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+  </div>
+</div>
+
+// Active/Selected state
+<div className="p-3 rounded-[48px] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 inline-flex flex-col justify-center items-center gap-2.5 overflow-hidden">
+  <div className="w-6 h-6 relative overflow-hidden">
+    <div className="w-4 h-4 left-[3.75px] top-[3.75px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Primary" />
+  </div>
+</div>
+```
+
 #### Segment Control Button (Tabs)
 
 - **Size**: px-6 py-3 (24px horizontal, 12px vertical), height: 48px
@@ -639,6 +693,105 @@
 - **Icon**: Chevron down, w-6 h-6, right aligned
 - **Example**: "Last 7 days"
 
+#### Text Input with Floating Label
+
+Текстовый input с плавающей меткой (label), которая располагается над полем ввода.
+
+- **Container**: inline-flex flex-col justify-start items-start
+- **Input Field**:
+  - Height: h-12 (48px)
+  - Padding: pl-[28px] (horizontal padding for text)
+  - Radius: rounded-[48px]
+  - Border: outline-[1.50px] outline-offset-[-1.50px]
+  - Overflow: overflow-hidden
+  - Font: text-sm, font-normal, leading-5, tracking-tight
+
+##### Floating Label
+- **Container**: h-3 px-6, positioned над input
+- **Label Badge**:
+  - Padding: px-1 py-0.5
+  - Background: bg-Backgrounds-surface2 или bg-Backgrounds-surface1
+  - Font: text-xs, font-normal, leading-5, tracking-tight
+  - Color: text-Text-Primary
+  - Layout: inline-flex justify-center items-center gap-0.5
+- **Positioning**: Label "плавает" над верхней границей input
+
+##### Input States
+
+**Default (Empty)**:
+- Border: outline-Stroke-Stroke2
+- Placeholder: opacity-50, text-Text-Secondary
+- Label background: bg-Backgrounds-surface2
+
+**Hover**:
+- Border: outline-shade07-50/50
+- Placeholder: text-Text-Secondary
+- Label background: bg-Backgrounds-surface1
+
+**Focus/Active**:
+- Border: outline-shade07-50/50
+- Cursor: w-0.5 h-4 bg-Text-Blue visible
+- Placeholder: может скрыться
+- Text: text-Text-Primary (при вводе)
+- Label background: bg-Backgrounds-surface2
+
+**Filled (Success)**:
+- Border: outline-shade07-50/50 или outline-Stroke-Stroke2
+- Text: text-Text-Primary
+- Success Icon: w-6 h-6 checkmark icon справа
+  - Icon color: outline-Primary-primary02 (зеленый)
+  - Position: absolute, right side
+- Label visible
+
+**Error**:
+- Border: outline-Primary-primary03 (красная обводка)
+- Text: text-Text-Primary
+- Cursor: w-0.5 h-4 bg-Text-Blue visible
+- Error Message: под input
+  - Font: text-xs, font-normal, leading-5, tracking-tight
+  - Color: text-Primary-primary03
+  - Gap: gap-2 от input
+  - Example: "Please enter an email address."
+
+**Disabled**:
+- Opacity: opacity-50
+- Cursor: not-allowed
+- Border: может быть более прозрачным
+
+##### Пример использования
+
+```jsx
+// Default state with floating label
+<div className="w-80 inline-flex flex-col justify-start items-start">
+  <div className="self-stretch h-3 px-6 flex flex-col justify-center items-start gap-2">
+    <div className="h-5 px-1 py-0.5 bg-Backgrounds-surface2 inline-flex justify-center items-center gap-0.5">
+      <div className="justify-start text-Text-Primary text-xs font-normal font-['Inter_Display'] leading-5 tracking-tight">Component name</div>
+    </div>
+  </div>
+  <div className="self-stretch h-12 relative rounded-[48px] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 overflow-hidden">
+    <div className="left-[28px] top-[14px] absolute opacity-50 justify-center text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">ie. Bento Cards: User Interface</div>
+  </div>
+</div>
+
+// Error state
+<div className="w-80 inline-flex flex-col justify-start items-center gap-2">
+  <div className="self-stretch flex flex-col justify-start items-start">
+    <div className="self-stretch h-3 px-6 flex flex-col justify-center items-start gap-2">
+      <div className="h-5 px-1 py-0.5 bg-Backgrounds-surface1 inline-flex justify-center items-center gap-0.5">
+        <div className="justify-start text-Text-Primary text-xs font-normal leading-5 tracking-tight">Component name</div>
+      </div>
+    </div>
+    <div className="self-stretch h-12 relative rounded-[48px] outline outline-[1.50px] outline-offset-[-1.50px] outline-Primary-primary03 overflow-hidden">
+      <div className="left-[26px] top-[15px] absolute inline-flex justify-start items-center">
+        <div className="justify-center text-Text-Primary text-sm font-normal leading-5 tracking-tight">adkahdfl</div>
+        <div className="w-0.5 h-4 bg-Text-Blue rounded-sm" />
+      </div>
+    </div>
+  </div>
+  <div className="self-stretch justify-start text-Primary-primary03 text-xs font-normal font-['Inter_Display'] leading-5 tracking-tight">Please enter an email address.</div>
+</div>
+```
+
 ---
 
 ### 4. Badges & Tags
@@ -723,6 +876,71 @@
 - **Error Message**:
   - Color:
   - Font Size:
+
+#### Label with Info Icon
+
+Label с иконкой информации и tooltip для дополнительных пояснений.
+
+- **Container**: inline-flex justify-start items-center gap-1.5
+- **Label Text**:
+  - Font: text-sm, font-semibold, leading-4, tracking-tight
+  - Color: text-Text-Primary
+  - Example: "Product title"
+- **Info Icon**:
+  - Size: w-4 h-4 (16x16px container)
+  - Icon: circle with 'i' или question mark
+  - Outline: outline-[1.50px] outline-offset-[-0.75px]
+- **Tooltip** (при hover/click):
+  - Position: data-position="right" (или top, bottom, left)
+  - Container: px-2 py-1.5, bg-Backgrounds-dark1, rounded-md
+  - Font: text-xs, font-normal, leading-5, tracking-tight
+  - Color: text-Text-Light
+  - Arrow: w-2 h-1, rotate-90, bg-Backgrounds-dark1
+  - Max Width: может быть ограничена
+  - Example: "Maximum 100 characters. No HTML or emoji allowed"
+
+##### States
+
+**Default**:
+- Icon opacity: opacity-50
+- Icon color: outline-Text-Tertiary
+- Tooltip: hidden
+
+**Hover/Active**:
+- Icon opacity: 1 (full opacity)
+- Icon color: outline-Text-Blue (синий accent)
+- Tooltip: visible
+- Может быть дополнительный info icon w-8 h-8
+
+##### Пример использования
+
+```jsx
+// Default state
+<div className="inline-flex justify-start items-center gap-1.5">
+  <div className="justify-start text-Text-Primary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">Product title</div>
+  <div className="w-4 h-4 relative opacity-50">
+    <div className="w-3 h-3 left-[2px] top-[2px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Tertiary" />
+    <div className="w-[1.50px] h-[1.50px] left-[7.25px] top-[10.40px] absolute bg-Text-Tertiary" />
+    <div className="w-1 h-1 left-[6.35px] top-[4.40px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Tertiary" />
+  </div>
+</div>
+
+// Hover/Active with tooltip
+<div className="inline-flex justify-start items-center gap-1.5">
+  <div className="justify-start text-Text-Primary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">Product title</div>
+  <div className="w-4 h-4 relative">
+    <div className="w-3 h-3 left-[2px] top-[2px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Blue" />
+    <div className="w-[1.50px] h-[1.50px] left-[7.25px] top-[10.40px] absolute bg-Text-Blue" />
+    <div className="w-1 h-1 left-[6.35px] top-[4.40px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Blue" />
+  </div>
+  <div data-position="right" className="flex justify-start items-center">
+    <div className="w-2 h-1 origin-top-left rotate-90 bg-Backgrounds-dark1" />
+    <div className="h-5 px-2 py-1.5 bg-Backgrounds-dark1 rounded-md flex justify-center items-center gap-2">
+      <div className="justify-start text-Text-Light text-xs font-normal font-['Inter_Display'] leading-5 tracking-tight">Maximum 100 characters. No HTML or emoji allowed</div>
+    </div>
+  </div>
+</div>
+```
 
 ---
 
@@ -2094,6 +2312,217 @@
       <div className="flex gap-1">
         <div className="w-px h-3 bg-Text-Secondary rotate-45" />
         <div className="w-px h-3 bg-Text-Secondary rotate-45" />
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+---
+
+### 23. Product Card (Bento Card)
+
+#### Product Card Component
+
+Карточка продукта с изображением, метаданными и интерактивными элементами.
+
+- **Container**:
+  - Width: w-96 min-w-72 (384px, minimum 288px)
+  - Layout: inline-flex flex-col justify-start items-start gap-3
+  - Spacing: gap-3 между image и content
+
+##### Card Image
+- **Size**: h-56 (224px height), full width
+- **Radius**: rounded-3xl (24px)
+- **Background**: bg-gray-200 (placeholder)
+- **Image**: w-96 h-56, absolute positioned, object-cover
+- **Overflow**: overflow-hidden
+
+##### Card Content
+- **Layout**: flex-col justify-center items-start gap-1
+- **Components**:
+  - Title row (с ценой или действиями)
+  - Metadata row (дата, рейтинг и т.д.)
+
+##### Title Row
+- **Layout**: inline-flex justify-between items-center
+- **Title**:
+  - Font: text-base, font-semibold, leading-6, tracking-tight
+  - Color: text-Text-Primary
+  - Truncation: line-clamp-1
+  - Example: "Bento Design System"
+- **Price Badge**: positioned справа (see Status Badge specs)
+
+##### Metadata Components
+- **Date/Time**:
+  - Layout: inline-flex justify-start items-center gap-2
+  - Icon: w-6 h-6 clock icon
+  - Text: text-xs, font-normal, leading-5, tracking-tight
+  - Opacity: opacity-80
+  - Color: text-Text-Secondary
+  - Example: "Apr 9, 2044 at 3:55 PM"
+- **Rating** (if applicable):
+  - Layout: inline-flex gap-2.5
+  - Star icon: w-5 h-5
+  - Score: text-sm, font-semibold, text-Text-Primary
+  - Count: text-sm, font-normal, text-Text-Secondary в скобках
+  - Example: "4.8 (88)"
+
+#### Card States
+
+##### Default State
+- Image: full visibility
+- Content: full opacity
+- No overlay
+- No checkbox
+- No action buttons
+
+##### Hover State (with Checkbox)
+- Image: может иметь slight overlay (opacity-30 bg-Backgrounds-dark1)
+- Checkbox: появляется в left-top corner
+  - Position: absolute, left-[16px] top-[16px]
+  - Unchecked: bg-Backgrounds-surface2, border-2 border-Stroke-Stroke2
+  - Size: w-6 h-6
+- Action Buttons: появляются под title
+  - Layout: inline-flex gap-2, positioned absolute или relative
+  - Buttons: Edit, Delete, Schedule/Unpublish
+  - See Action Buttons (Small) specs
+
+##### Selected State
+- Image overlay: opacity-10 bg-shade10-100
+- Checkbox: checked state
+  - Container: bg-shade10-100, border-2 border-Primary-primary01
+  - Checkmark: w-4 h-4 bg-Primary-primary01 rounded-sm, positioned [4px, 4px]
+- Content: opacity-50 на всем content section
+- Title, price, metadata: все с opacity-50
+
+##### With Action Buttons (Hover Variant)
+- Image: opacity-30 bg-Backgrounds-dark1 overlay
+- Checkbox: unchecked, visible
+- Action Buttons Row:
+  - Position: может быть absolute overlay на content или ниже title
+  - Layout: inline-flex gap-2
+  - Buttons show default and hover states
+  - Common actions: Edit, Delete, Schedule, Unpublish
+- Info tooltip: может появиться w-8 h-8 icon с tooltip
+
+#### Rating Component
+
+Компонент отображения рейтинга со звездочкой.
+
+- **Container**: inline-flex justify-start items-start gap-2.5
+- **Layout**: flex justify-start items-center gap-2
+- **Star Icon**:
+  - Container: w-5 h-5 (20x20px), relative overflow-hidden
+  - Star shape: w-4 h-4, positioned [1.25px, 0.83px]
+  - Color: bg-Text-Secondary
+- **Score and Count**:
+  - Layout: flex justify-start items-center gap-1
+  - Score: text-sm, font-semibold, leading-4, tracking-tight, text-Text-Primary
+  - Count: text-sm, font-normal, leading-5, tracking-tight, text-Text-Secondary
+  - Format: "4.8 (88)" - score + count in parentheses
+
+##### Пример использования
+
+```jsx
+// Default card
+<div className="w-96 min-w-72 inline-flex flex-col justify-start items-start gap-3">
+  <div className="self-stretch h-56 relative bg-gray-200 rounded-3xl overflow-hidden">
+    <img className="w-96 h-56 left-0 top-0 absolute" src="https://placehold.co/356x230" />
+  </div>
+  <div className="self-stretch flex flex-col justify-center items-start gap-1">
+    <div className="self-stretch inline-flex justify-between items-center">
+      <div className="justify-start text-Text-Primary text-base font-semibold font-['Inter_Display'] leading-6 tracking-tight line-clamp-1">Bento Design System</div>
+      <div className="w-12 px-3 py-1.5 bg-green-600/5 rounded-lg outline outline-[1.50px] outline-offset-[-1.50px] outline-green-600/20 flex justify-center items-center gap-1">
+        <div className="justify-start text-Primary-primary02 text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">$98</div>
+      </div>
+    </div>
+    <div className="self-stretch inline-flex justify-start items-center gap-2">
+      <div className="w-6 h-6 relative overflow-hidden">
+        <div className="w-5 h-5 left-[2.75px] top-[2.75px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+      </div>
+      <div className="flex-1 opacity-80 justify-start text-Text-Secondary text-xs font-normal font-['Inter_Display'] leading-5 tracking-tight">Apr 9, 2044 at 3:55 PM</div>
+    </div>
+  </div>
+</div>
+
+// Selected card with checkbox
+<div className="w-96 min-w-72 inline-flex flex-col justify-start items-start gap-3">
+  <div className="self-stretch h-56 relative bg-gray-200 rounded-3xl overflow-hidden">
+    <img className="w-96 h-56 left-0 top-0 absolute" src="https://placehold.co/356x230" />
+    <div className="w-96 h-56 left-0 top-0 absolute opacity-10 bg-shade10-100" />
+    <div className="w-6 h-6 left-[16px] top-[16px] absolute overflow-hidden">
+      <div className="w-6 h-6 left-0 top-0 absolute bg-shade10-100 rounded-md border-2 border-Primary-primary01" />
+      <div className="w-4 h-4 left-[4px] top-[4px] absolute bg-Primary-primary01 rounded-sm" />
+    </div>
+  </div>
+  <div className="self-stretch opacity-50 flex flex-col justify-center items-start gap-1">
+    {/* Same content structure */}
+  </div>
+</div>
+
+// Card with rating
+<div className="w-96 min-w-72 inline-flex flex-col justify-start items-start gap-3">
+  <div className="self-stretch h-56 relative bg-gray-200 rounded-3xl overflow-hidden">
+    <img className="w-96 h-56 left-0 top-0 absolute" src="..." />
+  </div>
+  <div className="self-stretch flex flex-col justify-center items-start gap-1">
+    <div className="self-stretch inline-flex justify-between items-center">
+      <div className="justify-start text-Text-Primary text-base font-semibold leading-6 tracking-tight line-clamp-1">Bento Design System</div>
+      <div className="w-12 px-3 py-1.5 bg-green-600/5 rounded-lg outline outline-[1.50px] outline-offset-[-1.50px] outline-green-600/20 flex justify-center items-center gap-1">
+        <div className="justify-start text-Primary-primary02 text-sm font-semibold leading-4 tracking-tight">$98</div>
+      </div>
+    </div>
+    <div className="w-20 inline-flex justify-start items-start gap-2.5">
+      <div className="flex justify-start items-center gap-2">
+        <div className="w-5 h-5 relative overflow-hidden">
+          <div className="w-4 h-4 left-[1.25px] top-[0.83px] absolute bg-Text-Secondary" />
+        </div>
+        <div className="flex justify-start items-center gap-1">
+          <div className="justify-start text-Text-Primary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">4.8</div>
+          <div className="justify-start text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">(88)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+// Hover card with action buttons
+<div className="w-96 min-w-72 inline-flex flex-col justify-start items-start gap-3">
+  <div className="self-stretch h-56 relative bg-gray-200 rounded-3xl overflow-hidden">
+    <img className="w-96 h-56 left-0 top-0 absolute" src="..." />
+    <div className="w-96 h-56 left-0 top-0 absolute opacity-30 bg-Backgrounds-dark1" />
+    <div data-status="placeholder" className="w-6 h-6 left-[16px] top-[16px] absolute overflow-hidden">
+      <div className="w-6 h-6 left-0 top-0 absolute bg-Backgrounds-surface2 rounded-md border-2 border-Stroke-Stroke2" />
+    </div>
+  </div>
+  <div className="self-stretch relative flex flex-col justify-center items-start gap-1">
+    <div className="self-stretch inline-flex justify-between items-center">
+      <div className="justify-start text-Text-Primary text-base font-semibold leading-6 tracking-tight line-clamp-1">Bento Design System</div>
+      <div className="w-12 px-3 py-1.5 bg-green-600/5 rounded-lg outline outline-[1.50px] outline-offset-[-1.50px] outline-green-600/20 flex justify-center items-center gap-1">
+        <div className="justify-start text-Primary-primary02 text-sm font-semibold leading-4 tracking-tight">$98</div>
+      </div>
+    </div>
+    <div className="w-56 h-6 relative">
+      <div className="left-[-4px] top-0 absolute inline-flex justify-start items-start gap-2">
+        <div className="pl-1 pr-1.5 py-1 rounded-md flex justify-start items-center gap-1">
+          <div className="w-4 h-4 relative overflow-hidden">
+            <div className="w-3 h-3 left-[2.50px] top-[2.05px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+          </div>
+          <div className="opacity-80 justify-start text-Text-Secondary text-sm font-semibold leading-4 tracking-tight">Edit</div>
+        </div>
+        <div className="pl-1 pr-1.5 py-1 rounded-md outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 flex justify-start items-center gap-1">
+          <div className="w-4 h-4 relative overflow-hidden">
+            <div className="w-3 h-3 left-[1.83px] top-[1.83px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Primary" />
+          </div>
+          <div className="opacity-80 justify-start text-Text-Primary text-sm font-semibold leading-4 tracking-tight">Delete</div>
+        </div>
+        <div className="pl-1 pr-1.5 py-1 rounded-md flex justify-start items-center gap-1">
+          <div className="w-4 h-4 relative">
+            <div className="w-3 h-3 left-[2px] top-[2px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+          </div>
+          <div className="opacity-80 justify-start text-Text-Secondary text-sm font-semibold leading-4 tracking-tight">Schedule</div>
+        </div>
       </div>
     </div>
   </div>
