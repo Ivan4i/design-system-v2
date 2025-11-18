@@ -6175,6 +6175,1072 @@ Product Card Structure:
 
 ---
 
+## 38. Comment Row / Comment Thread Item
+
+### Описание / Description
+
+Компонент строки комментария для систем обсуждений, отзывов и коммуникации. Поддерживает множественные состояния: default, highlighted, with inline reply, nested threads, unread indicator. Включает user avatar, comment text, product context, action buttons.
+
+Comment row component for discussion systems, reviews, and communication. Supports multiple states: default, highlighted, with inline reply, nested threads, unread indicator. Includes user avatar, comment text, product context, action buttons.
+
+### Спецификация / Specification
+
+#### Базовая структура / Base Structure
+
+```
+Container (w-[1180px] p-4)
+├── Left Section (w-[720px])
+│   ├── Checkbox (w-6 h-6)
+│   ├── User Avatar (w-12 h-12 rounded-[80px])
+│   └── Comment Content
+│       ├── User Info Row
+│       │   ├── Name (text-base font-semibold)
+│       │   ├── @username (text-sm opacity-80)
+│       │   ├── Dot separator
+│       │   └── Time (text-sm)
+│       ├── Comment Text (text-sm line-clamp-1 or 3)
+│       ├── Reply Input (optional, highlighted state)
+│       └── Nested Reply (optional, thread state)
+├── Right Section (flex-1)
+│   ├── Product Image (w-16 h-16)
+│   └── Product Info
+│       ├── Title (text-base font-semibold)
+│       └── Category (text-sm)
+├── Action Buttons (w-96, absolute positioned in highlighted)
+│   ├── Reply button
+│   ├── Like button
+│   └── Remove button
+└── Unread Indicator (w-2 h-2, absolute positioned)
+```
+
+#### Dimensions
+
+**Container:**
+- Width: `w-[1180px]`
+- Padding: `p-4` (16px all sides)
+- Height: varies (`h-24` minimum для standard row)
+- Border radius: `rounded-2xl` (в highlighted state)
+
+**Left Section:**
+- Width: `w-[720px]` (fixed)
+- Gap: `gap-5` (20px) между элементами
+
+**User Avatar:**
+- Size: `w-12 h-12` (48x48px) для main comment
+- Size: `w-8 h-8` (32x32px) для nested reply
+- Border radius: `rounded-[80px]` (полный круг)
+
+**Checkbox:**
+- Size: `w-6 h-6` (24x24px)
+- Border: `border-2 border-Stroke-Stroke2` или `border-Stroke-Highlight/50`
+
+**Product Section:**
+- Image: `w-16 h-16` (64x64px)
+- Border radius: `rounded-xl`
+- Gap: `gap-5` (20px)
+
+**Comment Content:**
+- Width: `w-[608px]` (varies based on layout)
+- Flex: `flex-1` для adaptive width
+
+**Dot Separator:**
+- Size: `w-3 h-3` container
+- Dot: `w-0.5 h-0.5` (2x2px)
+- Position: centered в container
+- Opacity: `opacity-50`
+- Color: `bg-Text-Tertiary`
+
+**Unread Indicator:**
+- Size: `w-2 h-2` (8x8px)
+- Position: `left-[1124px] top-[16px] absolute`
+- Shape: `rounded-full`
+- Color: `bg-Primary-primary02` (green)
+
+**Action Buttons Container:**
+- Width: `w-96` или `w-56`
+- Position: `left-0 top-[20px] absolute` relative to parent
+- Left offset: `left-[-4px]` для alignment
+
+**Nested Reply Connection:**
+- Width: `w-8 h-9` (32x36px)
+- Position: `left-[24px] top-[48px] absolute`
+- Border radius: `rounded-[10px]`
+- Outline: `outline-[1.50px] outline-offset-[-0.75px] outline-Stroke-Stroke2`
+- Creates visual connection line
+
+**Reply Input Field:**
+- Background: `bg-Backgrounds-surface2` (light) или `bg-shade05-20/20` (dark)
+- Border radius: `rounded-[80px]` (pill shape)
+- Padding: `p-1`
+- Outline: `outline-1 outline-offset-[-1px] outline-Stroke-Stroke2`
+- Contains: @mention tag + cursor + Send button
+
+**Reply Avatar Icon:**
+- Container: `w-11 h-11` (44x44px)
+- Border radius: `rounded-[90px]`
+- Icon inside: `w-6 h-6` with `w-5 h-5` shape
+
+**Send Button:**
+- Height: `h-11` (44px)
+- Padding: `px-7 py-4`
+- Border radius: `rounded-[32px]`
+- Light mode: `bg-gradient-to-b from-zinc-800 to-zinc-800`
+- Dark mode: `bg-gradient-to-b from-white to-neutral-200`
+- Shadow: `shadow-[inset_2px_0px_8px_2px_rgba(248,248,248,0.20)]` (light)
+- Outline: `outline-[1.50px] outline-offset-[-1.50px] outline-white/40`
+
+#### Typography
+
+**User Name:**
+- Font: `font-['Inter_Display']`
+- Size: `text-base` (16px)
+- Weight: `font-semibold` (600)
+- Line height: `leading-6` (24px)
+- Letter spacing: `tracking-tight`
+- Color: `text-Text-Primary`
+- Truncation: `line-clamp-1`
+
+**@Username:**
+- Font: `font-['Inter_Display']`
+- Size: `text-sm` (14px)
+- Weight: `font-normal` (400)
+- Line height: `leading-5` (20px)
+- Letter spacing: `tracking-tight`
+- Color: `text-Text-Secondary`
+- Opacity: `opacity-80`
+- Truncation: `line-clamp-1`
+
+**Time Stamp:**
+- Font: `font-['Inter_Display']`
+- Size: `text-sm` (14px)
+- Weight: `font-normal` (400)
+- Line height: `leading-5` (20px)
+- Color: `text-Text-Secondary`
+- Opacity: `opacity-80`
+- Examples: "19h", "2m", "1s"
+
+**Comment Text:**
+- Font: `font-['Inter_Display']`
+- Size: `text-sm` (14px)
+- Weight: `font-normal` (400)
+- Line height: `leading-5` (20px)
+- Letter spacing: `tracking-tight`
+- Color: `text-Text-Primary`
+- Opacity: `opacity-80`
+- Truncation: `line-clamp-1` или `line-clamp-3`
+
+**Reply Text (with @mention):**
+- Font: `font-['Inter_Display']`
+- Size: `text-sm` (14px)
+- Weight: `font-medium` (500)
+- Line height: `leading-5` (20px)
+- Color: `text-Text-Primary`
+- Opacity: `opacity-80`
+- @mention: `underline` decoration
+- Line clamp: `line-clamp-3`
+
+**Product Title:**
+- Font: `font-['Inter_Display']`
+- Size: `text-base` (16px)
+- Weight: `font-semibold` (600)
+- Line height: `leading-6` (24px)
+- Color: `text-Text-Primary`
+- Truncation: `line-clamp-1`
+
+**Product Category:**
+- Font: `font-['Inter_Display']`
+- Size: `text-sm` (14px)
+- Weight: `font-normal` (400)
+- Line height: `leading-5` (20px)
+- Color: `text-Text-Secondary`
+- Opacity: `opacity-80`
+
+**Action Button Labels:**
+- Font: `font-['Inter_Display']`
+- Size: `text-sm` (14px)
+- Weight: `font-semibold` (600)
+- Line height: `leading-4` (16px)
+- Letter spacing: `tracking-tight`
+- Color: `text-Text-Secondary` (default) или `text-Text-Primary` (hover)
+- Opacity: `opacity-80`
+
+**Reply Input @mention:**
+- Font: `font-['Inter_Display']`
+- Size: `text-sm` (14px)
+- Weight: `font-normal` (400)
+- Line height: `leading-5` (20px)
+- Color: `text-Text-Primary`
+- Truncation: `line-clamp-3`
+
+**Send Button Text:**
+- Font: `font-['Inter_Display']`
+- Size: `text-sm` (14px)
+- Weight: `font-semibold` (600)
+- Line height: `leading-4` (16px)
+- Letter spacing: `tracking-tight`
+- Color: `text-Text-Light`
+
+#### Colors and Theming
+
+**Default Row:**
+- Background: transparent
+- No border radius
+- No shadows
+- No outline
+
+**Row with Border Separator (Light Mode):**
+- Border bottom: `border-b-[1.50px] border-Stroke-Subtle/10`
+- Subtle разделитель между комментариями
+
+**Row with Border Separator (Dark Mode):**
+- Border bottom: `border-b-[1.50px] border-Stroke-Subtle`
+- More visible для contrast
+
+**Highlighted Row (Light Mode):**
+- Background: `bg-Backgrounds-highlight`
+- Border radius: `rounded-2xl`
+- Multiple shadow layers:
+  - Layer 1: `shadow-[0px_1px_4px_0px_rgba(0,0,0,0.05)]`
+  - Layer 2: `shadow-[0px_8px_8px_-2px_rgba(0,0,0,0.08)]`
+  - Layer 3: `shadow-[inset_0px_0px_0px_3px_rgba(255,255,255,1.00)]` - white inset border
+- Outline: `outline-[1.50px] outline-offset-[-1.50px] outline-zinc-100`
+
+**Highlighted Row (Dark Mode):**
+- Background: `bg-Backgrounds-highlight`
+- Border radius: `rounded-2xl`
+- NO multiple shadows (cleaner)
+- Outline: `outline-[1.50px] outline-offset-[-1.50px] outline-zinc-100`
+- Checkbox border: `border-Stroke-Highlight/50`
+
+**Unread Indicator:**
+- Color: `bg-Primary-primary02` (green - matches primary color)
+- Size: `w-2 h-2` dot
+- Position: absolute top-right corner
+- Indicates new/unread comment
+
+**Action Buttons:**
+
+*Default State:*
+- Background: transparent
+- No outline
+- Icon color: `outline-Text-Secondary`
+- Text color: `text-Text-Secondary opacity-80`
+- Padding: `pl-1 pr-1.5 py-1`
+- Border radius: `rounded-md`
+
+*Hover State:*
+- Background: transparent
+- Outline: `outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2`
+- Icon color: `outline-Text-Primary`
+- Text color: `text-Text-Primary opacity-80`
+
+*Like Button - Liked State:*
+- Icon: filled heart `bg-Primary-primary03` (no outline)
+- Text color: `text-Text-Primary opacity-80`
+- No outline in default state
+
+**Reply Input Field (Light Mode):**
+- Background: `bg-Backgrounds-surface2`
+- Outline: `outline-1 outline-offset-[-1px] outline-Stroke-Stroke2`
+- Border radius: `rounded-[80px]`
+
+**Reply Input Field (Dark Mode):**
+- Background: `bg-shade05-20/20`
+- Outline: `outline-1 outline-offset-[-1px] outline-Stroke-Stroke2`
+- Border radius: `rounded-[80px]`
+
+**@Mention Tag:**
+- Text: `text-Text-Primary`
+- Font weight: `font-normal`
+- No background (inline text)
+
+**Cursor Indicator:**
+- Width: `w-0.5`
+- Height: `h-4`
+- Color: `bg-Text-Blue`
+- Border radius: `rounded-sm`
+- Blinks/animates
+
+**Nested Reply:**
+- Smaller avatar: `w-8 h-8`
+- Indented from main comment
+- Connection line visual
+- Same text styling but slightly smaller hierarchy
+
+#### States
+
+##### Default State
+
+**Layout:**
+- Standard height: `h-24` (96px)
+- Padding: `p-4`
+- No background color
+- No border radius
+- Display: `inline-flex justify-start items-center`
+
+**Components visible:**
+- Checkbox (unchecked)
+- User avatar (circular)
+- User name + @username + time
+- Comment text (truncated to 1 line)
+- Product image + info
+- Optional: unread indicator dot
+
+**Action buttons:**
+- NOT visible by default (или always visible в некоторых вариантах)
+
+**Position:**
+- Left section: `w-[720px]`
+- Right section: `flex-1`
+- Gap: `gap-6` (24px)
+
+##### Row with Border Separator
+
+**Purpose:**
+- Разделяет комментарии в списке
+- Light mode: subtle `border-Stroke-Subtle/10`
+- Dark mode: more visible `border-Stroke-Subtle`
+
+**Border:**
+- Position: `border-b-[1.50px]`
+- Applies to entire row width
+
+##### Highlighted State (Active Comment)
+
+**Purpose:**
+- Indicates focused/active comment
+- Shows action buttons
+- Elevated appearance
+
+**Visual Changes:**
+- Background: `bg-Backgrounds-highlight`
+- Border radius: `rounded-2xl`
+- Multiple shadows (light mode only)
+- Outline: `outline-zinc-100`
+
+**Layout Changes:**
+- Comment content width: `w-[608px]` (slightly narrower)
+- Action buttons container: `w-96 h-16` positioned relative
+- May show fewer lines of product info
+
+**Action Buttons:**
+- Positioned: `w-96 h-16 relative` container
+- Buttons at: `left-[-4px] top-0 absolute`
+- Gap: `gap-5` (20px) between buttons
+- Shows: Reply (hover state), Like, Remove
+
+##### State with Reply Input
+
+**Purpose:**
+- User is composing a reply
+- Shows inline reply field below comment
+
+**Additional Component:**
+- Reply input field container
+- Background: `bg-Backgrounds-surface2` (light) or `bg-shade05-20/20` (dark)
+- Pill shape: `rounded-[80px]`
+- Contains: avatar icon + @mention + cursor + Send button
+
+**Reply Field Layout:**
+- Full width: `self-stretch`
+- Padding: `p-1`
+- Display: `inline-flex justify-between items-center`
+- Left: avatar icon + @mention text + cursor
+- Right: Send button
+
+**@Mention Tag:**
+- Shows: `@samstoo` (username being replied to)
+- Color: `text-Text-Primary`
+- Cursor: animated blue line `bg-Text-Blue`
+
+**Send Button:**
+- Height: `h-11`
+- Gradient background (dark in light mode, light in dark mode)
+- Inset shadow для depth
+- Text: "Send"
+
+##### State with Nested Reply (Thread)
+
+**Purpose:**
+- Shows reply to the comment
+- Creates conversation thread
+- Visual connection between parent and child
+
+**Layout:**
+- Parent comment: standard layout
+- Gap: `gap-4` (16px) before nested reply
+- Nested reply container: `inline-flex justify-start items-start gap-4`
+
+**Nested Reply Components:**
+- Smaller avatar: `w-8 h-8` (vs `w-12 h-12`)
+- Same text structure but nested
+- Connection line: `w-8 h-9` rounded rectangle outline
+- Position: `left-[24px] top-[48px] absolute`
+
+**Connection Line:**
+- Visual connector from parent to child
+- Border radius: `rounded-[10px]`
+- Outline: `outline-[1.50px] outline-Stroke-Stroke2`
+- Creates tree-like visual hierarchy
+
+**Nested Reply Content:**
+- Width: `flex-1`
+- Same user info structure: name + @username + time
+- Reply text with @mention support
+- Action buttons: Reply, Like, Remove
+
+##### State with Unread Indicator
+
+**Purpose:**
+- Shows new/unread comments
+- Indicates user attention needed
+
+**Indicator:**
+- Green dot: `w-2 h-2 bg-Primary-primary02`
+- Position: `left-[1124px] top-[16px] absolute` (top-right)
+- Shape: `rounded-full`
+- Always visible until marked as read
+
+**Placement:**
+- Positioned absolute relative to row container
+- Top-right corner near product section
+- Does not affect layout of other elements
+
+##### Like Button States
+
+**Default (Not Liked):**
+- Icon: outline heart
+- Outline: `outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary`
+- Text: `text-Text-Secondary opacity-80`
+
+**Liked State:**
+- Icon: filled heart `bg-Primary-primary03` (solid blue)
+- Size: `w-3.5 h-3` positioned at `left-[1.33px] top-[2px]`
+- Text: `text-Text-Primary opacity-80` (darker)
+- No outline (filled background)
+
+##### Action Button Interaction States
+
+**Reply Button:**
+- Default: outline icon, secondary text
+- Hover: with outline border, primary text
+- Purpose: открывает reply input field
+
+**Like Button:**
+- Default: outline icon
+- Hover: with outline border (if not liked)
+- Liked: filled icon, no outline border
+- Purpose: toggles like state
+
+**Remove Button:**
+- Default: outline icon, secondary text
+- Hover: with outline border, primary text
+- Purpose: удаляет комментарий (requires confirmation)
+
+#### Responsive Behavior
+
+**Desktop (>1180px):**
+- Full `w-[1180px]` width
+- Two-column layout: comment + product info
+- All elements visible
+
+**Tablet (768px - 1180px):**
+- Width adapts to container
+- Product section может сократиться
+- Comment text может wrap to 2-3 lines
+
+**Mobile (<768px):**
+- Stack vertically: comment above, product below
+- Full width avatar and text
+- Action buttons може быть always visible
+- Nested replies может иметь less indentation
+
+#### Icon Specifications
+
+**Reply Icon:**
+- Size: `w-3 h-3` at `left-[2.50px] top-[2.05px]`
+- Outline: `outline-[1.50px] outline-offset-[-0.75px]`
+- Color: `outline-Text-Secondary` (default) or `outline-Text-Primary` (hover)
+- Shape: reply/comment arrow
+
+**Like/Heart Icon (Outline):**
+- Size: `w-3 h-3` at `left-[1.83px] top-[2.50px]`
+- Outline: `outline-[1.50px] outline-offset-[-0.75px]`
+- Color: `outline-Text-Secondary`
+- Shape: heart outline
+
+**Like/Heart Icon (Filled):**
+- Size: `w-3.5 h-3` at `left-[1.33px] top-[2px]`
+- Background: `bg-Primary-primary03` (blue filled)
+- No outline
+- Shape: solid heart
+
+**Remove/Delete Icon:**
+- Size: `w-3 h-3` at `left-[1.83px] top-[1.83px]`
+- Outline: `outline-[1.50px] outline-offset-[-0.75px]`
+- Color: `outline-Text-Secondary`
+- Shape: trash/delete
+
+**Reply Input Avatar Icon:**
+- Container: `w-6 h-6` at `left-[10px] top-[10px]`
+- Icon: `w-5 h-5` at `left-[2px] top-[2px]`
+- Background: `bg-Text-Secondary`
+- Represents reply action
+
+#### Пример использования / Usage Example
+
+```jsx
+// Default Comment Row with Unread Indicator
+<div className="self-stretch h-24 p-4 relative inline-flex justify-start items-center gap-6 overflow-hidden">
+  {/* Left Section: Checkbox + Avatar + Comment */}
+  <div className="w-[720px] flex justify-start items-start gap-5">
+    <div className="h-12 flex justify-start items-center gap-2">
+      <div data-status="placeholder" className="w-6 h-6 relative overflow-hidden">
+        <div className="w-6 h-6 left-0 top-0 absolute rounded-md border-2 border-Stroke-Stroke2" />
+      </div>
+    </div>
+
+    <div className="flex-1 flex justify-start items-start gap-5">
+      {/* User Avatar */}
+      <img className="w-12 h-12 relative rounded-[80px]" src="https://placehold.co/48x48" />
+
+      {/* Comment Content */}
+      <div className="flex-1 inline-flex flex-col justify-center items-start">
+        {/* User Info Row */}
+        <div className="inline-flex justify-start items-center gap-3">
+          <div className="justify-start text-Text-Primary text-base font-semibold font-['Inter_Display'] leading-6 tracking-tight line-clamp-1">
+            Sam Stoof
+          </div>
+
+          <div className="flex justify-start items-center gap-2">
+            <div className="opacity-80 justify-start text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight line-clamp-1">
+              @samstoo
+            </div>
+
+            {/* Dot Separator */}
+            <div className="w-3 h-3 relative overflow-hidden">
+              <div className="w-0.5 h-0.5 left-[5px] top-[5px] absolute opacity-50 bg-Text-Tertiary rounded-full" />
+            </div>
+
+            <div className="opacity-80 justify-start text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight line-clamp-1">
+              19h
+            </div>
+          </div>
+        </div>
+
+        {/* Comment Text */}
+        <div className="self-stretch inline-flex justify-center items-center gap-2">
+          <div className="flex-1 opacity-80 justify-start text-Text-Primary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight line-clamp-1">
+            Can you make a version for automated penetration testing and cybersecurity?
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {/* Right Section: Product Info */}
+  <div className="flex-1 flex justify-start items-center gap-5">
+    <img className="w-16 h-16 relative rounded-xl" src="https://placehold.co/64x64" />
+    <div className="flex-1 self-stretch inline-flex flex-col justify-center items-start">
+      <div className="self-stretch justify-start text-Text-Primary text-base font-semibold font-['Inter_Display'] leading-6 tracking-tight line-clamp-1">
+        Bento Pro v.2
+      </div>
+      <div className="self-stretch opacity-80 justify-start text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">
+        UI Design Kit
+      </div>
+    </div>
+  </div>
+
+  {/* Unread Indicator */}
+  <div className="w-2 h-2 left-[1124px] top-[16px] absolute bg-Primary-primary02 rounded-full" />
+</div>
+
+// Comment Row with Border Separator - Light Mode
+<div className="self-stretch h-24 p-4 relative border-b-[1.50px] border-Stroke-Subtle/10 inline-flex justify-start items-center gap-6 overflow-hidden">
+  {/* Same structure as default */}
+</div>
+
+// Comment Row with Border Separator - Dark Mode
+<div className="self-stretch h-24 p-4 relative border-b-[1.50px] border-Stroke-Subtle inline-flex justify-start items-center gap-6 overflow-hidden">
+  {/* Same structure as default */}
+</div>
+
+// Highlighted Comment Row with Action Buttons - Light Mode
+<div className="self-stretch h-24 p-4 bg-Backgrounds-highlight rounded-2xl shadow-[0px_1px_4px_0px_rgba(0,0,0,0.05)] shadow-[0px_8px_8px_-2px_rgba(0,0,0,0.08)] shadow-[inset_0px_0px_0px_3px_rgba(255,255,255,1.00)] outline outline-[1.50px] outline-offset-[-1.50px] outline-zinc-100 inline-flex justify-start items-center gap-6 overflow-hidden">
+  <div className="w-[720px] flex justify-start items-start gap-5">
+    <div className="h-12 flex justify-start items-center gap-2">
+      <div data-status="placeholder" className="w-6 h-6 relative overflow-hidden">
+        <div className="w-6 h-6 left-0 top-0 absolute rounded-md border-2 border-Stroke-Stroke2" />
+      </div>
+    </div>
+
+    <div className="flex-1 flex justify-start items-start gap-5">
+      <img className="w-12 h-12 relative rounded-[80px]" src="https://placehold.co/48x48" />
+
+      <div className="w-[608px] inline-flex flex-col justify-center items-start">
+        {/* User Info and Comment Text */}
+        <div className="inline-flex justify-start items-center gap-3">
+          <div className="justify-start text-Text-Primary text-base font-semibold font-['Inter_Display'] leading-6 tracking-tight line-clamp-1">
+            Sam Stoof
+          </div>
+          <div className="flex justify-start items-center gap-2">
+            <div className="opacity-80 justify-start text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight line-clamp-1">
+              @samstoo
+            </div>
+            <div className="w-3 h-3 relative overflow-hidden">
+              <div className="w-0.5 h-0.5 left-[5px] top-[5px] absolute opacity-50 bg-Text-Tertiary rounded-full" />
+            </div>
+            <div className="opacity-80 justify-start text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight line-clamp-1">
+              19h
+            </div>
+          </div>
+        </div>
+        <div className="self-stretch inline-flex justify-center items-center gap-2">
+          <div className="flex-1 opacity-80 justify-start text-Text-Primary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight line-clamp-1">
+            Can you make a version for automated penetration testing and cybersecurity?
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {/* Action Buttons - Right Side */}
+  <div className="w-96 h-16 relative">
+    <div className="w-56 h-6 left-0 top-[20px] absolute">
+      <div className="left-[-4px] top-0 absolute inline-flex justify-start items-start gap-5">
+        {/* Reply Button - Hover State */}
+        <div
+          data-property-1="hover"
+          className="pl-1 pr-1.5 py-1 rounded-md outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 flex justify-start items-center gap-1"
+        >
+          <div className="w-4 h-4 relative overflow-hidden">
+            <div className="w-3 h-3 left-[2.50px] top-[2.05px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Primary" />
+          </div>
+          <div className="opacity-80 justify-start text-Text-Primary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">
+            Reply
+          </div>
+        </div>
+
+        {/* Like Button - Default */}
+        <div
+          data-property-1="default"
+          className="pl-1 pr-1.5 py-1 rounded-md flex justify-start items-center gap-1"
+        >
+          <div className="w-4 h-4 relative overflow-hidden">
+            <div className="w-3 h-3 left-[1.83px] top-[2.50px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+          </div>
+          <div className="opacity-80 justify-start text-Text-Secondary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">
+            Like
+          </div>
+        </div>
+
+        {/* Remove Button */}
+        <div
+          data-property-1="default"
+          className="pl-1 pr-1.5 py-1 rounded-md flex justify-start items-center gap-1"
+        >
+          <div className="w-4 h-4 relative overflow-hidden">
+            <div className="w-3 h-3 left-[1.83px] top-[1.83px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+          </div>
+          <div className="opacity-80 justify-start text-Text-Secondary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">
+            Remove
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+// Highlighted Comment with Like Button - Liked State
+<div className="self-stretch h-24 p-4 bg-Backgrounds-highlight rounded-2xl outline outline-[1.50px] outline-offset-[-1.50px] outline-zinc-100 inline-flex justify-start items-center gap-6 overflow-hidden">
+  {/* ...comment content... */}
+
+  {/* Action Buttons with Liked State */}
+  <div className="w-96 h-16 relative">
+    <div className="w-56 h-6 left-0 top-[20px] absolute">
+      <div className="left-[-4px] top-0 absolute inline-flex justify-start items-start gap-5">
+        <div className="pl-1 pr-1.5 py-1 rounded-md flex justify-start items-center gap-1">
+          <div className="w-4 h-4 relative overflow-hidden">
+            <div className="w-3 h-3 left-[2.50px] top-[2.05px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+          </div>
+          <div className="opacity-80 justify-start text-Text-Secondary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">
+            Reply
+          </div>
+        </div>
+
+        {/* Like Button - Liked/Filled State */}
+        <div className="pl-1 pr-1.5 py-1 rounded-md flex justify-start items-center gap-1">
+          <div className="w-4 h-4 relative overflow-hidden">
+            <div className="w-3.5 h-3 left-[1.33px] top-[2px] absolute bg-Primary-primary03" />
+          </div>
+          <div className="opacity-80 justify-start text-Text-Primary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">
+            Like
+          </div>
+        </div>
+
+        <div className="pl-1 pr-1.5 py-1 rounded-md flex justify-start items-center gap-1">
+          <div className="w-4 h-4 relative overflow-hidden">
+            <div className="w-3 h-3 left-[1.83px] top-[1.83px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+          </div>
+          <div className="opacity-80 justify-start text-Text-Secondary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">
+            Remove
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+// Comment with Reply Input Field - Light Mode
+<div className="self-stretch p-4 bg-Backgrounds-highlight rounded-2xl shadow-[0px_1px_4px_0px_rgba(0,0,0,0.05)] shadow-[0px_8px_8px_-2px_rgba(0,0,0,0.08)] shadow-[inset_0px_0px_0px_3px_rgba(255,255,255,1.00)] outline outline-[1.50px] outline-offset-[-1.50px] outline-zinc-100 inline-flex justify-start items-center gap-6 overflow-hidden">
+  <div className="w-[720px] flex justify-start items-start gap-5">
+    <div className="h-12 flex justify-start items-center gap-2">
+      <div data-status="placeholder" className="w-6 h-6 relative overflow-hidden">
+        <div className="w-6 h-6 left-0 top-0 absolute rounded-md border-2 border-Stroke-Stroke2" />
+      </div>
+    </div>
+
+    <div className="flex-1 flex justify-start items-start gap-5">
+      <img className="w-12 h-12 relative rounded-[80px]" src="https://placehold.co/48x48" />
+
+      <div className="w-[608px] inline-flex flex-col justify-start items-start gap-4">
+        {/* Comment Content */}
+        <div className="self-stretch flex flex-col justify-center items-start">
+          <div className="inline-flex justify-start items-center gap-3">
+            <div className="justify-start text-Text-Primary text-base font-semibold font-['Inter_Display'] leading-6 tracking-tight line-clamp-1">
+              Sam Stoof
+            </div>
+            <div className="flex justify-start items-center gap-2">
+              <div className="opacity-80 justify-start text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight line-clamp-1">
+                @samstoo
+              </div>
+              <div className="w-3 h-3 relative overflow-hidden">
+                <div className="w-0.5 h-0.5 left-[5px] top-[5px] absolute opacity-50 bg-Text-Tertiary rounded-full" />
+              </div>
+              <div className="opacity-80 justify-start text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight line-clamp-1">
+                2m
+              </div>
+            </div>
+          </div>
+          <div className="self-stretch inline-flex justify-center items-center gap-2">
+            <div className="flex-1 opacity-80 justify-start text-Text-Primary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight line-clamp-1">
+              Can you make a version for automated penetration testing and cybersecurity?
+            </div>
+          </div>
+        </div>
+
+        {/* Reply Input Field */}
+        <div className="self-stretch p-1 bg-Backgrounds-surface2 rounded-[80px] outline outline-1 outline-offset-[-1px] outline-Stroke-Stroke2 inline-flex justify-between items-center overflow-hidden">
+          <div className="flex justify-start items-center">
+            {/* Reply Icon */}
+            <div data-light-mode="True" className="w-11 h-11 relative rounded-[90px] overflow-hidden">
+              <div className="w-6 h-6 left-[10px] top-[10px] absolute overflow-hidden">
+                <div className="w-5 h-5 left-[2px] top-[2px] absolute bg-Text-Secondary" />
+              </div>
+            </div>
+
+            {/* @Mention + Cursor */}
+            <div className="flex justify-start items-center">
+              <div className="justify-start text-Text-Primary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight line-clamp-3">
+                @samstoo
+              </div>
+              <div className="w-0.5 h-4 bg-Text-Blue rounded-sm" />
+            </div>
+          </div>
+
+          {/* Send Button */}
+          <div
+            data-light-mode="True"
+            data-state="Default"
+            data-style="Button"
+            className="h-11 px-7 py-4 bg-gradient-to-b from-zinc-800 to-zinc-800 rounded-[32px] shadow-[inset_2px_0px_8px_2px_rgba(248,248,248,0.20)] outline outline-[1.50px] outline-offset-[-1.50px] outline-white/40 flex justify-center items-center gap-2.5 overflow-hidden"
+          >
+            <div className="justify-start text-Text-Light text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">
+              Send
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {/* Action Buttons */}
+  <div className="w-96 h-16 relative">
+    {/* ...action buttons... */}
+  </div>
+</div>
+
+// Comment with Reply Input Field - Dark Mode
+<div className="self-stretch p-4 bg-Backgrounds-highlight rounded-2xl outline outline-[1.50px] outline-offset-[-1.50px] outline-zinc-100 inline-flex justify-start items-center gap-6 overflow-hidden">
+  {/* ...same structure... */}
+
+  {/* Reply Input Field - Dark Mode */}
+  <div className="self-stretch p-1 bg-shade05-20/20 rounded-[80px] outline outline-1 outline-offset-[-1px] outline-Stroke-Stroke2 inline-flex justify-between items-center overflow-hidden">
+    <div className="flex justify-start items-center">
+      <div data-light-mode="False" className="w-11 h-11 relative rounded-[90px] overflow-hidden">
+        <div className="w-6 h-6 left-[10px] top-[10px] absolute overflow-hidden">
+          <div className="w-5 h-5 left-[2px] top-[2px] absolute bg-Text-Secondary" />
+        </div>
+      </div>
+      <div className="flex justify-start items-center">
+        <div className="justify-start text-Text-Primary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight line-clamp-3">
+          @samstoo
+        </div>
+        <div className="w-0.5 h-4 bg-Text-Blue rounded-sm" />
+      </div>
+    </div>
+
+    {/* Send Button - Dark Mode */}
+    <div
+      data-light-mode="False"
+      className="h-11 px-7 py-4 bg-gradient-to-b from-white to-neutral-200 rounded-[32px] shadow-[inset_2px_0px_8px_2px_rgba(24,24,24,0.20)] outline outline-[1.50px] outline-offset-[-1.50px] outline-white/60 flex justify-center items-center gap-2.5 overflow-hidden"
+    >
+      <div className="justify-start text-Text-Light text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">
+        Send
+      </div>
+    </div>
+  </div>
+</div>
+
+// Comment with Nested Reply (Thread) - Light Mode
+<div className="self-stretch p-4 bg-Backgrounds-highlight rounded-2xl shadow-[0px_1px_4px_0px_rgba(0,0,0,0.05)] shadow-[0px_8px_8px_-2px_rgba(0,0,0,0.08)] shadow-[inset_0px_0px_0px_3px_rgba(255,255,255,1.00)] outline outline-[1.50px] outline-offset-[-1.50px] outline-zinc-100 inline-flex justify-start items-center gap-6 overflow-hidden">
+  <div className="w-[720px] flex justify-start items-start gap-5">
+    <div className="h-12 flex justify-start items-center gap-2">
+      <div data-status="placeholder" className="w-6 h-6 relative overflow-hidden">
+        <div className="w-6 h-6 left-0 top-0 absolute rounded-md border-2 border-Stroke-Stroke2" />
+      </div>
+    </div>
+
+    <div className="flex-1 relative flex justify-start items-start gap-5">
+      <img className="w-12 h-12 relative rounded-[80px]" src="https://placehold.co/48x48" />
+
+      <div className="w-[608px] inline-flex flex-col justify-start items-start gap-4">
+        {/* Parent Comment */}
+        <div className="self-stretch flex flex-col justify-center items-start">
+          <div className="inline-flex justify-start items-center gap-3">
+            <div className="justify-start text-Text-Primary text-base font-semibold font-['Inter_Display'] leading-6 tracking-tight line-clamp-1">
+              Sam Stoof
+            </div>
+            <div className="flex justify-start items-center gap-2">
+              <div className="opacity-80 justify-start text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight line-clamp-1">
+                @samstoo
+              </div>
+              <div className="w-3 h-3 relative overflow-hidden">
+                <div className="w-0.5 h-0.5 left-[5px] top-[5px] absolute opacity-50 bg-Text-Tertiary rounded-full" />
+              </div>
+              <div className="opacity-80 justify-start text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight line-clamp-1">
+                2m
+              </div>
+            </div>
+          </div>
+          <div className="self-stretch inline-flex justify-center items-center gap-2">
+            <div className="flex-1 opacity-80 justify-start text-Text-Primary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight line-clamp-1">
+              Can you make a version for automated penetration testing and cybersecurity?
+            </div>
+          </div>
+        </div>
+
+        {/* Nested Reply */}
+        <div className="self-stretch inline-flex justify-start items-start gap-4">
+          <img className="w-8 h-8 relative rounded-[80px]" src="https://placehold.co/32x32" />
+
+          <div className="flex-1 inline-flex flex-col justify-start items-start gap-2">
+            <div className="self-stretch flex flex-col justify-center items-start">
+              <div className="inline-flex justify-start items-center gap-3">
+                <div className="justify-start text-Text-Primary text-base font-semibold font-['Inter_Display'] leading-6 tracking-tight line-clamp-1">
+                  Dash
+                </div>
+                <div className="flex justify-start items-center gap-2">
+                  <div className="opacity-80 justify-start text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight line-clamp-1">
+                    @dash
+                  </div>
+                  <div className="w-3 h-3 relative overflow-hidden">
+                    <div className="w-0.5 h-0.5 left-[5px] top-[5px] absolute opacity-50 bg-Text-Tertiary rounded-full" />
+                  </div>
+                  <div className="opacity-80 justify-start text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight line-clamp-1">
+                    1s
+                  </div>
+                </div>
+              </div>
+
+              {/* Reply Text with @mention */}
+              <div className="self-stretch opacity-80 justify-start">
+                <span className="text-Text-Primary text-sm font-medium font-['Inter_Display'] leading-5 tracking-tight line-clamp-3">
+                  Hey{" "}
+                </span>
+                <span className="text-Text-Primary text-sm font-medium font-['Inter_Display'] underline leading-5 tracking-tight line-clamp-3">
+                  @samstoo
+                </span>
+                <span className="text-Text-Primary text-sm font-medium font-['Inter_Display'] leading-5 tracking-tight line-clamp-3">
+                  ! 😊 We're working on cool stuff in the cybersecurity space. Stay tuned, and thanks for the awesome idea! 🔍✨
+                </span>
+              </div>
+            </div>
+
+            {/* Action Buttons for Nested Reply */}
+            <div className="w-56 h-6 relative">
+              <div className="left-[-4px] top-0 absolute inline-flex justify-start items-start gap-5">
+                <div className="pl-1 pr-1.5 py-1 rounded-md flex justify-start items-center gap-1">
+                  <div className="w-4 h-4 relative overflow-hidden">
+                    <div className="w-3 h-3 left-[2.50px] top-[2.05px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+                  </div>
+                  <div className="opacity-80 justify-start text-Text-Secondary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">
+                    Reply
+                  </div>
+                </div>
+                <div className="pl-1 pr-1.5 py-1 rounded-md flex justify-start items-center gap-1">
+                  <div className="w-4 h-4 relative overflow-hidden">
+                    <div className="w-3 h-3 left-[1.83px] top-[2.50px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+                  </div>
+                  <div className="opacity-80 justify-start text-Text-Secondary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">
+                    Like
+                  </div>
+                </div>
+                <div className="pl-1 pr-1.5 py-1 rounded-md flex justify-start items-center gap-1">
+                  <div className="w-4 h-4 relative overflow-hidden">
+                    <div className="w-3 h-3 left-[1.83px] top-[1.83px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+                  </div>
+                  <div className="opacity-80 justify-start text-Text-Secondary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">
+                    Remove
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Connection Line */}
+      <div className="w-8 h-9 left-[24px] top-[48px] absolute rounded-[10px] outline outline-[1.50px] outline-offset-[-0.75px] outline-Stroke-Stroke2" />
+    </div>
+  </div>
+
+  {/* Parent Action Buttons */}
+  <div className="w-96 h-16 relative">
+    {/* ...action buttons... */}
+  </div>
+</div>
+```
+
+#### Usage Notes
+
+**Comment Row Component:**
+- Используйте для систем комментариев, отзывов, discussions
+- Поддерживает checkbox для bulk operations
+- Avatar круглый (border-radius: 80px)
+- Product context показывает связь комментария с товаром/темой
+
+**States Overview:**
+- **Default**: simple row без выделения
+- **Border Separator**: разделяет комментарии в списке (light/dark variants)
+- **Highlighted**: активный комментарий с elevated appearance и action buttons
+- **With Reply Input**: показывает inline reply field
+- **With Nested Reply**: creates conversation thread с connection line
+- **Unread Indicator**: green dot для new comments
+
+**Highlighted State:**
+- Light mode: 3 shadow layers для depth (soft + depth + white inset)
+- Dark mode: cleaner без теней, только outline
+- Action buttons появляются справа
+- Border radius `rounded-2xl` выделяет из списка
+- Width slightly narrower (`w-[608px]`) для action buttons space
+
+**Reply Input Field:**
+- Pill shape (`rounded-[80px]`)
+- Light mode: `bg-Backgrounds-surface2`
+- Dark mode: `bg-shade05-20/20` (semi-transparent)
+- Contains: reply icon + @mention + cursor + Send button
+- @mention underlined в reply text
+- Cursor indicator: blue vertical line (`bg-Text-Blue`)
+
+**Nested Replies:**
+- Smaller avatar: `w-8 h-8` (vs parent `w-12 h-12`)
+- Connection line: rounded rectangle outline
+- Positioned: `left-[24px] top-[48px] absolute`
+- Indented from parent comment
+- Full action buttons: Reply, Like, Remove
+- Supports @mentions с underline
+
+**Unread Indicator:**
+- Green dot: `bg-Primary-primary02`
+- Position: top-right corner (`left-[1124px] top-[16px]`)
+- Always visible until marked as read
+- Draws attention to new comments
+
+**Action Buttons:**
+- **Reply**: opens inline reply field
+- **Like**: toggles liked state (outline → filled heart)
+- **Remove**: deletes comment (requires confirmation)
+- Default: no outline, secondary colors
+- Hover: with outline border, primary colors
+- Compact: `pl-1 pr-1.5 py-1`
+
+**Like Button States:**
+- Not Liked: outline heart icon (`outline-Text-Secondary`)
+- Liked: filled heart (`bg-Primary-primary03` blue)
+- Icon size changes: `w-3 h-3` → `w-3.5 h-3` when filled
+- Text color: secondary → primary when liked
+
+**Send Button:**
+- Light mode: dark gradient (`from-zinc-800`)
+- Dark mode: light gradient (`from-white to-neutral-200`)
+- Inset shadow для depth effect
+- Height: `h-11` (matches input field)
+- Prominent appearance для primary action
+
+**Dot Separator:**
+- Tiny dot (`w-0.5 h-0.5`) between user info elements
+- Opacity: 50%
+- Color: `bg-Text-Tertiary`
+- Creates subtle visual separation
+
+**Time Stamps:**
+- Relative format: "19h", "2m", "1s"
+- Opacity: 80%
+- Secondary text color
+- Updates in real-time
+
+**Product Context:**
+- Shows which product/topic comment belongs to
+- Image: `w-16 h-16 rounded-xl`
+- Title + category below
+- Right side of row
+- Helps users identify context quickly
+
+**@Mentions:**
+- Underlined в reply text
+- Links to user profile
+- Auto-complete при typing
+- Blue cursor indicator shows typing position
+
+**Threading:**
+- Connection line creates visual hierarchy
+- Supports nested discussions
+- Smaller avatars для replies
+- Same action buttons at all levels
+- Can nest multiple levels deep
+
+**Responsive Behavior:**
+- Desktop: two-column layout (comment + product)
+- Tablet: may wrap text, shrink product section
+- Mobile: stack vertically, full width elements
+- Action buttons may be always visible on touch devices
+
+**Border Separators:**
+- Light mode: `border-Stroke-Subtle/10` (very subtle)
+- Dark mode: `border-Stroke-Subtle` (more visible)
+- Only between rows, not on first/last
+- Creates visual rhythm in long lists
+
+**Accessibility:**
+- Checkbox для keyboard navigation
+- Action buttons keyboard accessible
+- Clear focus states
+- Screen reader friendly structure
+- Relative time stamps update
+
+---
+
 ## Как использовать эту дизайн-систему
 
 ### Для дизайнеров
