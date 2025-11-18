@@ -5252,6 +5252,702 @@ Container (w-[1180px] bg-Backgrounds-surface2)
 
 ---
 
+## 37. Product Grid View / Products Gallery
+
+### Описание / Description
+
+Полноценный компонент галереи продуктов с grid layout, переключением view modes (grid/list), поиском и hover состояниями с быстрыми действиями. Карточки продуктов показывают изображение, название, цену и рейтинг.
+
+Complete product gallery component with grid layout, view mode switching (grid/list), search, and hover states with quick actions. Product cards display image, title, price, and rating.
+
+### Спецификация / Specification
+
+#### Базовая структура / Base Structure
+
+```
+Container (w-[1180px] bg-Backgrounds-surface2)
+├── Header Section
+│   ├── Left: Title + Search Input
+│   └── Right: View Toggle (Grid/List buttons)
+└── Product Grid
+    ├── Product Card 1 (default state)
+    ├── Product Card 2 (hover state)
+    └── ... (multiple cards, flex-wrap)
+
+Product Card Structure:
+├── Image Container (h-56)
+│   ├── Product Image
+│   ├── Hover Overlay (opacity-30)
+│   └── Checkbox (hover only)
+├── Card Content
+│   ├── Title + Price Badge
+│   └── Rating (star + count)
+└── Hover Actions (positioned absolute)
+    ├── Edit button
+    ├── Delete button
+    ├── Unpublish button
+    └── Drag handle icon
+```
+
+#### Dimensions
+
+**Container:**
+- Width: `w-[1180px]`
+- Border radius: `rounded-[32px]`
+- Padding: varies by section
+
+**Header Section:**
+- Padding: `p-3` (12px all sides)
+- Height: `h-12` (48px) для элементов
+- Search input: `w-72` (288px)
+- View toggle buttons: `w-6 h-6` (24x24px icon area)
+- Button padding: `p-3` (12px)
+- Button border radius: `rounded-[48px]`
+
+**Product Grid:**
+- Padding: `px-8 pt-5 pb-8` (32px horizontal, 20px top, 32px bottom)
+- Gap between cards: `gap-6` (24px)
+- Layout: flex-wrap
+
+**Product Card:**
+- Min width: `min-w-72` (288px)
+- Flex: `flex-1` (равномерное распределение)
+- Gap between elements: `gap-3` (12px)
+
+**Image Container:**
+- Height: `h-56` (224px)
+- Width: `w-96` (384px) или self-stretch
+- Border radius: `rounded-3xl`
+
+**Card Content:**
+- Gap between rows: `gap-1` (4px)
+- Title/Price row: space-between
+- Rating row: gap-2.5 (10px)
+
+#### Typography
+
+**Page Title ("Products"):**
+- Font: `font-['Inter_Display']`
+- Size: `text-2xl` (24px)
+- Weight: `font-medium` (500)
+- Line height: `leading-9` (36px)
+- Letter spacing: `tracking-tight`
+- Color: `text-Text-Primary`
+
+**Search Placeholder:**
+- Font: `font-['Inter_Display']`
+- Size: `text-sm` (14px)
+- Weight: `font-normal` (400)
+- Line height: `leading-5` (20px)
+- Color: `text-Text-Secondary`
+
+**Product Title:**
+- Font: `font-['Inter_Display']`
+- Size: `text-base` (16px)
+- Weight: `font-semibold` (600)
+- Line height: `leading-6` (24px)
+- Letter spacing: `tracking-tight`
+- Color: `text-Text-Primary`
+- Truncation: `line-clamp-1`
+
+**Price:**
+- Font: `font-['Inter_Display']`
+- Size: `text-sm` (14px)
+- Weight: `font-semibold` (600)
+- Line height: `leading-4` (16px)
+- Color: `text-Primary-primary02` (green)
+
+**Rating Number:**
+- Font: `font-['Inter_Display']`
+- Size: `text-sm` (14px)
+- Weight: `font-semibold` (600)
+- Line height: `leading-4` (16px)
+- Color: `text-Text-Primary`
+
+**Rating Count:**
+- Font: `font-['Inter_Display']`
+- Size: `text-sm` (14px)
+- Weight: `font-normal` (400)
+- Line height: `leading-5` (20px)
+- Color: `text-Text-Secondary`
+
+**Action Button Labels:**
+- Font: `font-['Inter_Display']`
+- Size: `text-sm` (14px)
+- Weight: `font-semibold` (600)
+- Line height: `leading-4` (16px)
+- Color: varies by state
+- Opacity: `opacity-80`
+
+#### Colors and Theming
+
+**Container (Light Mode):**
+- Background: `bg-Backgrounds-surface2`
+- Border radius: `rounded-[32px]`
+- Shadow layer 1: `shadow-[0px_6px_4px_-4px_rgba(8,8,8,0.05)]`
+- Shadow layer 2: `shadow-[0px_5px_1.5px_-4px_rgba(8,8,8,0.09)]`
+- Outline: `outline-[1.50px] outline-offset-[-1.50px]`
+- Border: subtle (without explicit border class in light mode)
+
+**Container (Dark Mode):**
+- Background: `bg-Backgrounds-surface2` (darker via CSS vars)
+- Shadow layer 1: `shadow-[0px_6px_4px_-4px_rgba(8,8,8,0.05)]` (same)
+- Shadow layer 2: `shadow-[0px_5px_1.5px_-4px_rgba(8,8,8,0.50)]` (stronger)
+- Outline: `outline-[1.50px] outline-offset-[-1.50px] outline-white`
+
+**Search Input (Light Mode):**
+- Background: `bg-Backgrounds-surface1`
+- Border radius: `rounded-[90px]`
+- Padding: `pl-3 pr-5 py-3`
+- No explicit outline
+
+**Search Input (Dark Mode):**
+- Background: `bg-Backgrounds-surface1`
+- Border radius: `rounded-[90px]`
+- Padding: `pl-3 pr-5 py-3`
+- Outline: `outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Subtle`
+
+**View Toggle - Grid Button (Active):**
+- Background: transparent
+- Border radius: `rounded-[48px]`
+- Padding: `p-3`
+- Outline: `outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2`
+- Icon color: `outline-Text-Primary`
+
+**View Toggle - List Button (Default):**
+- Background: transparent
+- Border radius: `rounded-[48px]`
+- Padding: `p-3`
+- No outline
+- Icon color: `outline-Text-Secondary`
+
+**Product Image:**
+- Background: `bg-gray-200` (placeholder)
+- Border radius: `rounded-3xl`
+
+**Hover Overlay:**
+- Background: `bg-Backgrounds-dark1`
+- Opacity: `opacity-30`
+- Покрывает всю image area
+
+**Checkbox (Hover State):**
+- Background: `bg-Backgrounds-surface2`
+- Border: `border-2 border-Stroke-Stroke2`
+- Border radius: `rounded-md`
+- Position: left-[16px] top-[16px]
+- Size: `w-6 h-6`
+
+**Price Badge:**
+- Background: `bg-green-600/5` (5% opacity green)
+- Outline: `outline-[1.50px] outline-offset-[-1.50px] outline-green-600/20`
+- Border radius: `rounded-lg`
+- Padding: `px-3 py-1.5`
+- Width: `w-12`
+
+**Action Buttons:**
+
+*Default state (Edit, Unpublish):*
+- Background: transparent
+- Border radius: `rounded-md`
+- Padding: `pl-1 pr-1.5 py-1`
+- Icon: `outline-Text-Secondary`
+- Text: `text-Text-Secondary opacity-80`
+
+*Hover state (Delete shown as example):*
+- Background: transparent
+- Border radius: `rounded-md`
+- Padding: `pl-1 pr-1.5 py-1`
+- Outline: `outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2`
+- Icon: `outline-Text-Primary`
+- Text: `text-Text-Primary opacity-80`
+
+**Rating Star Icon:**
+- Background: `bg-Text-Secondary`
+- Size: `w-4 h-4` (positioned within `w-5 h-5` container)
+
+#### Layout Structure
+
+**Header Section:**
+- Display: `inline-flex justify-between items-center`
+- Full width: `self-stretch`
+- Padding: `p-3`
+- Left section: `h-12 pl-5 flex justify-center items-center gap-6`
+  - Contains: title + search input
+- Right section: `flex justify-start items-center gap-2`
+  - Contains: grid button + list button
+
+**Product Grid:**
+- Display: `inline-flex justify-start items-center gap-6 flex-wrap content-center`
+- Width: `w-[1180px]`
+- Padding: `px-8 pt-5 pb-8`
+- Cards automatically wrap to new rows
+
+**Product Card:**
+- Display: `inline-flex flex-col justify-start items-start`
+- Flex: `flex-1 min-w-72`
+- Gap: `gap-3` (between image and content)
+- Responsive: grows/shrinks with container
+
+**Card Content Section:**
+- Display: `flex flex-col justify-center items-start`
+- Gap: `gap-1` (4px between rows)
+- Full width: `self-stretch`
+
+**Title + Price Row:**
+- Display: `inline-flex justify-between items-center`
+- Full width: `self-stretch`
+
+**Rating Row:**
+- Display: `inline-flex justify-start items-start`
+- Gap: `gap-2.5` (10px)
+- Width: `w-20` (80px) minimum
+
+#### States
+
+##### Default State (No Hover)
+
+**Card appearance:**
+- Image: full visibility, no overlay
+- Checkbox: hidden
+- Action buttons: hidden
+- Drag handle: hidden
+- Content: always visible (title, price, rating)
+
+**Components visible:**
+- Product image
+- Product title (truncated to 1 line)
+- Price badge (green)
+- Rating: star icon + number + count
+
+##### Hover State
+
+**Card appearance:**
+- Image: `opacity-30 bg-Backgrounds-dark1` overlay applied
+- Checkbox: appears in top-left (16px, 16px)
+- Action buttons: appear below content (Edit, Delete, Unpublish)
+- Drag handle: appears (positioned absolute)
+- Content: remains visible
+
+**Hover overlay:**
+- Full image coverage: `w-96 h-56`
+- Position: `left-0 top-0 absolute`
+- Background: `bg-Backgrounds-dark1`
+- Opacity: `opacity-30`
+
+**Checkbox appearance:**
+- Position: `left-[16px] top-[16px] absolute`
+- Size: `w-6 h-6`
+- Background: `bg-Backgrounds-surface2`
+- Border: `border-2 border-Stroke-Stroke2`
+- Border radius: `rounded-md`
+- Status: `data-status="placeholder"`
+
+**Action Buttons Row:**
+- Position: `left-[-4px] top-0 absolute` (relative to card content)
+- Display: `inline-flex justify-start items-start gap-2`
+- Contains: Edit, Delete, Unpublish buttons
+- Width: `w-56 h-6`
+
+**Action Button States:**
+- Edit: default appearance (no outline)
+- Delete: hover appearance (with outline) - shown as example
+- Unpublish: default appearance (no outline)
+
+**Drag Handle:**
+- Position: `left-[90px] top-[35px] absolute`
+- Size: `w-8 h-8`
+- Complex SVG path structure
+- Colors: bg-white + outline-black
+- Used for reordering cards
+
+##### Grid View Active
+
+**Header:**
+- Grid button: `data-property-2="active"` with outline
+- List button: `data-property-2="default"` no outline
+
+**Grid layout:**
+- Cards displayed in grid with flex-wrap
+- Multiple cards per row (typically 3 cards)
+- Equal width distribution via `flex-1 min-w-72`
+
+##### List View Active (not shown but implied)
+
+**Header:**
+- Grid button: no outline
+- List button: with outline
+
+**List layout:**
+- Cards displayed vertically (one per row)
+- Full width for each card
+- Similar to table rows from section 33/34
+
+#### Icon Specifications
+
+**Search Icon:**
+- Circle: `w-3 h-3` at position `left-[6.75px] top-[4.48px]`
+- Handle: `w-1 h-1` at position `left-[4.87px] top-[15.60px]`
+- Outline: `outline-[1.50px] outline-offset-[-0.75px]`
+- Color: `outline-Text-Secondary`
+
+**Grid Icon (View Toggle):**
+- Size: `w-4 h-4` at position `left-[3.75px] top-[3.75px]`
+- Outline: `outline-[1.50px] outline-offset-[-0.75px]`
+- Color: active = `outline-Text-Primary`, default = `outline-Text-Secondary`
+- Shape: grid squares
+
+**List Icon (View Toggle):**
+- Size: `w-4 h-3.5` at position `left-[3.75px] top-[5.25px]`
+- Outline: `outline-[1.50px] outline-offset-[-0.75px]`
+- Color: active = `outline-Text-Primary`, default = `outline-Text-Secondary`
+- Shape: horizontal lines
+
+**Rating Star Icon:**
+- Size: `w-4 h-4` at position `left-[1.25px] top-[0.83px]`
+- Background: `bg-Text-Secondary` (filled)
+- Container: `w-5 h-5`
+
+**Action Button Icons:**
+
+*Edit icon:*
+- Size: `w-3 h-3` at position `left-[2.50px] top-[2.05px]`
+- Outline: `outline-[1.50px] outline-offset-[-0.75px]`
+- Shape: pencil/edit
+
+*Delete icon:*
+- Size: `w-3 h-3` at position `left-[1.83px] top-[1.83px]`
+- Outline: `outline-[1.50px] outline-offset-[-0.75px]`
+- Shape: trash/delete
+
+*Unpublish icon:*
+- Size: `w-3 h-3` at position `left-[2px] top-[2px]`
+- Outline: `outline-[1.50px] outline-offset-[-0.75px]`
+- Shape: unpublish/hide
+
+**Drag Handle:**
+- Complex multi-part SVG
+- Size: `w-8 h-8`
+- Main shape: `w-3.5 h-4` at `left-[10.47px] top-[10.17px]`
+- Multiple small elements for grip dots
+- Colors: bg-white with outline-black
+
+#### Responsive Behavior
+
+**Desktop (>1180px):**
+- Full `w-[1180px]` width
+- 3 cards per row (flex-1 min-w-72)
+- All elements visible
+
+**Tablet (768px - 1180px):**
+- Container adapts to available width
+- 2 cards per row
+- Search input может сокращаться
+- Grid/list toggle остается
+
+**Mobile (<768px):**
+- Single column layout
+- 1 card per row
+- Search может перемещаться на новую строку
+- View toggle может скрываться (force grid view)
+- Hover actions могут быть always visible или accessible via tap
+
+**Card Flexibility:**
+- `flex-1`: cards grow to fill available space
+- `min-w-72`: minimum width 288px before wrapping
+- `flex-wrap`: cards wrap to new row when needed
+- `content-center`: centers wrapped content
+
+#### Shadow Stacking (Depth)
+
+**Light Mode Shadows:**
+- Layer 1: `0px 6px 4px -4px rgba(8,8,8,0.05)` - soft outer shadow
+- Layer 2: `0px 5px 1.5px -4px rgba(8,8,8,0.09)` - subtle definition
+- Combined effect: soft floating appearance
+
+**Dark Mode Shadows:**
+- Layer 1: `0px 6px 4px -4px rgba(8,8,8,0.05)` - same soft shadow
+- Layer 2: `0px 5px 1.5px -4px rgba(8,8,8,0.50)` - much stronger
+- Combined effect: more pronounced depth
+
+**Purpose:**
+- Creates elevation for entire gallery container
+- Separates gallery from page background
+- More subtle in light mode, more dramatic in dark mode
+
+#### Пример использования / Usage Example
+
+```jsx
+// Product Grid View - Light Mode
+<div className="w-[1180px] bg-Backgrounds-surface2 rounded-[32px] shadow-[0px_6px_4px_-4px_rgba(8,8,8,0.05)] shadow-[0px_5px_1.5px_-4px_rgba(8,8,8,0.09)] outline outline-[1.50px] outline-offset-[-1.50px] inline-flex flex-col justify-start items-center gap-3 overflow-hidden">
+
+  {/* Header Section */}
+  <div data-state="Grid" className="self-stretch p-3 inline-flex justify-between items-center">
+    {/* Left: Title + Search */}
+    <div className="h-12 pl-5 flex justify-center items-center gap-6">
+      <div className="justify-start text-Text-Primary text-2xl font-medium font-['Inter_Display'] leading-9 tracking-tight">
+        Products
+      </div>
+
+      {/* Search Input */}
+      <div
+        data-light-mode="True"
+        data-state="default"
+        className="w-72 pl-3 pr-5 py-3 bg-Backgrounds-surface1 rounded-[90px] flex justify-start items-center gap-2 overflow-hidden"
+      >
+        <div className="w-6 h-6 relative overflow-hidden">
+          <div className="w-3 h-3 left-[6.75px] top-[4.48px] absolute rounded-full outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+          <div className="w-1 h-1 left-[4.87px] top-[15.60px] absolute rounded-sm outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+        </div>
+        <div className="justify-start text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">
+          Search products
+        </div>
+      </div>
+    </div>
+
+    {/* Right: View Toggle */}
+    <div className="flex justify-start items-center gap-2">
+      {/* Grid Button - Active */}
+      <div
+        data-property-1="grid"
+        data-property-2="active"
+        className="p-3 rounded-[48px] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 inline-flex flex-col justify-center items-center gap-2.5 overflow-hidden"
+      >
+        <div className="w-6 h-6 relative overflow-hidden">
+          <div className="w-4 h-4 left-[3.75px] top-[3.75px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Primary" />
+        </div>
+      </div>
+
+      {/* List Button - Default */}
+      <div
+        data-property-1="list"
+        data-property-2="default"
+        className="p-3 rounded-[48px] inline-flex flex-col justify-center items-center gap-2.5 overflow-hidden"
+      >
+        <div className="w-6 h-6 relative overflow-hidden">
+          <div className="w-4 h-3.5 left-[3.75px] top-[5.25px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {/* Product Grid */}
+  <div className="w-[1180px] px-8 pt-5 pb-8 inline-flex justify-start items-center gap-6 flex-wrap content-center">
+
+    {/* Product Card - Default State */}
+    <div
+      data-property-1="Default"
+      className="flex-1 min-w-72 inline-flex flex-col justify-start items-start gap-3"
+    >
+      {/* Image Container */}
+      <div className="self-stretch h-56 relative bg-gray-200 rounded-3xl overflow-hidden">
+        <img
+          className="w-96 h-56 left-0 top-0 absolute"
+          src="https://placehold.co/356x230"
+        />
+      </div>
+
+      {/* Card Content */}
+      <div className="self-stretch flex flex-col justify-center items-start gap-1">
+        {/* Title + Price */}
+        <div className="self-stretch inline-flex justify-between items-center">
+          <div className="justify-start text-Text-Primary text-base font-semibold font-['Inter_Display'] leading-6 tracking-tight line-clamp-1">
+            Bento Design System
+          </div>
+          <div
+            data-property-1="Default"
+            className="w-12 px-3 py-1.5 bg-green-600/5 rounded-lg outline outline-[1.50px] outline-offset-[-1.50px] outline-green-600/20 flex justify-center items-center gap-1"
+          >
+            <div className="justify-start text-Primary-primary02 text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">
+              $98
+            </div>
+          </div>
+        </div>
+
+        {/* Rating */}
+        <div className="w-20 inline-flex justify-start items-start gap-2.5">
+          <div className="flex justify-start items-center gap-2">
+            <div className="w-5 h-5 relative overflow-hidden">
+              <div className="w-4 h-4 left-[1.25px] top-[0.83px] absolute bg-Text-Secondary" />
+            </div>
+            <div className="flex justify-start items-center gap-1">
+              <div className="justify-start text-Text-Primary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">
+                4.8
+              </div>
+              <div className="justify-start text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">
+                (88)
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* Product Card - Hover State */}
+    <div
+      data-property-1="hover"
+      className="flex-1 min-w-72 inline-flex flex-col justify-start items-start gap-3"
+    >
+      {/* Image Container with Overlay */}
+      <div className="self-stretch h-56 relative bg-gray-200 rounded-3xl overflow-hidden">
+        <img
+          className="w-96 h-56 left-0 top-0 absolute"
+          src="https://placehold.co/356x230"
+        />
+
+        {/* Hover Overlay */}
+        <div className="w-96 h-56 left-0 top-0 absolute opacity-30 bg-Backgrounds-dark1" />
+
+        {/* Checkbox (appears on hover) */}
+        <div
+          data-status="placeholder"
+          className="w-6 h-6 left-[16px] top-[16px] absolute overflow-hidden"
+        >
+          <div className="w-6 h-6 left-0 top-0 absolute bg-Backgrounds-surface2 rounded-md border-2 border-Stroke-Stroke2" />
+        </div>
+      </div>
+
+      {/* Card Content with Hover Actions */}
+      <div className="self-stretch relative flex flex-col justify-center items-start gap-1">
+        {/* Title + Price */}
+        <div className="self-stretch inline-flex justify-between items-center">
+          <div className="justify-start text-Text-Primary text-base font-semibold font-['Inter_Display'] leading-6 tracking-tight line-clamp-1">
+            Bento Design System
+          </div>
+          <div
+            data-property-1="Default"
+            className="w-12 px-3 py-1.5 bg-green-600/5 rounded-lg outline outline-[1.50px] outline-offset-[-1.50px] outline-green-600/20 flex justify-center items-center gap-1"
+          >
+            <div className="justify-start text-Primary-primary02 text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">
+              $98
+            </div>
+          </div>
+        </div>
+
+        {/* Action Buttons Row (appears on hover) */}
+        <div className="w-56 h-6 relative">
+          <div className="left-[-4px] top-0 absolute inline-flex justify-start items-start gap-2">
+            {/* Edit Button - Default */}
+            <div
+              data-property-1="default"
+              className="pl-1 pr-1.5 py-1 rounded-md flex justify-start items-center gap-1"
+            >
+              <div className="w-4 h-4 relative overflow-hidden">
+                <div className="w-3 h-3 left-[2.50px] top-[2.05px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+              </div>
+              <div className="opacity-80 justify-start text-Text-Secondary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">
+                Edit
+              </div>
+            </div>
+
+            {/* Delete Button - Hover */}
+            <div
+              data-property-1="hover"
+              className="pl-1 pr-1.5 py-1 rounded-md outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 flex justify-start items-center gap-1"
+            >
+              <div className="w-4 h-4 relative overflow-hidden">
+                <div className="w-3 h-3 left-[1.83px] top-[1.83px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Primary" />
+              </div>
+              <div className="opacity-80 justify-start text-Text-Primary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">
+                Delete
+              </div>
+            </div>
+
+            {/* Unpublish Button - Default */}
+            <div
+              data-property-1="default"
+              className="pl-1 pr-1.5 py-1 rounded-md flex justify-start items-center gap-1"
+            >
+              <div className="w-4 h-4 relative">
+                <div className="w-3 h-3 left-[2px] top-[2px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+              </div>
+              <div className="opacity-80 justify-start text-Text-Secondary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">
+                Unpublish
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Drag Handle (positioned absolute) */}
+        <div className="w-8 h-8 left-[90px] top-[35px] absolute">
+          <div className="w-3.5 h-4 left-[10.47px] top-[10.17px] absolute bg-white" />
+          <div className="w-3.5 h-4 left-[10.47px] top-[10.17px] absolute outline outline-[0.75px] outline-offset-[-0.38px] outline-black" />
+          <div className="w-0 h-1 left-[20.68px] top-[18.33px] absolute outline outline-[0.75px] outline-offset-[-0.38px] outline-black" />
+          <div className="w-[0.01px] h-1 left-[18.53px] top-[18.33px] absolute outline outline-[0.75px] outline-offset-[-0.38px] outline-black" />
+          <div className="w-[0.02px] h-1 left-[16.42px] top-[18.36px] absolute outline outline-[0.75px] outline-offset-[-0.38px] outline-black" />
+        </div>
+      </div>
+    </div>
+
+    {/* Additional cards... (repeat pattern) */}
+  </div>
+</div>
+
+// Dark Mode Variant
+<div className="w-[1180px] bg-Backgrounds-surface2 rounded-[32px] shadow-[0px_6px_4px_-4px_rgba(8,8,8,0.05)] shadow-[0px_5px_1.5px_-4px_rgba(8,8,8,0.50)] outline outline-[1.50px] outline-offset-[-1.50px] outline-white inline-flex flex-col justify-start items-center gap-3 overflow-hidden">
+
+  {/* Header Section */}
+  <div data-state="Grid" className="self-stretch p-3 inline-flex justify-between items-center">
+    <div className="h-12 pl-5 flex justify-center items-center gap-6">
+      <div className="justify-start text-Text-Primary text-2xl font-medium font-['Inter_Display'] leading-9 tracking-tight">
+        Products
+      </div>
+
+      {/* Search Input - Dark Mode with outline */}
+      <div
+        data-light-mode="False"
+        data-state="default"
+        className="w-72 pl-3 pr-5 py-3 bg-Backgrounds-surface1 rounded-[90px] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Subtle flex justify-start items-center gap-2 overflow-hidden"
+      >
+        <div className="w-6 h-6 relative overflow-hidden">
+          <div className="w-3 h-3 left-[6.75px] top-[4.48px] absolute rounded-full outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+          <div className="w-1 h-1 left-[4.87px] top-[15.60px] absolute rounded-sm outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+        </div>
+        <div className="justify-start text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">
+          Search products
+        </div>
+      </div>
+    </div>
+
+    {/* View Toggle - same as light mode */}
+    <div className="flex justify-start items-center gap-2">
+      {/* Grid and List buttons... */}
+    </div>
+  </div>
+
+  {/* Product Grid - same structure as light mode */}
+  <div className="w-[1180px] px-8 pt-5 pb-8 inline-flex justify-start items-center gap-6 flex-wrap content-center">
+    {/* Product cards... */}
+  </div>
+</div>
+```
+
+#### Usage Notes
+
+- Компонент объединяет header с view toggles и grid layout продуктов
+- Grid/List toggle переключает между grid и list views (list view использует table layout из sections 33-34)
+- Hover состояние показывает overlay, checkbox и quick actions
+- Action buttons: Edit, Delete, Unpublish с разными состояниями
+- Drag handle позволяет перетаскивать карточки для изменения порядка
+- Checkbox в hover state позволяет множественный выбор для bulk actions
+- Price badge использует green color scheme для привлечения внимания
+- Rating показывает star icon + numeric rating + count отзывов
+- Responsive: карточки автоматически wrappятся на новые строки
+- Light/dark mode различаются:
+  - Shadow strength (layer 2: 0.09 vs 0.50)
+  - Container outline (subtle vs white)
+  - Search input outline (none vs Stroke-Subtle)
+- Multiple shadow layers создают depth и elevation
+- Image overlay на hover: opacity-30 темного фона
+- Cards используют `flex-1 min-w-72` для responsive grid
+- Title truncation: `line-clamp-1` предотвращает overflow
+- Action buttons могут быть в default или hover состоянии
+- Drag handle имеет сложную SVG структуру для grip визуала
+- Можно комбинировать с pagination или "Load more" button
+- Search интегрируется с filtering логикой
+- View state сохраняется через `data-state` attribute
+
+---
+
 ## Как использовать эту дизайн-систему
 
 ### Для дизайнеров
