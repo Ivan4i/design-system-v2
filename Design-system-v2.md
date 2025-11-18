@@ -4569,6 +4569,79 @@ Container (w-[1148px] p-4)
 - Checkbox: checked appearance
 - Возможно выделение всей строки
 
+##### Highlighted/Active Row State
+
+**Purpose:**
+- Показывает активную/выбранную строку с prominent выделением
+- Используется для drag-and-drop preview, active editing, или focused item
+
+**Visual Appearance (Light Mode):**
+- Background: `bg-Backgrounds-highlight`
+- Border radius: `rounded-2xl` (вместо без border radius)
+- Multiple shadow layers:
+  - Layer 1: `shadow-[0px_1px_4px_0px_rgba(0,0,0,0.05)]` - soft shadow
+  - Layer 2: `shadow-[0px_8px_8px_-2px_rgba(0,0,0,0.08)]` - depth shadow
+  - Layer 3: `shadow-[inset_0px_0px_0px_3px_rgba(255,255,255,1.00)]` - white inset border effect
+- Outline: `outline-[1.50px] outline-offset-[-1.50px] outline-zinc-100`
+- Padding: `p-4` (same as default)
+
+**Visual Appearance (Dark Mode):**
+- Background: `bg-Backgrounds-highlight` (lighter in dark mode via CSS vars)
+- Border radius: `rounded-2xl`
+- Outline: `outline-[1.50px] outline-offset-[-1.50px] outline-zinc-100`
+- NO multiple shadows (cleaner appearance)
+- Checkbox border: `border-Stroke-Highlight/50` (вместо Stroke-Stroke2)
+
+**Content Changes:**
+- URL строка заменяется на action buttons
+- Action buttons: Edit, Delete, Schedule (или другие actions)
+- Buttons располагаются в том же месте где URL
+- Same layout для category, price, date
+
+**Action Buttons:**
+- Padding: `pl-1 pr-1.5 py-1`
+- Border radius: `rounded-md`
+- Gap: `gap-2` between buttons
+- Icon: `w-4 h-4` with `w-3 h-3` shape inside
+- Text: `text-sm font-semibold opacity-80 text-Text-Secondary`
+- Default state: no outline
+- Hover state: with `outline-Stroke-Stroke2`
+
+##### Row with Border Separator
+
+**Light Mode:**
+- Border bottom: `border-b-[1.50px] border-Stroke-Subtle/10`
+- Используется между строками в списке
+
+**Dark Mode:**
+- Border bottom: `border-b-[1.50px] border-Stroke-Subtle`
+- More visible border для contrast
+
+#### Price Badge Variants
+
+**Active/Paid Price (Green):**
+- Background: `bg-green-600/5` (5% opacity green)
+- Outline: `outline-[1.50px] outline-offset-[-1.50px] outline-green-600/20`
+- Text color: `text-Primary-primary02` (green)
+- Border radius: `rounded-lg`
+- Padding: `px-3 py-1.5`
+- Width: `w-12`
+- Example: "$98", "$49", "$299"
+
+**Free/Zero Price (Gray):**
+- Background: `bg-Backgrounds-surface1`
+- Outline: `outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2`
+- Text color: `text-Text-Primary`
+- Border radius: `rounded-lg`
+- Padding: `px-3 py-1.5`
+- Width: `w-12`
+- Example: "$0.0", "Free"
+
+**Usage:**
+- Green badge: для платных продуктов, привлекает внимание к цене
+- Gray badge: для бесплатных продуктов, нейтральный appearance
+- Consistent width для alignment в таблице
+
 #### Responsive Behavior
 
 - Fixed width: `w-[1148px]` для desktop layouts
@@ -4634,6 +4707,131 @@ Container (w-[1148px] p-4)
     </div>
   </div>
 </div>
+
+// Highlighted/Active Row - Light Mode
+<div className="w-[1148px] p-4 bg-Backgrounds-highlight rounded-2xl shadow-[0px_1px_4px_0px_rgba(0,0,0,0.05)] shadow-[0px_8px_8px_-2px_rgba(0,0,0,0.08)] shadow-[inset_0px_0px_0px_3px_rgba(255,255,255,1.00)] outline outline-[1.50px] outline-offset-[-1.50px] outline-zinc-100 inline-flex justify-start items-start gap-6 overflow-hidden">
+  {/* Left Section */}
+  <div className="w-96 h-16 flex justify-start items-center gap-5">
+    <div data-status="placeholder" className="w-6 h-6 relative overflow-hidden">
+      <div className="w-6 h-6 left-0 top-0 absolute rounded-md border-2 border-Stroke-Stroke2" />
+    </div>
+
+    <img
+      className="w-16 h-16 relative rounded-xl"
+      src="https://placehold.co/64x64"
+    />
+
+    <div className="flex-1 self-stretch inline-flex flex-col justify-center items-start">
+      <div className="self-stretch justify-start text-Text-Primary text-base font-semibold font-['Inter_Display'] leading-6 tracking-tight line-clamp-1">
+        Bento Matte 3D Illustration
+      </div>
+
+      {/* Action Buttons instead of URL */}
+      <div className="inline-flex justify-start items-start gap-2">
+        {/* Edit Button */}
+        <div
+          data-property-1="default"
+          className="pl-1 pr-1.5 py-1 rounded-md flex justify-start items-center gap-1"
+        >
+          <div className="w-4 h-4 relative overflow-hidden">
+            <div className="w-3 h-3 left-[2.50px] top-[2.05px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+          </div>
+          <div className="opacity-80 justify-start text-Text-Secondary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">
+            Edit
+          </div>
+        </div>
+
+        {/* Delete Button */}
+        <div
+          data-property-1="default"
+          className="pl-1 pr-1.5 py-1 rounded-md flex justify-start items-center gap-1"
+        >
+          <div className="w-4 h-4 relative overflow-hidden">
+            <div className="w-3 h-3 left-[1.83px] top-[1.83px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+          </div>
+          <div className="opacity-80 justify-start text-Text-Secondary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">
+            Delete
+          </div>
+        </div>
+
+        {/* Schedule Button */}
+        <div
+          data-property-1="default"
+          className="pl-1 pr-1.5 py-1 rounded-md flex justify-start items-center gap-1"
+        >
+          <div className="w-4 h-4 relative">
+            <div className="w-3 h-3 left-[2px] top-[2px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+          </div>
+          <div className="opacity-80 justify-start text-Text-Secondary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">
+            Schedule
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {/* Right Section */}
+  <div className="flex-1 py-2 flex justify-start items-center gap-12">
+    <div className="flex justify-start items-center gap-2">
+      <div className="w-6 h-6 relative overflow-hidden">
+        <div className="w-4 h-4 left-[3.75px] top-[3.75px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+      </div>
+      <div className="w-32 justify-start text-Text-Primary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">
+        UI Design Kit
+      </div>
+    </div>
+
+    <div className="w-28 h-7 relative">
+      <div className="w-12 px-3 py-1.5 left-0 top-0 absolute bg-green-600/5 rounded-lg outline outline-[1.50px] outline-offset-[-1.50px] outline-green-600/20 inline-flex justify-center items-center gap-1">
+        <div className="justify-start text-Primary-primary02 text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">
+          $98
+        </div>
+      </div>
+    </div>
+
+    <div className="w-40 justify-start text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">
+      Apr 9, 2044 at 3:55 PM
+    </div>
+  </div>
+</div>
+
+// Highlighted/Active Row - Dark Mode
+<div className="w-[1148px] p-4 bg-Backgrounds-highlight rounded-2xl outline outline-[1.50px] outline-offset-[-1.50px] outline-zinc-100 inline-flex justify-start items-start gap-6 overflow-hidden">
+  <div className="w-96 h-16 flex justify-start items-center gap-5">
+    {/* Checkbox with different border in dark mode */}
+    <div data-status="placeholder" className="w-6 h-6 relative overflow-hidden">
+      <div className="w-6 h-6 left-0 top-0 absolute rounded-md border-2 border-Stroke-Highlight/50" />
+    </div>
+    {/* Rest of content same as light mode */}
+  </div>
+</div>
+
+// Row with Border Separator - Light Mode
+<div className="w-[1148px] p-4 border-b-[1.50px] border-Stroke-Subtle/10 inline-flex justify-start items-start gap-6 overflow-hidden">
+  {/* Standard row content */}
+</div>
+
+// Row with Border Separator - Dark Mode
+<div className="w-[1148px] p-4 border-b-[1.50px] border-Stroke-Subtle inline-flex justify-start items-start gap-6 overflow-hidden">
+  {/* Standard row content */}
+</div>
+
+// Price Badge Variants
+<>
+  {/* Green Badge - Paid Price */}
+  <div className="w-12 px-3 py-1.5 bg-green-600/5 rounded-lg outline outline-[1.50px] outline-offset-[-1.50px] outline-green-600/20 inline-flex justify-center items-center gap-1">
+    <div className="justify-start text-Primary-primary02 text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">
+      $98
+    </div>
+  </div>
+
+  {/* Gray Badge - Free Price */}
+  <div className="w-12 px-3 py-1.5 bg-Backgrounds-surface1 rounded-lg outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 inline-flex justify-center items-center gap-1">
+    <div className="justify-start text-Text-Primary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">
+      $0.0
+    </div>
+  </div>
+</>
 ```
 
 #### Usage Notes
@@ -4645,6 +4843,35 @@ Container (w-[1148px] p-4)
 - Date/Time формат: "MMM D, YYYY at H:MM AM/PM"
 - Можно комбинировать с полными строками (section 33) в одной таблице
 - Подходит для Product Lists, Order History, Purchase Records
+
+**Highlighted/Active Row State:**
+- Используйте для активной строки при editing, drag-and-drop, или focused item
+- Light mode: multiple shadow layers создают elevation и depth
+- Dark mode: cleaner appearance без теней, только outline
+- Action buttons заменяют URL в highlighted state
+- Inset shadow в light mode создает white border effect
+- Border radius `rounded-2xl` выделяет строку из списка
+
+**Border Separators:**
+- Light mode: `border-Stroke-Subtle/10` для subtle разделения
+- Dark mode: `border-Stroke-Subtle` для better visibility
+- Используйте между строками в длинных списках
+- Можно комбинировать с highlighted rows
+
+**Price Badge Variants:**
+- Green badge: для платных продуктов ($98, $49, $299, etc.)
+- Gray badge: для бесплатных продуктов ($0.0, Free)
+- Consistent width (`w-12`) для alignment в колонке
+- Green привлекает внимание, gray нейтральный
+- Используйте conditional rendering based on price value
+
+**Action Buttons:**
+- Появляются в highlighted row вместо URL
+- Common actions: Edit, Delete, Schedule, Publish, Archive
+- Default state: no outline, secondary text color
+- Hover state: with outline для emphasis
+- Compact size (`pl-1 pr-1.5 py-1`) для inline placement
+- Icons + text labels для clarity
 
 ---
 
