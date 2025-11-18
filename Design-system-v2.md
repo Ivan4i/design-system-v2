@@ -50,14 +50,14 @@
 
 ```css
 /* Success / Trend Up */
---color-success: ;
---color-success-bg: ;
---color-success-border: ;
+--color-success: var(--Primary-primary02); /* Зеленый для success */
+--color-success-bg: rgba(22, 163, 74, 0.05); /* green-600/5 */
+--color-success-border: rgba(22, 163, 74, 0.20); /* green-600/20 */
 
 /* Error / Trend Down */
---color-error: ;
---color-error-bg: ;
---color-error-border: ;
+--color-error: #f87171; /* red-400 */
+--color-error-bg: rgba(248, 113, 113, 0.05); /* red-400/5 */
+--color-error-border: rgba(248, 113, 113, 0.20); /* red-400/20 */
 
 /* Warning / Hot */
 --color-warning: ;
@@ -282,6 +282,27 @@
 --shadow-md: ;
 --shadow-lg: ;
 --shadow-xl: ;
+
+/* Popup/Dropdown Shadows (Light Mode) */
+--shadow-popup-light: 0px 5px 1.5px -4px rgba(8,8,8,0.09),
+                      0px 6px 4px -4px rgba(8,8,8,0.05),
+                      0px 6px 13px 0px rgba(8,8,8,0.03),
+                      0px 24px 24px -16px rgba(8,8,8,0.04),
+                      0px 2.15px 0.5px -2px rgba(0,0,0,0.25),
+                      0px 0px 10px 0px rgba(0,0,0,0.05);
+
+/* Popup/Dropdown Shadows (Dark Mode) */
+--shadow-popup-dark: 0px 5px 1.5px -4px rgba(8,8,8,0.09),
+                     0px 6px 4px -4px rgba(8,8,8,0.05),
+                     0px 6px 13px 0px rgba(8,8,8,0.03),
+                     0px 24px 24px -16px rgba(8,8,8,0.04),
+                     0px 2.15px 0.5px -2px rgba(0,0,0,0.80),
+                     0px 0px 10px 0px rgba(0,0,0,1.00);
+
+/* Toggle Knob Shadows (3D effect) */
+--shadow-knob: 0px 2px 4px 0px rgba(0,0,0,0.20),
+               inset 0px -1px 1px 0px rgba(0,0,0,0.10),
+               inset 0px 2px 2px 0px rgba(255,255,255,1.00);
 ```
 
 #### Button Shadows
@@ -299,6 +320,16 @@
 --shadow-hover-sm: ;
 --shadow-hover-md: ;
 --shadow-hover-lg: ;
+
+/* List Item Hover Shadow (Light Mode) */
+--shadow-list-hover-light: 0px 1px 4px 0px rgba(0,0,0,0.05),
+                           0px 8px 8px -2px rgba(0,0,0,0.08),
+                           inset 0px 0px 0px 3px rgba(255,255,255,1.00);
+
+/* Active/Selected Item Shadow */
+--shadow-item-active: 0px 1px 4px 0px rgba(0,0,0,0.05),
+                      0px 8px 8px -2px rgba(0,0,0,0.08),
+                      inset 0px 0px 0px 3px rgba(255,255,255,1.00);
 ```
 
 ### Borders
@@ -464,24 +495,39 @@
 
 ### 4. Badges & Tags
 
-#### Badge
+#### Status Badge (Small)
 
-- **Padding**:
-- **Radius**:
-- **Font Size**:
+- **Padding**: px-2 py-0.5 (8px horizontal, 2px vertical)
+- **Height**: h-6 (24px)
+- **Radius**: rounded-lg (12px)
+- **Border**: outline-[1.50px] outline-offset-[-1.50px]
+- **Font**: text-xs, font-normal, leading-5, tracking-tight
 - **Variants**:
-  - Success:
-  - Error:
-  - Warning:
-  - Info:
-  - Neutral:
+  - **Success/Active**: bg-green-600/5, outline-green-600/20, text-Primary-primary02
+  - **Error/Offline**: bg-red-400/5, outline-red-400/20, text-red-400
+  - **Warning**: (to be defined)
+  - **Info**: (to be defined)
+  - **Neutral**: (to be defined)
+
+#### Trend Badge (с иконкой)
+
+- **Padding**: px-2 py-1.5 (8px horizontal, 6px vertical)
+- **Radius**: rounded-lg (12px)
+- **Border**: outline-[1.50px] outline-offset-[-1.50px]
+- **Font**: text-sm, font-semibold, leading-4, tracking-tight
+- **Icon**: w-4 h-4, arrow up/down
+- **Gap**: gap-1 между icon и text
+- **Variants**:
+  - **Trend Up**: bg-green-600/5, outline-green-600/20, text-Primary-primary02, arrow up
+  - **Trend Down**: bg-red-400/5, outline-red-400/20, text-red-400, arrow down
+- **Example**: "36.8%" с стрелкой
 
 #### Tag
 
-- **Padding**:
-- **Radius**:
-- **Font Size**:
-- **Close Button**:
+- **Padding**: (to be defined)
+- **Radius**: (to be defined)
+- **Font Size**: (to be defined)
+- **Close Button**: (to be defined)
 
 ---
 
@@ -592,32 +638,72 @@
 - **Small**: 32x32px
 - **Medium**: 40x40px (w-10 h-10)
 - **Large**: 48x48px (container w-12 h-12 с px-4 py-3.5)
+- **List Item**: 64x64px (w-16 h-16) для list items
 - **XL**: 56x56px
 - **2XL**: 64x64px
 
 #### Styles
 
-- **Border Radius**: rounded-full (полностью круглый)
+- **Border Radius**:
+  - Default: rounded-full (полностью круглый)
+  - List Item: rounded-xl (16px) для квадратных, rounded-[64px] для круглых
 - **Border**:
   - Default: outline-[1.50px] outline-Stroke-Subtle/10 (светлый режим)
-  - Active: outline-[1.50px] outline-Stroke-Subtle (темный режим)
+  - Active/Selected: outline-[1.50px] outline-Text-Blue (синяя обводка)
+  - Dark Mode: outline-[1.50px] outline-Stroke-Subtle
 - **Container**: px-4 py-3.5, bg-Backgrounds-surface2, rounded-[90px]
 - **Placeholder**: img placeholder (placehold.co)
 - **Status Indicator**: (to be defined)
+
+#### Avatar Selection State
+
+- **Selected**: outline-[1.50px] outline-offset-[-1.50px] outline-Text-Blue
+- **Default**: без outline или subtle outline
+- **Container остается**: bg-Backgrounds-surface2, rounded-[90px]
 
 ---
 
 ### 10. List Items
 
-#### List Item
+#### List Item (Simple with Icon)
 
-- **Height**:
-- **Padding**:
-- **Border Bottom**:
+- **Padding**: p-3 (12px all sides)
+- **Radius**: rounded-2xl (16px) или rounded-[20px] (20px)
+- **Layout**: flex justify-start items-center gap-4
+- **Icon**: w-6 h-6
+- **Text**: text-sm, font-semibold, leading-4, tracking-tight
 - **States**:
-  - Hover:
-  - Active:
-  - Selected:
+  - Default: transparent, text-Text-Secondary
+  - Hover: (background change)
+  - Active: bg-Backgrounds-pop, shadow-[0px_1px_4px_0px_rgba(0,0,0,0.05)] shadow-[0px_8px_8px_-2px_rgba(0,0,0,0.08)] shadow-[inset_0px_0px_0px_3px_rgba(255,255,255,1.00)], outline-1 outline-zinc-100, text-Text-Primary
+  - Selected: (same as active)
+
+#### List Item (with Image & Price)
+
+- **Padding**: p-3 (12px)
+- **Radius**: rounded-[20px]
+- **Layout**: flex justify-start items-center gap-8
+- **Image**: w-16 h-16 (64x64px), rounded-xl (16px)
+- **Content Layout**: flex-1 flex gap-5
+- **Title**: text-base, font-semibold, leading-6, tracking-tight, text-Text-Primary
+- **Price/Value**: text-base, font-semibold, leading-6, text-right
+- **Badge**: status badge в правой части (gap-1 от price)
+- **States**:
+  - Default: transparent
+  - Hover (Light Mode): bg-Backgrounds-highlight, shadow-[0px_1px_4px_0px_rgba(0,0,0,0.05)], shadow-[0px_8px_8px_-2px_rgba(0,0,0,0.08)], shadow-[inset_0px_0px_0px_3px_rgba(255,255,255,1.00)], outline-[1.50px] outline-zinc-100
+  - Hover (Dark Mode): bg-Backgrounds-highlight, outline-[1.50px] outline-zinc-100
+
+#### List Item (User Card with Subtitle)
+
+- **Padding**: p-3 (12px)
+- **Radius**: rounded-[20px]
+- **Layout**: flex justify-start items-center gap-8
+- **Avatar**: w-16 h-16, rounded-xl (или rounded-[64px] для круглого)
+- **Content**: flex-col gap-1
+  - Name: text-base, font-semibold, leading-6, tracking-tight
+  - Subtitle: text-xs, font-normal, leading-5, tracking-tight, text-Text-Secondary
+- **Action Button**: w-12 h-12, p-5, rounded-[96px], outline-[1.50px] Stroke-Stroke2
+- **Gap**: gap-5 между avatar и content
 
 ---
 
@@ -655,24 +741,49 @@
 
 ### 12. Panels & Cards
 
+#### Dropdown Menu / Popup Panel
+
+- **Width**: w-96 (384px)
+- **Padding**: p-3 (12px)
+- **Background**: Backgrounds-surface2
+- **Radius**: rounded-[32px]
+- **Border**: outline-1 outline-offset-[-1px]
+- **Shadows (Light Mode)**:
+  - shadow-[0px_5px_1.5px_-4px_rgba(8,8,8,0.09)]
+  - shadow-[0px_6px_4px_-4px_rgba(8,8,8,0.05)]
+  - shadow-[0px_6px_13px_0px_rgba(8,8,8,0.03)]
+  - shadow-[0px_24px_24px_-16px_rgba(8,8,8,0.04)]
+  - shadow-[0px_2.15px_0.5px_-2px_rgba(0,0,0,0.25)]
+  - shadow-[0px_0px_10px_0px_rgba(0,0,0,0.05)]
+  - outline-Stroke-Subtle/10
+- **Shadows (Dark Mode)**:
+  - (same as light +)
+  - shadow-[0px_2.15px_0.5px_-2px_rgba(0,0,0,0.80)]
+  - shadow-[0px_0px_10px_0px_rgba(0,0,0,1.00)]
+  - shadow-[inset_0px_0px_12px_4px_rgba(250,250,250,0.05)]
+  - outline-Stroke-Stroke2
+- **Section Header**: p-3, text-sm, font-normal, text-Text-Secondary
+- **Gap**: gap-3 между секциями, gap-1.5 внутри секций
+- **Content**: flex-col для vertical layout
+
 #### Side Panel
 
-- **Width**:
-- **Background**:
-- **Shadow**:
-- **Padding**:
+- **Width**: (to be defined)
+- **Background**: (to be defined)
+- **Shadow**: (to be defined)
+- **Padding**: (to be defined)
 - **Header**:
-  - Padding Bottom:
-  - Border Bottom:
+  - Padding Bottom: (to be defined)
+  - Border Bottom: (to be defined)
 
 #### Modal
 
-- **Max Width**:
-- **Background**:
-- **Border Radius**:
-- **Shadow**:
-- **Overlay**:
-- **Padding**:
+- **Max Width**: (to be defined)
+- **Background**: (to be defined)
+- **Border Radius**: (to be defined)
+- **Shadow**: (to be defined)
+- **Overlay**: (to be defined)
+- **Padding**: (to be defined)
 
 ---
 
@@ -747,6 +858,49 @@
 --backdrop-blur-md: ;
 --backdrop-blur-lg: ;
 ```
+
+---
+
+### 17. Toggle Switch
+
+#### Toggle Switch
+
+- **Size**: w-11 h-6 (44x24px)
+- **Padding**: p-0.5 (2px внутренний отступ)
+- **Radius**: rounded-[32px] (pill shape)
+- **Border**: outline-[1.50px] outline-offset-[-1.50px]
+- **Knob**: w-5 h-5 (20x20px), rounded-3xl (почти полный круг)
+- **Layout**: inline-flex justify-end (ON) или justify-start (OFF)
+- **States**:
+  - **ON (Light Mode)**:
+    - Track: bg-gradient from-zinc-800 to-zinc-800, shadow-[inset 2px 0px 8px 2px rgba(248,248,248,0.20)], outline white/40
+    - Knob: bg-neutral-50, positioned right (justify-end)
+  - **ON (Dark Mode)**:
+    - Track: bg-gradient from-zinc-300 to-gray-200, shadow-[inset 2px 0px 8px 1px rgba(248,248,248,0.19)], outline white/40
+    - Knob: bg-shade02-100
+  - **OFF**:
+    - Track: bg-Backgrounds-surface2, shadow-[inset 2px 0px 8px 2px rgba(248,248,248,0.05)], outline-Stroke-Stroke2
+    - Knob: bg-neutral-50, positioned left (justify-start)
+- **Knob Shadows** (3D effect):
+  - shadow-[0px_2px_4px_0px_rgba(0,0,0,0.20)]
+  - shadow-[inset_0px_-1px_1px_0px_rgba(0,0,0,0.10)]
+  - shadow-[inset_0px_2px_2px_0px_rgba(255,255,255,1.00)] (OFF) или 0.05-0.12 (ON)
+- **Transition**: smooth transition для knob position и colors
+
+---
+
+### 18. Page Headers
+
+#### Section Header with Dropdown
+
+- **Container**: inline-flex justify-between items-center
+- **Title**:
+  - Padding: px-5 (h-12 container с p-3 gap-2)
+  - Font: text-xl, font-semibold, leading-7, tracking-tight
+  - Color: text-Text-Primary
+- **Dropdown**: w-40 max-w-44, positioned на правой стороне
+- **Layout**: flex между title и dropdown
+- **Example**: "Overview" + "Last 7 days" dropdown
 
 ---
 
