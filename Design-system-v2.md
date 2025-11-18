@@ -4617,6 +4617,46 @@ Container (w-[1148px] p-4)
 - Border bottom: `border-b-[1.50px] border-Stroke-Subtle`
 - More visible border для contrast
 
+##### Skeleton/Loading Row State
+
+**Purpose:**
+- Показывает загрузку новых данных
+- Placeholder во время fetch операций
+- Создает smooth transition при добавлении новых строк
+
+**Light Mode Skeleton:**
+- Checkbox: `w-6 h-6 opacity-80 bg-shade09-100 rounded-md`
+- Image: `w-16 h-16 bg-shade09-100 rounded-xl`
+- Text lines: `h-2 bg-shade09-100 rounded`
+- Title line: `w-24 h-2`
+- URL line: `w-40 h-2` (self-stretch)
+- Price line: `w-16 h-2`
+- Date line: `w-40 h-2`
+
+**Dark Mode Skeleton:**
+- Checkbox: `w-6 h-6 opacity-80 bg-shade04-100 rounded-md`
+- Image: `w-16 h-16 bg-shade04-100 rounded-xl`
+- Text lines: `h-2 bg-shade04-100 rounded`
+- Same dimensions as light mode
+- Lighter shade для dark backgrounds
+
+**Layout:**
+- Same padding and structure as regular row (`p-4`)
+- Border top: `border-t border-Stroke-Subtle/10` (light) или `border-Stroke-Subtle` (dark)
+- Gap between elements maintained
+- Text containers positioned with relative positioning
+
+**Animation (optional):**
+- Pulse animation можно добавить для loading effect
+- Shimmer effect для более динамичного вида
+- Maintains consistent height с regular rows
+
+**Usage:**
+- Display skeleton rows внизу списка при infinite scroll
+- Replace skeleton с real data when loaded
+- Show 1-3 skeleton rows в зависимости от loading state
+- Используется в таблицах, lists, feeds
+
 #### Price Badge Variants
 
 **Active/Paid Price (Green):**
@@ -4637,9 +4677,20 @@ Container (w-[1148px] p-4)
 - Width: `w-12`
 - Example: "$0.0", "Free"
 
+**Free/Zero Price (Red) - Alternative:**
+- Background: `bg-red-600/5` (5% opacity red)
+- Outline: `outline-[1.50px] outline-offset-[-1.50px] outline-red-600/20`
+- Text color: `text-Primary-primary03` (red)
+- Border radius: `rounded-lg`
+- Padding: `px-2 py-1.5`
+- Width: `w-16`
+- Data attribute: `data-property-1="False"`
+- Example: "$0.00"
+
 **Usage:**
 - Green badge: для платных продуктов, привлекает внимание к цене
 - Gray badge: для бесплатных продуктов, нейтральный appearance
+- Red badge: для бесплатных продуктов с предупреждением или выделением
 - Consistent width для alignment в таблице
 
 #### Responsive Behavior
@@ -4831,7 +4882,83 @@ Container (w-[1148px] p-4)
       $0.0
     </div>
   </div>
+
+  {/* Red Badge - Free Price Alternative */}
+  <div
+    data-property-1="False"
+    className="w-16 px-2 py-1.5 bg-red-600/5 rounded-lg outline outline-[1.50px] outline-offset-[-1.50px] outline-red-600/20 inline-flex justify-center items-center gap-2 overflow-hidden"
+  >
+    <div className="justify-start text-Primary-primary03 text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">
+      $0.00
+    </div>
+  </div>
 </>
+
+// Skeleton/Loading Row - Light Mode
+<div className="self-stretch p-4 border-t border-Stroke-Subtle/10 inline-flex justify-start items-start gap-6 overflow-hidden">
+  <div className="w-[480px] h-16 flex justify-start items-center gap-5">
+    {/* Skeleton Checkbox */}
+    <div className="w-6 h-6 relative overflow-hidden">
+      <div className="w-6 h-6 left-0 top-0 absolute opacity-80 bg-shade09-100 rounded-md" />
+    </div>
+
+    {/* Skeleton Image */}
+    <div className="w-16 h-16 relative bg-shade09-100 rounded-xl" />
+
+    {/* Skeleton Text Lines */}
+    <div className="flex-1 self-stretch inline-flex flex-col justify-center items-start">
+      <div className="w-80 h-12 relative">
+        <div className="w-40 left-0 top-[12px] absolute inline-flex flex-col justify-start items-start gap-2">
+          <div className="w-24 h-2 bg-shade09-100 rounded" />
+          <div className="self-stretch h-2 bg-shade09-100 rounded" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {/* Skeleton Price and Date */}
+  <div className="flex-1 py-2 flex justify-between items-center">
+    <div className="w-36 h-7 relative">
+      <div className="w-16 h-2 left-0 top-[10px] absolute bg-shade09-100 rounded" />
+    </div>
+    <div className="w-96 h-6 relative">
+      <div className="w-40 h-2 left-0 top-[8px] absolute bg-shade09-100 rounded" />
+    </div>
+  </div>
+</div>
+
+// Skeleton/Loading Row - Dark Mode
+<div className="self-stretch p-4 border-t border-Stroke-Subtle inline-flex justify-start items-start gap-6 overflow-hidden">
+  <div className="w-[480px] h-16 flex justify-start items-center gap-5">
+    {/* Skeleton Checkbox */}
+    <div className="w-6 h-6 relative overflow-hidden">
+      <div className="w-6 h-6 left-0 top-0 absolute opacity-80 bg-shade04-100 rounded-md" />
+    </div>
+
+    {/* Skeleton Image */}
+    <div className="w-16 h-16 relative bg-shade04-100 rounded-xl" />
+
+    {/* Skeleton Text Lines */}
+    <div className="flex-1 self-stretch inline-flex flex-col justify-center items-start">
+      <div className="w-80 h-12 relative">
+        <div className="w-40 left-0 top-[12px] absolute inline-flex flex-col justify-start items-start gap-2">
+          <div className="w-24 h-2 bg-shade04-100 rounded" />
+          <div className="self-stretch h-2 bg-shade04-100 rounded" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {/* Skeleton Price and Date */}
+  <div className="flex-1 py-2 flex justify-between items-center">
+    <div className="w-36 h-7 relative">
+      <div className="w-16 h-2 left-0 top-[10px] absolute bg-shade04-100 rounded" />
+    </div>
+    <div className="w-96 h-6 relative">
+      <div className="w-40 h-2 left-0 top-[8px] absolute bg-shade04-100 rounded" />
+    </div>
+  </div>
+</div>
 ```
 
 #### Usage Notes
@@ -4860,10 +4987,12 @@ Container (w-[1148px] p-4)
 
 **Price Badge Variants:**
 - Green badge: для платных продуктов ($98, $49, $299, etc.)
-- Gray badge: для бесплатных продуктов ($0.0, Free)
-- Consistent width (`w-12`) для alignment в колонке
-- Green привлекает внимание, gray нейтральный
-- Используйте conditional rendering based on price value
+- Gray badge: для бесплатных продуктов ($0.0, Free) - neutral appearance
+- Red badge: для бесплатных продуктов с warning или alert ($0.00) - draws attention
+- Green привлекает внимание к paid products
+- Gray нейтральный для free products
+- Red используется когда нужно выделить free product (например, expired trial, downgraded plan)
+- Используйте conditional rendering based on price value и business logic
 
 **Action Buttons:**
 - Появляются в highlighted row вместо URL
@@ -4872,6 +5001,17 @@ Container (w-[1148px] p-4)
 - Hover state: with outline для emphasis
 - Compact size (`pl-1 pr-1.5 py-1`) для inline placement
 - Icons + text labels для clarity
+
+**Skeleton/Loading State:**
+- Display во время загрузки новых данных
+- Light mode: `bg-shade09-100` для placeholders
+- Dark mode: `bg-shade04-100` для placeholders
+- Maintains same height и structure как regular rows
+- Text lines: `h-2 rounded` для smooth edges
+- Usually displayed at bottom of list при infinite scroll
+- Можно добавить pulse/shimmer animation для better UX
+- Replace skeleton с real data when loaded
+- 1-3 skeleton rows в зависимости от loading context
 
 ---
 
@@ -4947,11 +5087,21 @@ Container (w-[1180px] p-3)
 
 #### Colors
 
-**Default State - Search Input:**
+**Default State - Search Input (Light Mode):**
 - Background: `bg-Backgrounds-surface1`
 - Border radius: `rounded-[90px]`
 - Padding: `pl-3 pr-5 py-3`
 - Icon: `outline-Text-Secondary`
+- Data attribute: `data-light-mode="True"`
+
+**Default State - Search Input (Dark Mode):**
+- Background: `bg-Backgrounds-surface1`
+- Border radius: `rounded-[90px]`
+- Outline: `outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Subtle`
+- Padding: `pl-3 pr-5 py-3`
+- Icon: `outline-Text-Secondary`
+- Data attribute: `data-light-mode="False"`
+- Adds subtle outline для better visibility на dark backgrounds
 
 **Default State - Sort Dropdown:**
 - Background: `bg-Backgrounds-surface2`
@@ -5098,6 +5248,44 @@ Container (w-[1180px] p-3)
   </div>
 </div>
 
+// Default State - Dark Mode Search Input (with outline)
+<div className="w-[1180px] p-3 inline-flex justify-between items-center">
+  <div className="h-12 pl-5 flex justify-center items-center gap-6">
+    <div className="justify-start text-Text-Primary text-xl font-semibold font-['Inter_Display'] leading-7 tracking-tight">
+      5 scheduled products
+    </div>
+
+    {/* Search Input - Dark Mode with Outline */}
+    <div
+      data-light-mode="False"
+      data-state="default"
+      className="w-72 pl-3 pr-5 py-3 bg-Backgrounds-surface1 rounded-[90px] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Subtle flex justify-start items-center gap-2 overflow-hidden"
+    >
+      <div className="w-6 h-6 relative overflow-hidden">
+        <div className="w-3 h-3 left-[6.75px] top-[4.48px] absolute rounded-full outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+        <div className="w-1 h-1 left-[4.87px] top-[15.60px] absolute rounded-sm outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+      </div>
+      <div className="justify-start text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">
+        Search products
+      </div>
+    </div>
+  </div>
+
+  {/* Sort Dropdown (same as light mode) */}
+  <div
+    data-light-mode="True"
+    data-state="default"
+    className="w-44 h-12 pl-5 pr-3 py-3 bg-Backgrounds-surface2 rounded-[90px] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 flex justify-between items-center overflow-hidden"
+  >
+    <div className="justify-start text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">
+      Newest first
+    </div>
+    <div className="w-6 h-6 relative overflow-hidden">
+      <div className="w-2 h-[3.38px] left-[8px] top-[10px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+    </div>
+  </div>
+</div>
+
 // Selection State (Items Selected)
 <div className="w-[1180px] p-3 inline-flex justify-between items-center">
   {/* Left Section: Selection Counter + Deselect */}
@@ -5155,6 +5343,10 @@ Container (w-[1180px] p-3)
 - Toolbar переключается между Default и Selection states
 - Counter динамически обновляется (количество items или selected items)
 - Search input может быть активным или placeholder
+- **Search Input Variants:**
+  - Light mode: no outline, clean appearance
+  - Dark mode: with `outline-Stroke-Subtle` для better visibility на dark backgrounds
+  - Use `data-light-mode="True"` или `"False"` для switching
 - Sort dropdown может показывать разные опции:
   - Comments: "Newest first", "Oldest first", "Most likes"
   - Products: "Best selling", "Price: Low to High", "Rating"
