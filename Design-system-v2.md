@@ -473,14 +473,104 @@
 
 #### Search Input
 
-- **Size**: w-80 p-3 (320px width, 12px padding)
-- **Radius**: 90px (rounded-[90px])
-- **Background**:
-  - Light mode: Backgrounds-surface2
-  - Dark mode: Stroke-Subtle, outline-[1.50px] white
-- **Icon**: Search icon 24x24px (w-6 h-6), left aligned, gap-2
-- **Placeholder**: "Search anything...", text-sm, text-Text-Secondary
-- **Font**: font-normal, text-sm, leading-5, tracking-tight
+- **Size**: w-60 pl-3 pr-5 py-3 (240px width default, можно w-72 или w-80)
+- **Height**: 48px (h-12)
+- **Radius**: 90px (rounded-[90px]) - pill shape
+- **Layout**: flex justify-start items-center gap-2
+- **Border**: outline-[1.50px] outline-offset-[-1.50px]
+- **Overflow**: overflow-hidden
+- **Icon**: Search icon w-6 h-6 (24x24px), left aligned, gap-2 от текста
+- **Placeholder/Text**: text-sm, font-normal, leading-5, tracking-tight
+- **Cursor**: w-0 h-4 (0.5px width, 16px height) rounded-sm, bg-Primary-primary01 (синий)
+
+**States**:
+
+##### Default (Light Mode)
+- **Background**: bg-Backgrounds-surface1
+- **Border**: none или outline-Stroke-Subtle/10 (very subtle)
+- **Placeholder**: text-Text-Secondary
+- **Icon**: outline-[1.50px] outline-Text-Secondary
+
+##### Default (Dark Mode)
+- **Background**: bg-Backgrounds-surface1
+- **Border**: none
+- **Placeholder**: text-Text-Secondary
+- **Icon**: outline-[1.50px] outline-Text-Secondary
+
+##### Hover (Light Mode)
+- **Background**: bg-Backgrounds-surface2
+- **Border**: outline-[1.50px] outline-Stroke-Stroke2
+- **Shadow**: shadow-[0px_5px_1.5px_-4px_...] (popup shadows)
+- **Placeholder**: text-Text-Secondary
+- **Icon**: без изменений
+
+##### Focus/Active (Light Mode)
+- **Background**: bg-Backgrounds-surface2
+- **Border**: outline-[1.50px] outline-Stroke-Stroke2
+- **Shadow**: может быть subtle shadow
+- **Text**: text-Text-Primary
+- **Icon**: outline-[1.50px] outline-Text-Blue (синий accent)
+- **Cursor**: visible, мигающий
+- **Clear Button**: w-6 h-6, opacity-50 или visible (опционально)
+
+##### Focus/Active (Pressed/Dark Mode)
+- **Background**: bg-Backgrounds-surface2
+- **Shadow**:
+  - shadow-[inset_0px_0px_0px_3px_rgba(255,255,255,1.00)] (light)
+  - shadow-[inset_0px_4px_4px_0px_rgba(157,157,157,0.10)] (light)
+  - shadow-[inset_0px_0px_0px_3px_rgba(40,40,40,0.10)] (dark)
+  - shadow-[inset_0px_4px_4px_0px_rgba(18,18,18,0.81)] (dark)
+- **Border**: outline-[1.50px] outline-Stroke-Stroke2
+- **Icon**: outline-[1.50px] outline-Text-Blue
+- **Cursor**: visible
+
+##### Disabled
+- **Background**: bg-Backgrounds-surface1
+- **Opacity**: opacity-50 на всем input
+- **Cursor**: not-allowed
+- **Border**: может быть более прозрачным
+
+##### With Clear Button
+- **Layout**: justify-between вместо justify-start
+- **Left Section**: icon + text/placeholder
+- **Right Section**: clear button (x icon)
+- **Clear Button**: w-6 h-6, opacity-50 (default), можно hover для full opacity
+- **Padding Right**: p-3 для размещения clear button
+
+#### Пример использования
+
+```jsx
+// Default state (Light Mode)
+<div className="w-60 pl-3 pr-5 py-3 bg-Backgrounds-surface1 rounded-[90px] inline-flex justify-start items-center gap-2 overflow-hidden">
+  <div className="w-6 h-6 relative overflow-hidden">
+    <div className="w-3 h-3 left-[6.75px] top-[4.48px] absolute rounded-full outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+    <div className="w-1 h-1 left-[4.87px] top-[15.60px] absolute rounded-sm outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+  </div>
+  <div className="justify-start text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">Search products</div>
+</div>
+
+// Hover state (Light Mode)
+<div className="w-60 pl-3 pr-5 py-3 bg-Backgrounds-surface2 rounded-[90px] shadow-[0px_5px_1.5px_-4px_rgba(8,8,8,0.09)] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 inline-flex justify-start items-center gap-2 overflow-hidden">
+  {/* Same content */}
+</div>
+
+// Focus/Active state with cursor
+<div className="w-60 p-3 bg-Backgrounds-surface2 rounded-[90px] shadow-[inset_0px_0px_0px_3px_rgba(255,255,255,1.00)] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 inline-flex justify-between items-center overflow-hidden">
+  <div className="flex justify-start items-center gap-2">
+    <div className="w-6 h-6 relative overflow-hidden">
+      <div className="w-3 h-3 left-[6.75px] top-[4.48px] absolute rounded-full outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Blue" />
+      {/* Search icon in blue */}
+    </div>
+    <div className="h-6 py-1 flex justify-start items-center gap-1">
+      <div className="justify-start text-Text-Primary text-sm font-normal leading-5 tracking-tight">Search products</div>
+      <div className="w-0 h-4 outline outline-[1.50px] outline-offset-[-0.75px] outline-Primary-primary01" />
+    </div>
+  </div>
+  <div className="w-6 h-6 relative overflow-hidden">
+    {/* Clear button (optional) */}
+  </div>
+</div>
+```
 
 #### Select / Dropdown
 
@@ -497,17 +587,44 @@
 
 #### Status Badge (Small)
 
-- **Padding**: px-2 py-0.5 (8px horizontal, 2px vertical)
-- **Height**: h-6 (24px)
+Компактный badge для отображения статуса элементов.
+
+- **Padding**: px-2 py-1.5 (8px horizontal, 6px vertical)
+- **Height**: auto (определяется padding)
 - **Radius**: rounded-lg (12px)
 - **Border**: outline-[1.50px] outline-offset-[-1.50px]
-- **Font**: text-xs, font-normal, leading-5, tracking-tight
+- **Layout**: inline-flex justify-center items-center gap-2
+- **Overflow**: overflow-hidden
+- **Font**: text-sm, font-semibold, leading-4, tracking-tight
 - **Variants**:
-  - **Success/Active**: bg-green-600/5, outline-green-600/20, text-Primary-primary02
-  - **Error/Offline**: bg-red-400/5, outline-red-400/20, text-red-400
+  - **Success/Active**:
+    - Background: bg-green-600/5
+    - Border: outline-green-600/20
+    - Text: text-Primary-primary02
+    - Label: "Active"
+  - **Error/Offline**:
+    - Background: bg-red-600/5 (или bg-red-400/5)
+    - Border: outline-red-600/20 (или outline-red-400/20)
+    - Text: text-Primary-primary03
+    - Label: "Offline"
   - **Warning**: (to be defined)
   - **Info**: (to be defined)
   - **Neutral**: (to be defined)
+- **Usage**: в таблицах, карточках, списках для отображения статуса
+
+#### Пример использования
+
+```jsx
+// Active badge
+<div className="px-2 py-1.5 bg-green-600/5 rounded-lg outline outline-[1.50px] outline-offset-[-1.50px] outline-green-600/20 inline-flex justify-center items-center gap-2 overflow-hidden">
+  <div className="justify-start text-Primary-primary02 text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">Active</div>
+</div>
+
+// Offline badge
+<div className="px-2 py-1.5 bg-red-600/5 rounded-lg outline outline-[1.50px] outline-offset-[-1.50px] outline-red-600/20 inline-flex justify-center items-center gap-2 overflow-hidden">
+  <div className="justify-start text-Primary-primary03 text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">Offline</div>
+</div>
+```
 
 #### Trend Badge (с иконкой)
 
@@ -556,21 +673,266 @@
 #### Table Structure
 
 - **Row Height**:
-  - Compact:
-  - Default:
-  - Comfortable:
-- **Cell Padding**:
-- **Header**:
-  - Background:
-  - Font Weight:
-  - Border Bottom:
-- **Row Borders**:
-- **Hover State**:
-- **Striped Rows**:
+  - Default: h-16 (64px) с p-4 (16px padding)
+  - Header: h-12 (48px) с p-4
+  - Compact: (to be defined)
+  - Comfortable: (to be defined)
+- **Cell Padding**: p-4 (16px all sides)
+- **Layout**: inline-flex justify-start items-start gap-6
+- **Border Radius**: округлые углы не применяются к строкам
+- **Overflow**: overflow-hidden на контейнере
+
+#### Table Header Row
+
+- **Padding**: p-4 (16px)
+- **Height**: auto (определяется содержимым)
+- **Border Bottom**: border-b-[1.50px] border-Stroke-Subtle/10 или border-Stroke-Subtle
+- **Layout**: inline-flex justify-start items-center gap-6
+- **Checkbox**: w-6 h-6 с gap-5 от следующего элемента
+- **Font**: text-xs, font-normal, leading-5, tracking-tight
+- **Color**: text-Text-Tertiary (80% opacity)
+- **Column Labels**: aligned по содержимому (Product, Status, Price, Sales, Views, Like)
+- **Column Widths**:
+  - Product column: w-96 (384px)
+  - Status: w-20 (80px)
+  - Price: w-14 (56px)
+  - Sales: w-36 (144px)
+  - Views/Like: w-24 (96px each)
+
+#### Table Row (Default)
+
+- **Padding**: p-4 (16px)
+- **Layout**: inline-flex justify-start items-start gap-6
+- **Border Bottom**: border-b-[1.50px] border-Stroke-Subtle/10 (light) или border-Stroke-Subtle (dark)
+- **Background**: transparent
+- **Components**:
+  - Checkbox: w-6 h-6
+  - Image: w-16 h-16 (64x64px), rounded-xl (16px)
+  - Content sections с gap-6 между ними
+
+#### Table Row States
+
+##### Default State
+- **Background**: transparent
+- **Border Bottom**: border-b-[1.50px] border-Stroke-Subtle/10
+- **Text**: text-Text-Primary
+- **Transition**: none
+
+##### Hover State (Light Mode)
+- **Background**: bg-Backgrounds-highlight, rounded-2xl (16px)
+- **Shadow**:
+  - shadow-[0px_1px_4px_0px_rgba(0,0,0,0.05)]
+  - shadow-[0px_8px_8px_-2px_rgba(0,0,0,0.08)]
+  - shadow-[inset_0px_0px_0px_3px_rgba(255,255,255,1.00)]
+- **Border**: outline-[1.50px] outline-offset-[-1.50px] outline-zinc-100
+- **Action Buttons**: появляются Edit, Delete, Share кнопки
+- **Checkbox Border**: может измениться на border-Stroke-Stroke2 или border-Stroke-Highlight/50
+
+##### Hover State (Dark Mode)
+- **Background**: bg-Backgrounds-highlight, rounded-2xl (16px)
+- **Border**: outline-[1.50px] outline-offset-[-1.50px] outline-zinc-100
+- **No inset shadow**: только внешний outline
+- **Action Buttons**: появляются
+- **Checkbox Border**: border-Stroke-Highlight/50
+
+##### Selected/Active State
+- Аналогичен Hover State, но остается после снятия курсора
+- Checkbox: checked состояние
+
+##### Loading/Skeleton State
+- **Background**: bg-Backgrounds-surface1 (light) или bg-Backgrounds-pop (dark)
+- **Skeleton elements**:
+  - Image placeholder: w-16 h-16, bg-Backgrounds-surface1/pop, rounded-xl
+  - Text placeholders: h-2, различные ширины (w-44, w-20, w-14, w-32), bg-Backgrounds-surface1/pop, rounded-sm
+  - Positioned: left-0 top-[8px] или top-[10px] для vertical centering
+- **Animation**: pulse или shimmer effect
+
+#### Row Content Layout
+
+##### Product Column (w-96)
+- **Layout**: flex justify-start items-center gap-5
+- **Checkbox**: w-6 h-6
+- **Image**: w-16 h-16, rounded-xl
+- **Content**: flex-1 flex-col
+  - Title: text-base, font-semibold, leading-6, tracking-tight, line-clamp-1
+  - Subtitle: text-sm, font-normal, leading-5, tracking-tight, text-Text-Secondary, opacity-80
+
+##### Product Column (with actions on hover)
+- **Layout**: flex-1 relative
+- **Title**: positioned at top
+- **Action Buttons Row**: positioned at bottom (top-[34px])
+  - Layout: inline-flex gap-2
+  - Button: pl-1 pr-1.5 py-1, rounded-md
+  - States: default (no outline), hover (outline-[1.50px] outline-Stroke-Stroke2)
+
+##### Metadata Columns
+- **Layout**: flex-1 py-2 flex justify-between items-center
+- **Each column**: inline-flex flex-col gap-2.5
+- **Column types**:
+  - Status: w-20, contains badge
+  - Price: w-14, text-sm text-Text-Primary
+  - Sales: w-36, includes price + trend badge
+  - Views/Like: w-24, mini progress indicator
+
+#### Table Row Variants
+
+##### Simple Row (without image)
+- Checkbox + Text content
+- Layout: flex gap-5
+
+##### Row with Image & Metadata
+- Checkbox + Image + Title/Subtitle + Multiple metadata columns
+- Most common variant
+
+##### Row with Date Range
+- Checkbox + Image + Title + Date range (subtitle) + Sales + Progress bar
+- Subtitle: "25 Sep - 4 Oct" format
+
+##### Row with Action Buttons
+- Shows Edit, Delete, Share on hover
+- Buttons appear below title in product column
 
 ---
 
-### 7. Navigation
+### 7. Action Buttons (Small)
+
+#### Small Action Button (Inline)
+
+Используется для действий в строках таблиц (Edit, Delete, Share) или других компактных интерфейсах.
+
+- **Padding**: pl-1 pr-1.5 py-1 (4px left, 6px right, 4px top/bottom)
+- **Radius**: rounded-md (8px)
+- **Layout**: flex justify-start items-center gap-1
+- **Border**: none по умолчанию
+- **Height**: auto (определяется padding, ~24px)
+- **Components**:
+  - Icon: w-4 h-4 (16x16px)
+  - Text: text-sm, font-semibold, leading-4, tracking-tight
+- **States**:
+  - **Default**:
+    - Background: transparent
+    - Border: none
+    - Text: text-Text-Secondary, opacity-80
+    - Icon: outline-[1.50px] outline-Text-Secondary
+  - **Hover**:
+    - Background: transparent или subtle
+    - Border: outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2
+    - Text: text-Text-Primary, opacity-80
+    - Icon: outline-[1.50px] outline-Text-Primary
+  - **Active/Pressed**:
+    - Background: может быть подсвечен
+    - Border: outline-[1.50px] outline-Stroke-Stroke2
+  - **Disabled**:
+    - Opacity: opacity-50
+    - Cursor: not-allowed
+
+#### Common Action Button Variants
+
+##### Edit Button
+- Icon: pen/edit icon, w-4 h-4
+- Text: "Edit"
+- Color: text-Text-Secondary (default), text-Text-Primary (hover)
+
+##### Delete Button
+- Icon: trash/delete icon, w-4 h-4
+- Text: "Delete"
+- Color: text-Text-Secondary (default), можно использовать text-Primary-primary03 для delete warning
+
+##### Share Button
+- Icon: share icon, w-4 h-4
+- Text: "Share"
+- Color: text-Text-Secondary (default), text-Text-Primary (hover)
+
+#### Пример использования
+
+```jsx
+// Default state
+<div className="pl-1 pr-1.5 py-1 rounded-md flex justify-start items-center gap-1">
+  <div className="w-4 h-4 relative overflow-hidden">
+    <div className="w-3 h-3 left-[2.50px] top-[2.05px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+  </div>
+  <div className="opacity-80 justify-start text-Text-Secondary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">Edit</div>
+</div>
+
+// Hover state
+<div className="pl-1 pr-1.5 py-1 rounded-md outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 flex justify-start items-center gap-1">
+  <div className="w-4 h-4 relative overflow-hidden">
+    <div className="w-3 h-3 left-[2.50px] top-[2.05px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Primary" />
+  </div>
+  <div className="opacity-80 justify-start text-Text-Primary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">Edit</div>
+</div>
+```
+
+---
+
+### 8. Progress Indicators
+
+#### Mini Progress Bar (Time Indicator)
+
+Компактный индикатор прогресса с текстовой меткой, используется для отображения времени или небольших значений.
+
+- **Container**:
+  - Padding: py-0.5 (2px vertical)
+  - Radius: rounded-lg (12px)
+  - Layout: inline-flex justify-center items-center gap-2
+  - Width: auto (определяется содержимым)
+- **Label**:
+  - Width: w-8 (32px) - фиксированная ширина для выравнивания
+  - Font: text-sm, font-normal, leading-5, tracking-tight
+  - Color: text-Text-Primary
+  - Example: "48m", "2h", "15s"
+- **Progress Bar**:
+  - Container: w-8 h-1.5 (32px width, 6px height), bg-shade07-40/40, rounded-sm
+  - Fill: absolute positioned, various widths (w-1, w-3, w-5, w-6 из w-8 max)
+  - Fill Color: bg-Chart-Green (или другие цвета для различных статусов)
+  - Fill Radius: rounded-sm
+- **Variants**:
+  - Multiple states: разная ширина заполнения для отображения прогресса
+  - Color variants: Chart-Green (success), можно добавить warning, error цвета
+
+#### Full Progress Bar
+
+Используется для отображения прогресса задач, загрузки и других процессов.
+
+- **Container**: h-3 (12px height), relative
+- **Background Sections**:
+  - Base section: w-24 (или другая ширина), bg-shade07-40/40, rounded-[1px]
+  - Separator dots: w-0.5 h-3, bg-shade07-60/60, rounded-[0.50px], gap-px между точками
+  - Progress section: variable width, gradient или solid color
+- **Progress Fill**:
+  - Gradient variant: bg-gradient-to-r from-shade08-100 to-shade09-100, rounded-[1px]
+  - Solid variant: bg-Chart-Green, rounded-[1px]
+  - Border: border border-Stroke-Stroke2 (опционально)
+- **Layout**: inline-flex gap-0.5 между секциями
+- **Usage**: показывает completion percentage с визуальными разделителями
+
+#### Пример использования
+
+```jsx
+// Mini progress indicator
+<div className="py-0.5 rounded-lg inline-flex justify-center items-center gap-2">
+  <div className="w-8 justify-start text-Text-Primary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">48m</div>
+  <div className="w-8 h-1.5 relative bg-shade07-40/40 rounded-sm">
+    <div className="w-6 h-1.5 left-0 top-0 absolute bg-Chart-Green rounded-sm" />
+  </div>
+</div>
+
+// Full progress bar with sections
+<div className="h-3 relative">
+  <div className="left-0 top-0 absolute inline-flex justify-start items-start gap-0.5">
+    <div className="w-24 h-3 bg-shade07-40/40 rounded-[1px]" />
+    <div className="flex justify-start items-center gap-px">
+      <div className="w-0.5 h-3 bg-shade07-60/60 rounded-[0.50px]" />
+      <!-- More separator dots -->
+    </div>
+    <div className="w-60 h-3 bg-gradient-to-r from-shade08-100 to-shade09-100 rounded-[1px] border border-Stroke-Stroke2" />
+  </div>
+</div>
+```
+
+---
+
+### 9. Navigation
 
 #### Main Navigation / Header
 
@@ -776,14 +1138,139 @@
   - Padding Bottom: (to be defined)
   - Border Bottom: (to be defined)
 
-#### Modal
+#### Modal / Dialog
 
-- **Max Width**: (to be defined)
-- **Background**: (to be defined)
-- **Border Radius**: (to be defined)
-- **Shadow**: (to be defined)
-- **Overlay**: (to be defined)
-- **Padding**: (to be defined)
+##### Modal Container
+
+- **Max Width**: w-[573px] (573px)
+- **Padding**: p-12 (48px all sides)
+- **Background**: bg-Backgrounds-surface1
+- **Border Radius**: rounded-[32px]
+- **Border**: outline-1 outline-offset-[-1px]
+- **Layout**: flex-col justify-center items-start gap-8
+- **Overlay**: backdrop blur с затемнением (implementation specific)
+
+##### Modal Shadows
+
+**Light Mode**:
+- shadow-[0px_5px_1.5px_-4px_rgba(8,8,8,0.09)]
+- shadow-[0px_6px_4px_-4px_rgba(8,8,8,0.05)]
+- shadow-[0px_6px_13px_0px_rgba(8,8,8,0.03)]
+- shadow-[0px_24px_24px_-16px_rgba(8,8,8,0.04)]
+- shadow-[0px_2.15px_0.5px_-2px_rgba(0,0,0,0.25)]
+- outline-1, backdrop-blur-[32px]
+
+**Dark Mode**:
+- shadow-[0px_24px_24px_-16px_rgba(8,8,8,0.08)]
+- shadow-[0px_6px_13px_0px_rgba(8,8,8,0.12)]
+- shadow-[0px_6px_4px_-4px_rgba(8,8,8,0.16)]
+- shadow-[0px_5px_1.5px_-4px_rgba(8,8,8,0.20)]
+- shadow-[0px_2.15px_0.5px_-2px_rgba(0,0,0,0.25)]
+- shadow-[inset_2px_4px_16px_0px_rgba(253,253,253,0.05)]
+- outline-1 outline-white/40, backdrop-blur-[32px]
+
+##### Modal Icon
+
+- **Size**: w-16 h-16 (64x64px)
+- **Radius**: rounded-[80px] (круглая)
+- **Layout**: flex justify-center items-center
+- **Overflow**: overflow-hidden
+- **Icon размер**: w-6 h-6 (24x24px) внутри
+- **Варианты**:
+  - Error/Delete: bg-red-600/20, icon color Primary-primary03
+  - Success/Info: bg-shade08-100, icon color Text-Primary или Backgrounds-surface1
+
+##### Modal Content
+
+- **Title**:
+  - Font: text-3xl, font-semibold, leading-10, tracking-tight
+  - Color: text-Text-Primary
+  - Example: "Are you sure?", "Set products status", "Share this product"
+- **Description**:
+  - Font: text-base, font-normal, leading-6, tracking-tight
+  - Color: text-Text-Tertiary
+  - Margin Top: gap-4 от title
+  - Max Width: self-stretch
+  - Can contain mixed colors: Text-Tertiary + Primary-primary02 для акцентов
+- **Gap**: gap-8 между icon, content section и actions
+
+##### Modal Actions
+
+- **Container**:
+  - Layout: inline-flex gap-3
+  - Width: self-stretch (full width)
+- **Button Layout**: flex-1 для равной ширины кнопок
+- **Common Actions**:
+  - Cancel button (secondary): outline button
+  - Confirm/Primary button: gradient button
+  - Example: "Cancel" + "Delete", "Cancel" + "Copy link"
+
+#### Modal Variants
+
+##### Confirmation Modal (Delete)
+- **Icon**: bg-red-600/20 с alert icon
+- **Title**: "Are you sure?"
+- **Description**: предупреждение об удалении
+- **Actions**: "Cancel" + "Delete" (primary destructive)
+
+##### Status Change Modal
+- **Icon**: bg-shade08-100 с status icon
+- **Title**: "Set products status"
+- **Description**: описание изменения с акцентом на новый статус
+- **Content**: Segmented Control для выбора статуса
+- **Actions**: может не иметь, или иметь "Cancel" + "Apply"
+
+##### Share Modal
+- **Icon**: отсутствует или используется product image
+- **Title**: "Share this product"
+- **Product Preview**:
+  - Layout: inline-flex gap-6
+  - Image: w-20 h-20, rounded-2xl
+  - Info: title + subtitle
+- **Share Options**:
+  - Social buttons grid: flex-wrap gap-3
+  - Each button: flex-1 min-w-48
+- **Actions**: "Copy link" primary button
+
+##### Social Share Buttons
+
+- **Size**: flex-1 min-w-48 px-7 py-3
+- **Radius**: rounded-[32px]
+- **Border**: outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2
+- **Layout**: flex justify-center items-center gap-2
+- **Icon**: w-6 h-6, bg-Text-Secondary (default)
+- **Variants**:
+  - Instagram (ig): соответствующая иконка
+  - Twitter/X (x): соответствующая иконка
+  - Facebook (fb): соответствующая иконка
+  - Telegram (tr): соответствующая иконка
+- **States**:
+  - Default: outline-Stroke-Stroke2
+  - Hover: может измениться background или border
+- **Grid Layout**: flex-wrap для адаптивности
+
+#### Пример использования
+
+```jsx
+// Delete Confirmation Modal
+<div className="w-[573px] p-12 bg-Backgrounds-surface1 rounded-[32px] shadow-[...] outline-1 backdrop-blur-[32px] inline-flex flex-col justify-center items-start gap-8">
+  <div className="w-16 h-16 relative bg-red-600/20 rounded-[80px] overflow-hidden">
+    <div className="w-6 h-6 left-[20px] top-[20px] absolute overflow-hidden">
+      {/* Alert Icon */}
+    </div>
+  </div>
+  <div className="self-stretch flex flex-col justify-start items-start gap-4">
+    <div className="justify-start text-Text-Primary text-3xl font-semibold leading-10 tracking-tight">Are you sure?</div>
+    <div className="self-stretch justify-start text-Text-Tertiary text-base font-normal leading-6 tracking-tight">
+      This will definitely delete 4 products, and all data will be removed. This action cannot be undone.
+    </div>
+  </div>
+  <div className="self-stretch inline-flex justify-start items-start gap-3">
+    <div className="flex-1 h-12 px-7 py-3.5 rounded-[32px] outline-Stroke-Stroke2">Cancel</div>
+    <div className="flex-1 px-7 py-4 bg-gradient-to-b from-zinc-800 to-zinc-800 rounded-[32px]">Delete</div>
+  </div>
+</div>
+```
 
 ---
 
@@ -861,7 +1348,52 @@
 
 ---
 
-### 17. Toggle Switch
+### 17. Checkbox
+
+#### Checkbox
+
+- **Size**: w-6 h-6 (24x24px)
+- **Radius**: rounded-md (8px)
+- **Border**: border-2
+- **Container**: relative overflow-hidden
+- **States**:
+  - **Unchecked**:
+    - Border: border-2 border-Stroke-Stroke2
+    - Background: transparent
+    - Icon: none
+  - **Checked**:
+    - Border: border-2 border-Primary-primary01, opacity-30
+    - Checkmark: w-4 h-4, bg-Primary-primary01, rounded-sm
+    - Position: left-[4px] top-[4px] (centered within 24px container)
+  - **Hover (Unchecked)**:
+    - Border: border-2 border-shade07-50/50
+  - **Hover (Checked)**:
+    - Border opacity может увеличиться
+  - **Disabled**:
+    - Opacity: opacity-50
+    - Cursor: not-allowed
+  - **Indeterminate**:
+    - Checkmark: horizontal line instead of checkmark
+- **Animation**: smooth transition для checked state
+
+#### Пример использования
+
+```jsx
+// Unchecked
+<div className="w-6 h-6 relative overflow-hidden">
+  <div className="w-6 h-6 left-0 top-0 absolute rounded-md border-2 border-Stroke-Stroke2" />
+</div>
+
+// Checked
+<div className="w-6 h-6 relative overflow-hidden">
+  <div className="w-6 h-6 left-0 top-0 absolute opacity-30 rounded-md border-2 border-Primary-primary01" />
+  <div className="w-4 h-4 left-[4px] top-[4px] absolute bg-Primary-primary01 rounded-sm" />
+</div>
+```
+
+---
+
+### 18. Toggle Switch
 
 #### Toggle Switch
 
@@ -887,9 +1419,52 @@
   - shadow-[inset_0px_2px_2px_0px_rgba(255,255,255,1.00)] (OFF) или 0.05-0.12 (ON)
 - **Transition**: smooth transition для knob position и colors
 
+#### Segmented Control (Status Toggle)
+
+Используется для переключения между двумя опциями (например, Active/Deactive).
+
+- **Container**:
+  - Padding: p-1 (4px внутренний отступ)
+  - Radius: rounded-[36px]
+  - Border: outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2
+  - Layout: inline-flex gap-2
+- **Segment**:
+  - Size: flex-1 px-6 py-4 (равная ширина для всех сегментов)
+  - Radius: rounded-[32px]
+  - Font: text-sm, font-semibold, leading-4, tracking-tight
+  - Min Height: 48px total (with padding)
+- **States**:
+  - **Active (Success variant)**:
+    - Background: bg-green-600/10
+    - Border: outline-[1.50px] outline-offset-[-1.50px] outline-green-600/20
+    - Text: text-Primary-primary02
+  - **Active (Error variant)**:
+    - Background: bg-red-600/10
+    - Border: outline-[1.50px] outline-offset-[-1.50px] outline-red-600/20
+    - Text: text-Primary-primary03
+  - **Inactive**:
+    - Background: transparent
+    - Border: none
+    - Text: text-Text-Secondary
+    - Padding: py-3.5 (slightly less для visual alignment)
+
+#### Пример использования
+
+```jsx
+// Active state
+<div className="self-stretch p-1 rounded-[36px] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 inline-flex justify-start items-start gap-2">
+  <div className="flex-1 px-6 py-4 bg-green-600/10 rounded-[32px] outline outline-[1.50px] outline-offset-[-1.50px] outline-green-600/20 flex justify-center items-center gap-2">
+    <div className="justify-start text-Primary-primary02 text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">Active</div>
+  </div>
+  <div className="flex-1 px-6 py-3.5 rounded-[32px] flex justify-center items-center gap-2">
+    <div className="justify-start text-Text-Secondary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">Deactive</div>
+  </div>
+</div>
+```
+
 ---
 
-### 18. Page Headers
+### 19. Page Headers
 
 #### Section Header with Dropdown
 
@@ -901,6 +1476,78 @@
 - **Dropdown**: w-40 max-w-44, positioned на правой стороне
 - **Layout**: flex между title и dropdown
 - **Example**: "Overview" + "Last 7 days" dropdown
+
+#### Page Header with Search & Filters
+
+- **Container**: w-full px-4 py-3 (или p-3)
+- **Layout**: inline-flex justify-between items-center
+- **Left Section**:
+  - Title: text-xl, font-semibold, leading-7, tracking-tight, text-Text-Primary
+  - Search Input: w-72 (288px), pill-shaped search
+  - Gap: gap-6 между элементами
+  - Container: h-12 pl-5 flex items-center
+- **Right Section (Filters)**:
+  - Tab Filter buttons: Segment Control style
+  - Layout: flex gap-1
+  - Example: "Market", "Traffic sources", "Viewers"
+
+#### Bulk Actions Header
+
+Появляется когда выбраны элементы в таблице, заменяет обычный header.
+
+- **Container**: w-full px-4 py-3 (или p-3)
+- **Layout**: inline-flex justify-between items-center
+- **Height**: h-12 min
+- **Left Section**:
+  - Container: pl-5 flex items-center gap-6
+  - Selection Text: text-xl, font-semibold, leading-7, tracking-tight, text-Text-Primary
+    - Example: "4 products selected"
+  - Deselect Button: px-7 py-3.5, rounded-[32px], outline-[1.50px] outline-Stroke-Stroke2
+    - Text: text-sm, font-semibold, text-Text-Secondary, "Deselect"
+- **Right Section (Actions)**:
+  - Layout: flex gap-3
+  - Action Buttons: px-7 py-3, rounded-[32px], outline-[1.50px] outline-Stroke-Stroke2
+    - Common actions: "Delete", "Set status", "Export", etc.
+    - Text: text-sm, font-semibold, text-Text-Secondary
+- **State**:
+  - Appears: when items are selected (checkbox checked)
+  - Replaces: normal page header
+  - Transition: smooth fade in/out
+
+#### Пример использования
+
+```jsx
+// Normal header with search & filters
+<div className="w-full p-3 inline-flex justify-between items-center">
+  <div className="h-12 pl-5 flex justify-center items-center gap-6">
+    <div className="justify-start text-Text-Primary text-xl font-semibold leading-7 tracking-tight">Products</div>
+    <div className="w-72 pl-3 pr-5 py-3 bg-Backgrounds-surface1 rounded-[90px] flex items-center gap-2">
+      {/* Search input */}
+    </div>
+  </div>
+  <div className="flex justify-start items-start gap-1">
+    {/* Filter tabs */}
+  </div>
+</div>
+
+// Bulk actions header
+<div className="w-full p-3 inline-flex justify-between items-center">
+  <div className="h-12 pl-5 flex justify-center items-center gap-6">
+    <div className="justify-start text-Text-Primary text-xl font-semibold leading-7 tracking-tight">4 products selected</div>
+    <div className="px-7 py-3.5 rounded-[32px] outline outline-[1.50px] outline-Stroke-Stroke2">
+      <div className="text-center text-Text-Secondary text-sm font-semibold leading-4 tracking-tight">Deselect</div>
+    </div>
+  </div>
+  <div className="flex items-center gap-3">
+    <div className="px-7 py-3 rounded-[32px] outline outline-[1.50px] outline-Stroke-Stroke2">
+      <div className="text-center text-Text-Secondary text-sm font-semibold leading-4 tracking-tight">Delete</div>
+    </div>
+    <div className="px-7 py-3 rounded-[32px] outline outline-[1.50px] outline-Stroke-Stroke2">
+      <div className="text-center text-Text-Secondary text-sm font-semibold leading-4 tracking-tight">Set status</div>
+    </div>
+  </div>
+</div>
+```
 
 ---
 
