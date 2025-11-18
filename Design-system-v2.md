@@ -440,6 +440,64 @@
   - Active: outline-[1.50px] Stroke-Stroke2, text-Text-Primary
   - Hover: (to be defined)
 
+#### Secondary Button
+
+Простая кнопка с фоном без градиента, используется для менее важных действий.
+
+- **Size**: px-7 py-3.5 (28px horizontal, 14px vertical), height: h-12 (48px)
+- **Radius**: rounded-[32px]
+- **Font**: font-semibold, text-sm (14px), leading-4, text-center, tracking-tight
+- **Layout**: flex justify-center items-center gap-2
+- **States**:
+  - **Default (Light Mode)**:
+    - Background: bg-Backgrounds-pop
+    - Border: outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2
+    - Text: text-Text-Secondary
+    - Shadow: может иметь subtle shadow
+  - **Default (Dark Mode)**:
+    - Background: bg-Backgrounds-pop
+    - Border: outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2
+    - Text: text-Text-Secondary
+  - **Hover**:
+    - Background: может стать lighter/darker
+    - Border: outline-Stroke-Stroke2 (более выраженная)
+    - Text: text-Text-Primary
+    - Shadow: может увеличиться
+  - **Active/Pressed**:
+    - Background: может быть darker
+    - Inset shadow: может иметь inset shadow для pressed эффекта
+  - **Disabled**:
+    - Opacity: opacity-50
+    - Cursor: not-allowed
+    - Background: bg-Backgrounds-pop
+    - Text: text-Text-Secondary
+- **Usage**: Используется для второстепенных действий (Cancel, Deselect), как альтернатива primary gradient button
+- **Common Labels**: "Cancel", "Deselect", "Back", "Close"
+
+#### Пример использования
+
+```jsx
+// Secondary button (Light Mode)
+<div className="h-12 px-7 py-3.5 bg-Backgrounds-pop rounded-[32px] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 flex justify-center items-center gap-2">
+  <div className="text-center text-Text-Secondary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">Cancel</div>
+</div>
+
+// Secondary button (Dark Mode) - similar structure
+<div className="h-12 px-7 py-3.5 bg-Backgrounds-pop rounded-[32px] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 flex justify-center items-center gap-2">
+  <div className="text-center text-Text-Secondary text-sm font-semibold font-['Inter_Display'] leading-4 tracking-tight">Deselect</div>
+</div>
+
+// In a button group (e.g., modal actions)
+<div className="self-stretch inline-flex justify-start items-start gap-3">
+  <div className="flex-1 h-12 px-7 py-3.5 bg-Backgrounds-pop rounded-[32px] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 flex justify-center items-center">
+    <div className="text-center text-Text-Secondary text-sm font-semibold leading-4 tracking-tight">Cancel</div>
+  </div>
+  <div className="flex-1 px-7 py-4 bg-gradient-to-b from-zinc-800 to-zinc-800 rounded-[32px] flex justify-center items-center">
+    <div className="text-center text-Text-Primary text-sm font-semibold leading-4 tracking-tight">Confirm</div>
+  </div>
+</div>
+```
+
 ---
 
 ### 3. Inputs
@@ -1679,6 +1737,364 @@
     </div>
     <div className="px-7 py-3 rounded-[32px] outline outline-[1.50px] outline-Stroke-Stroke2">
       <div className="text-center text-Text-Secondary text-sm font-semibold leading-4 tracking-tight">Set status</div>
+    </div>
+  </div>
+</div>
+```
+
+---
+
+### 20. File Upload (Drag & Drop)
+
+#### File Upload Area
+
+Компонент для загрузки файлов с поддержкой drag & drop.
+
+- **Container**:
+  - Size: w-96 h-56 (384px x 224px)
+  - Padding: px-8 py-16 (32px horizontal, 64px vertical)
+  - Radius: rounded-[32px]
+  - Border: outline-2 outline-offset-[-2px] (активное состояние)
+  - Layout: flex-col justify-center items-center gap-4
+  - Overflow: overflow-hidden
+
+##### Empty State (Light Mode)
+- **Background**: bg-Backgrounds-surface3/50 (50% opacity)
+- **Border**: outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2
+- **Icon Container**: w-12 h-12, bg-Backgrounds-surface2, rounded-xl
+  - Icon: w-6 h-6 upload icon, outline-[1.50px] outline-Text-Secondary
+- **Text**:
+  - Primary: text-base, font-semibold, leading-6, tracking-tight, text-Text-Primary
+  - Secondary: text-sm, font-normal, leading-5, tracking-tight, text-Text-Secondary
+  - Content: "Drag and drop an image, or Browse"
+  - "Browse" highlighted with text-Primary-primary01 (синий)
+
+##### Empty State (Dark Mode)
+- **Background**: bg-shade04-100
+- **Border**: outline-[1.50px] outline-Stroke-Stroke2
+- **Icon & Text**: same as Light Mode
+
+##### Active Drag State
+- **Border**: outline-2 outline-offset-[-2px] outline-Primary-primary01
+- **Background**: может быть слегка подсвечен
+- **Visual feedback**: показывает что область готова принять файл
+
+##### With Uploaded Image State
+- **Container**: same sizing (w-96 h-56)
+- **Background**: bg-Backgrounds-surface3/50 (Light) or bg-shade04-100 (Dark)
+- **Image**: positioned fill container, rounded-[32px] to match container
+- **Success Indicator**:
+  - Container: w-12 h-12, bg-Backgrounds-pop, rounded-xl (positioned top-right or center)
+  - Icon: w-6 h-6 checkmark, bg-Primary-primary02 (зеленый)
+  - Shadow: может иметь subtle shadow
+- **Positioning**: relative для размещения success indicator overlay
+
+#### File Upload States
+
+**Default State**:
+- Show icon + text
+- Border: outline-[1.50px] outline-Stroke-Stroke2
+- Cursor: pointer
+- Hover: может подсветить border или background
+
+**Dragging Over (Active Drop Zone)**:
+- Border: outline-2 outline-Primary-primary01 (синяя, более толстая обводка)
+- Background: может быть слегка подсвечен
+- Visual feedback: показывает готовность к drop
+
+**Uploading State**:
+- Progress indicator (to be defined)
+- Может показывать spinner или progress bar
+
+**Success State (Uploaded)**:
+- Shows image preview
+- Success checkmark overlay
+- Border: может вернуться к default или убраться
+
+**Error State**:
+- Border: outline-Primary-primary03 (красный)
+- Error message под компонентом
+- Icon: может измениться на error icon
+
+#### Пример использования
+
+```jsx
+// Empty state (Light Mode)
+<div className="w-96 h-56 px-8 py-16 bg-Backgrounds-surface3/50 rounded-[32px] outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 flex-col justify-center items-center gap-4 inline-flex overflow-hidden">
+  <div className="w-12 h-12 p-3 bg-Backgrounds-surface2 rounded-xl inline-flex justify-center items-center overflow-hidden">
+    <div className="w-6 h-6 relative overflow-hidden">
+      <div className="w-4 h-4 left-[3px] top-[4.50px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+      {/* Upload icon arrows */}
+    </div>
+  </div>
+  <div className="flex-col justify-start items-center gap-1 flex">
+    <div className="justify-start text-center">
+      <span className="text-Text-Primary text-base font-semibold font-['Inter_Display'] leading-6 tracking-tight">Drag and drop an image, or </span>
+      <span className="text-Primary-primary01 text-base font-semibold font-['Inter_Display'] leading-6 tracking-tight">Browse</span>
+    </div>
+    <div className="justify-start text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">Supports: JPG, PNG, SVG</div>
+  </div>
+</div>
+
+// Active drag state
+<div className="w-96 h-56 px-8 py-16 bg-Backgrounds-surface3/50 rounded-[32px] outline outline-2 outline-offset-[-2px] outline-Primary-primary01 flex-col justify-center items-center gap-4 inline-flex overflow-hidden">
+  {/* Same content */}
+</div>
+
+// With uploaded image
+<div className="w-96 h-56 relative bg-Backgrounds-surface3/50 rounded-[32px] overflow-hidden">
+  <img className="w-full h-full object-cover rounded-[32px]" src="..." alt="Uploaded" />
+  <div className="absolute top-4 right-4 w-12 h-12 p-3 bg-Backgrounds-pop rounded-xl flex justify-center items-center">
+    <div className="w-6 h-6 relative">
+      <div className="w-4 h-4 left-[4px] top-[4px] absolute bg-Primary-primary02 rounded-sm" />
+      {/* Checkmark icon */}
+    </div>
+  </div>
+</div>
+```
+
+---
+
+### 21. Uploaded File Card
+
+#### File Card Component
+
+Карточка для отображения загруженного файла с информацией и действиями.
+
+- **Container**:
+  - Padding: p-6 (24px all sides)
+  - Radius: rounded-3xl (24px)
+  - Border: outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2
+  - Layout: flex justify-between items-center
+  - Gap: gap-6 между элементами
+
+##### Left Section (File Info)
+- **Layout**: flex items-center gap-4
+- **Icon Container**: w-12 h-12, bg-Backgrounds-surface3, rounded-xl
+  - Icon: w-6 h-6 file/document icon с upload arrows
+  - Color: outline-[1.50px] outline-Text-Secondary
+- **File Details**: flex-col gap-1
+  - Filename: text-base, font-semibold, leading-6, tracking-tight, text-Text-Primary
+  - File size: text-sm, font-normal, leading-5, tracking-tight, text-Text-Secondary
+  - Example: "product-image.png", "2.4 MB"
+
+##### Right Section (Delete Button)
+- **Button (Light Mode)**:
+  - Size: w-12 h-12 p-3
+  - Radius: rounded-xl
+  - Background: bg-gradient-to-b from-white to-neutral-200
+  - Shadow: shadow-[inset_2px_0px_8px_2px_rgba(24,24,24,0.20)]
+  - Border: outline-[1.50px] outline-offset-[-1.50px] outline-white/60
+  - Icon: w-6 h-6 trash/delete icon, outline-Text-Primary
+- **Button (Dark Mode)**:
+  - Background: bg-gradient-to-b from-zinc-800 to-zinc-800
+  - Shadow: shadow-[inset_2px_0px_8px_2px_rgba(248,248,248,0.20)]
+  - Border: outline-[1.50px] outline-white/40
+  - Icon: outline-Text-Primary
+
+#### States
+
+**Default**:
+- Border: outline-Stroke-Stroke2
+- Background: transparent or bg-Backgrounds-surface2
+- Icon: Text-Secondary
+
+**Hover**:
+- Delete button hover: может подсветиться
+- Card hover: может иметь subtle shadow
+
+**Uploading**:
+- Progress bar под filename (опционально)
+- Percentage indicator
+
+**Error**:
+- Border: outline-Primary-primary03
+- Error icon вместо file icon
+
+#### Пример использования
+
+```jsx
+// Light mode
+<div className="self-stretch p-6 rounded-3xl outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 inline-flex justify-between items-center">
+  <div className="flex justify-start items-center gap-4">
+    <div className="w-12 h-12 p-3 bg-Backgrounds-surface3 rounded-xl inline-flex justify-center items-center overflow-hidden">
+      <div className="w-6 h-6 relative overflow-hidden">
+        <div className="w-4 h-4 left-[3px] top-[4.50px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Secondary" />
+        {/* File upload icon */}
+      </div>
+    </div>
+    <div className="flex-col justify-start items-start gap-1 inline-flex">
+      <div className="justify-start text-Text-Primary text-base font-semibold font-['Inter_Display'] leading-6 tracking-tight">product-image.png</div>
+      <div className="justify-start text-Text-Secondary text-sm font-normal font-['Inter_Display'] leading-5 tracking-tight">2.4 MB</div>
+    </div>
+  </div>
+  <div className="w-12 h-12 p-3 bg-gradient-to-b from-white to-neutral-200 rounded-xl shadow-[inset_2px_0px_8px_2px_rgba(24,24,24,0.20)] outline outline-[1.50px] outline-offset-[-1.50px] outline-white/60 inline-flex justify-center items-center overflow-hidden">
+    <div className="w-6 h-6 relative overflow-hidden">
+      {/* Delete icon */}
+    </div>
+  </div>
+</div>
+```
+
+---
+
+### 22. Text Editor / Rich Text
+
+#### Text Editor Container
+
+Компонент для редактирования текста с форматированием (bold, italic, underline, etc.).
+
+- **Container**:
+  - Width: w-full или fixed (например w-96)
+  - Padding: p-6 (24px)
+  - Radius: rounded-3xl (24px)
+  - Border: outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2
+  - Background: bg-Backgrounds-surface1 or bg-Backgrounds-surface2
+  - Layout: flex-col gap-4
+
+##### Toolbar
+- **Container**:
+  - Layout: inline-flex items-center gap-2
+  - Border Bottom: может иметь border-b separator
+  - Padding Bottom: pb-4 (если есть separator)
+- **Button Groups**: разделены вертикальными линиями
+  - Separator: w-px h-6 bg-Stroke-Stroke2 между группами
+
+##### Toolbar Buttons
+- **Size**: w-10 h-10 p-3 (40x40px container, 12px padding)
+- **Radius**: rounded-lg (12px)
+- **Layout**: flex justify-center items-center
+- **Icon**: w-4 h-4 (16x16px)
+- **Gap**: gap-1 между кнопками в группе
+- **States**:
+  - **Default (Inactive)**:
+    - Background: transparent
+    - Border: none
+    - Icon: outline-[1.50px] outline-Text-Secondary
+  - **Active (Light Mode)**:
+    - Background: bg-shade08-80/80
+    - Radius: rounded-lg
+    - Icon: outline-[1.50px] outline-Text-Primary
+  - **Active (Dark Mode)**:
+    - Background: bg-shade05-50/50
+    - Radius: rounded-lg
+    - Icon: outline-[1.50px] outline-Text-Primary
+  - **Hover**:
+    - Background: bg-shade08-80/40 (Light) or bg-shade05-50/25 (Dark)
+    - Icon: может стать Text-Primary
+
+##### Common Toolbar Buttons
+- **Text Formatting**:
+  - Bold (B): text-sm font-semibold или icon
+  - Italic (I): text-sm italic или icon
+  - Underline (U): text-sm underline или icon
+  - Strikethrough: icon
+- **Alignment**:
+  - Align Left
+  - Align Center
+  - Align Right
+  - Justify
+- **Lists**:
+  - Bullet List
+  - Numbered List
+  - Checklist
+- **Insert**:
+  - Link
+  - Image
+  - Code block
+  - Quote
+
+##### Text Area
+- **Container**: flex-1 или min-h-40
+- **Padding**: p-4
+- **Font**: text-base, font-normal, leading-6
+- **Placeholder**: text-Text-Tertiary
+- **Cursor**: text cursor visible при focus
+- **Content**: contenteditable или textarea
+
+##### Resize Handle
+- **Position**: absolute, bottom-right corner (bottom-0 right-0)
+- **Size**: w-4 h-4
+- **Icon**: resize grip lines
+  - Two diagonal lines: w-px h-3, bg-Text-Secondary, gap-1
+  - Positioned: right-[4px] bottom-[4px]
+  - Rotation: может быть повернут на 45deg для diagonal lines
+- **Cursor**: cursor-nwse-resize
+
+#### Editor States
+
+**Default**:
+- Border: outline-Stroke-Stroke2
+- Background: bg-Backgrounds-surface2
+- Toolbar visible
+
+**Focus**:
+- Border: может стать outline-Primary-primary01 или shade07-50/50
+- Cursor visible в text area
+
+**Disabled**:
+- Opacity: opacity-50
+- Cursor: not-allowed
+- Toolbar buttons disabled
+
+**Read-only**:
+- No toolbar
+- No cursor
+- No editing allowed
+
+#### Пример использования
+
+```jsx
+<div className="w-96 p-6 bg-Backgrounds-surface2 rounded-3xl outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 flex-col justify-start items-start gap-4 inline-flex">
+  {/* Toolbar */}
+  <div className="self-stretch inline-flex justify-start items-center gap-2">
+    {/* Format buttons group */}
+    <div className="inline-flex justify-start items-center gap-1">
+      <div className="w-10 h-10 p-3 bg-shade08-80/80 rounded-lg flex justify-center items-center">
+        <div className="w-4 h-4 relative overflow-hidden">
+          {/* Bold icon - active state */}
+        </div>
+      </div>
+      <div className="w-10 h-10 p-3 rounded-lg flex justify-center items-center">
+        <div className="w-4 h-4 relative overflow-hidden">
+          {/* Italic icon - inactive state */}
+        </div>
+      </div>
+      <div className="w-10 h-10 p-3 rounded-lg flex justify-center items-center">
+        <div className="w-4 h-4 relative overflow-hidden">
+          {/* Underline icon */}
+        </div>
+      </div>
+    </div>
+
+    {/* Separator */}
+    <div className="w-px h-6 bg-Stroke-Stroke2" />
+
+    {/* Alignment buttons group */}
+    <div className="inline-flex justify-start items-center gap-1">
+      <div className="w-10 h-10 p-3 rounded-lg flex justify-center items-center">
+        {/* Align left icon */}
+      </div>
+      <div className="w-10 h-10 p-3 rounded-lg flex justify-center items-center">
+        {/* Align center icon */}
+      </div>
+    </div>
+
+    {/* More button groups... */}
+  </div>
+
+  {/* Text area */}
+  <div className="self-stretch min-h-40 p-4 relative">
+    <div className="text-Text-Primary text-base font-normal leading-6 tracking-tight">
+      {/* Editable content */}
+    </div>
+
+    {/* Resize handle */}
+    <div className="absolute bottom-0 right-0 w-4 h-4 cursor-nwse-resize">
+      <div className="flex gap-1">
+        <div className="w-px h-3 bg-Text-Secondary rotate-45" />
+        <div className="w-px h-3 bg-Text-Secondary rotate-45" />
+      </div>
     </div>
   </div>
 </div>
