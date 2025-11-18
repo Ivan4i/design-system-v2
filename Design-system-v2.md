@@ -7241,6 +7241,221 @@ Container (w-[1180px] p-4)
 
 ---
 
+### 39. File Download Card / File Attachment Card
+
+**Описание (Russian):**
+Карточка файла для скачивания с информацией о размере, иконкой типа файла и кнопкой загрузки. Используется для отображения прикрепленных файлов, загружаемых ресурсов или архивов. Компактный дизайн с четкой визуальной иерархией и понятными action points.
+
+**Description (English):**
+File download card displaying file information, size, file type icon, and download button. Used for showing attached files, downloadable resources, or archives. Compact design with clear visual hierarchy and obvious action points.
+
+**Specification:**
+
+**Container:**
+- Width: `w-[664px]`
+- Padding: `p-6`
+- Border radius: `rounded-3xl`
+- Outline: `outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2`
+- Layout: `inline-flex justify-between items-center`
+- Overflow: `overflow-hidden`
+
+**File Information Section (Left):**
+- Layout: `inline-flex flex-col gap-2`
+- Contains: file name + (icon + size)
+
+**File Name:**
+- Text color: `text-Text-Primary`
+- Font size: `text-base` (16px)
+- Font weight: `font-semibold`
+- Font family: `font-['Inter_Display']`
+- Line height: `leading-6`
+- Letter spacing: `tracking-tight`
+- Content: Full file name with extension
+
+**File Info Row:**
+- Layout: `inline-flex items-center gap-2`
+- Contains: file type icon + size text
+
+**File Type Icon:**
+- Size: `w-6 h-6`
+- Color: `bg-Primary-primary02`
+- Type: Archive/ZIP icon (multiple rectangles)
+- Icon composition:
+  - Top bar: `w-4 h-2.5` at `left-[3px] top-[1px]`
+  - Left bar: `w-1.5 h-2` at `left-[3px] top-[14px]`
+  - Center divider: `w-0.5 h-2` at `left-[11px] top-[14px]`
+  - Right bar: `w-1.5 h-2` at `left-[15px] top-[14px]`
+
+**File Size:**
+- Text color: `text-Text-Secondary`
+- Font size: `text-base` (16px)
+- Font weight: `font-normal`
+- Font family: `font-['Inter_Display']`
+- Line height: `leading-6`
+- Letter spacing: `tracking-tight`
+- Format: Number + "MB" or "GB"
+
+**Download Button (Right):**
+- Size: `w-12 h-12`
+- Padding: `p-3.5`
+- Background: `bg-gradient-to-b from-zinc-800 to-zinc-800` (dark gradient)
+- Border radius: `rounded-[32px]`
+- Shadow: `shadow-[inset_2px_0px_8px_2px_rgba(248,248,248,0.20)]`
+- Outline: `outline-[1.50px] outline-offset-[-1.50px] outline-white/40`
+- Layout: `flex justify-center items-center`
+- Data attributes: `data-light-mode="True" data-state="Default" data-style="Icon"`
+
+**Download Icon:**
+- Size: `w-6 h-6`
+- Color: `outline-Text-Light`
+- Icon: Download arrow (circle with arrow pointing down)
+- Stroke: `outline-[1.50px] outline-offset-[-0.75px]`
+
+**Colors & Theming:**
+
+**Light Mode:**
+- Container outline: `outline-Stroke-Stroke2`
+- File name: `text-Text-Primary`
+- File size: `text-Text-Secondary`
+- File icon: `bg-Primary-primary02` (green)
+- Button background: Dark gradient (`from-zinc-800 to-zinc-800`)
+- Button outline: `outline-white/40`
+- Button shadow: Inset white glow
+- Download icon: `outline-Text-Light` (white)
+
+**Dark Mode:**
+- Container outline: `outline-Stroke-Stroke2` (lighter in dark mode)
+- File name: `text-Text-Primary` (white)
+- File size: `text-Text-Secondary` (gray)
+- File icon: `bg-Primary-primary02` (green, same)
+- Button: Light gradient for dark mode
+- Button outline: Darker outline
+- Download icon: Adapts to theme
+
+**States:**
+- Default: As described above
+- Hover (button): Slightly lighter background
+- Active (button): Pressed state with different shadow
+- Disabled: Reduced opacity, no interaction
+
+**Icons:**
+1. **File Type Icon (Archive/ZIP):**
+   - Multiple rectangles forming archive symbol
+   - Primary green color
+   - 24x24px container
+
+2. **Download Icon:**
+   - Circle with down arrow
+   - White/light color
+   - 24x24px size
+   - Clear action indicator
+
+**Example JSX:**
+
+```jsx
+// File Download Card - Default State
+<div className="w-[664px] p-6 rounded-3xl outline outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Stroke2 inline-flex justify-between items-center overflow-hidden">
+  {/* Left: File Information */}
+  <div className="inline-flex flex-col justify-start items-start gap-2">
+    {/* File Name */}
+    <div className="justify-start text-Text-Primary text-base font-semibold font-['Inter_Display'] leading-6 tracking-tight">
+      Bento Pro v 2.0 – Illustration Kit.zip
+    </div>
+
+    {/* File Icon + Size */}
+    <div className="inline-flex justify-start items-center gap-2">
+      {/* Archive/ZIP Icon */}
+      <div className="w-6 h-6 relative overflow-hidden">
+        <div className="w-0.5 h-2 left-[11px] top-[14px] absolute bg-Primary-primary02" />
+        <div className="w-1.5 h-2 left-[15px] top-[14px] absolute bg-Primary-primary02" />
+        <div className="w-1.5 h-2 left-[3px] top-[14px] absolute bg-Primary-primary02" />
+        <div className="w-4 h-2.5 left-[3px] top-[1px] absolute bg-Primary-primary02" />
+      </div>
+
+      {/* File Size */}
+      <div className="justify-start text-Text-Secondary text-base font-normal font-['Inter_Display'] leading-6 tracking-tight">
+        128 MB
+      </div>
+    </div>
+  </div>
+
+  {/* Right: Download Button */}
+  <div
+    data-light-mode="True"
+    data-state="Default"
+    data-style="Icon"
+    className="w-12 h-12 p-3.5 bg-gradient-to-b from-zinc-800 to-zinc-800 rounded-[32px] shadow-[inset_2px_0px_8px_2px_rgba(248,248,248,0.20)] outline outline-[1.50px] outline-offset-[-1.50px] outline-white/40 flex justify-center items-center gap-2.5 overflow-hidden"
+  >
+    {/* Download Icon */}
+    <div className="w-6 h-6 relative overflow-hidden">
+      <div className="w-5 h-5 left-[2.75px] top-[2.75px] absolute outline outline-[1.50px] outline-offset-[-0.75px] outline-Text-Light" />
+    </div>
+  </div>
+</div>
+```
+
+**Usage Notes:**
+
+**When to Use:**
+- Displaying downloadable files in product listings
+- Showing attached resources in comments or messages
+- File management interfaces
+- Download centers or resource libraries
+- Email attachments preview
+- Product deliverables (like design kits, templates)
+
+**File Type Icons:**
+- Archive/ZIP: Multiple rectangles (as shown)
+- PDF: Document symbol
+- Image: Picture frame icon
+- Video: Play button icon
+- Audio: Waveform icon
+- Create consistent icon set для all file types
+
+**File Size Display:**
+- Show в appropriate units (KB, MB, GB)
+- Round to reasonable precision (128 MB, не 128.47 MB)
+- Use consistent formatting across interface
+- Gray color indicates secondary information
+
+**Download Button:**
+- Always visible and accessible
+- Dark button works on light backgrounds
+- Icon-only design keeps card compact
+- Clear affordance for download action
+- Consider adding tooltip on hover
+
+**Responsive Behavior:**
+- Desktop: Full width (664px)
+- Tablet: May reduce width, maintain proportions
+- Mobile: Full width, possibly stack elements vertically
+- Button always remains accessible
+
+**Variations:**
+- With progress bar (during download)
+- With "Downloaded" checkmark state
+- With file preview thumbnail
+- With additional metadata (date, uploader)
+- Multiple files in list/grid
+- With delete/remove button
+
+**Accessibility:**
+- Download button keyboard accessible
+- File name readable by screen readers
+- Clear focus states on button
+- File size announced
+- ARIA labels for icon-only button
+
+**Design Principles:**
+- Clean, minimal design
+- File information clearly visible
+- Download action obvious
+- Compact footprint
+- Works in lists or individually
+- Consistent с other cards в system
+
+---
+
 ## Как использовать эту дизайн-систему
 
 ### Для дизайнеров
