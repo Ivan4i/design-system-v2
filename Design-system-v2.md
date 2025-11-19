@@ -60,14 +60,14 @@
 --color-error-border: rgba(248, 113, 113, 0.20); /* red-400/20 */
 
 /* Warning / Hot */
---color-warning: ;
---color-warning-bg: ;
---color-warning-border: ;
+--color-warning: #fb923c; /* orange-400 */
+--color-warning-bg: rgba(251, 146, 60, 0.05); /* orange-400/5 */
+--color-warning-border: rgba(251, 146, 60, 0.20); /* orange-400/20 */
 
 /* Info */
---color-info: ;
---color-info-bg: ;
---color-info-border: ;
+--color-info: #60a5fa; /* blue-400 */
+--color-info-bg: rgba(96, 165, 250, 0.05); /* blue-400/5 */
+--color-info-border: rgba(96, 165, 250, 0.20); /* blue-400/20 */
 ```
 
 ### Neutral Colors
@@ -119,14 +119,14 @@
 
 ```css
 /* Для графиков и визуализации данных */
---color-chart-1: ;
---color-chart-2: ;
---color-chart-3: ;
---color-chart-4: ;
---color-chart-5: ;
---color-chart-6: ;
---color-chart-7: ;
---color-chart-8: ;
+--color-chart-1: #8b5cf6; /* violet-500 - primary chart color */
+--color-chart-2: #06b6d4; /* cyan-500 */
+--color-chart-3: #10b981; /* emerald-500 */
+--color-chart-4: #f59e0b; /* amber-500 */
+--color-chart-5: #ec4899; /* pink-500 */
+--color-chart-6: #6366f1; /* indigo-500 */
+--color-chart-7: #14b8a6; /* teal-500 */
+--color-chart-8: #f97316; /* orange-500 */
 ```
 
 ### Gradients
@@ -143,12 +143,12 @@
 
 ```css
 /* Цвета для иконок брендов и социальных сетей */
---color-brand-facebook: ;
---color-brand-twitter: ;
---color-brand-instagram: ;
---color-brand-linkedin: ;
---color-brand-youtube: ;
---color-brand-github: ;
+--color-brand-facebook: #1877f2;
+--color-brand-twitter: #1da1f2;
+--color-brand-instagram: #e4405f;
+--color-brand-linkedin: #0a66c2;
+--color-brand-youtube: #ff0000;
+--color-brand-github: #181717;
 ```
 
 ---
@@ -276,12 +276,12 @@
 #### Card Shadows
 
 ```css
---shadow-xs: ;
---shadow-sm: ;
---shadow-base: ;
---shadow-md: ;
---shadow-lg: ;
---shadow-xl: ;
+--shadow-xs: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+--shadow-sm: 0px 1px 3px 0px rgba(0, 0, 0, 0.1), 0px 1px 2px -1px rgba(0, 0, 0, 0.1);
+--shadow-base: 0px 4px 6px -1px rgba(0, 0, 0, 0.1), 0px 2px 4px -2px rgba(0, 0, 0, 0.1);
+--shadow-md: 0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -4px rgba(0, 0, 0, 0.1);
+--shadow-lg: 0px 20px 25px -5px rgba(0, 0, 0, 0.1), 0px 8px 10px -6px rgba(0, 0, 0, 0.1);
+--shadow-xl: 0px 25px 50px -12px rgba(0, 0, 0, 0.25);
 
 /* Popup/Dropdown Shadows (Light Mode) */
 --shadow-popup-light: 0px 5px 1.5px -4px rgba(8,8,8,0.09),
@@ -310,16 +310,16 @@
 ```css
 --shadow-button-light: inset 2px 0px 8px 2px rgba(24, 24, 24, 0.20); /* Dark mode button */
 --shadow-button-dark: inset 2px 0px 8px 2px rgba(248, 248, 248, 0.20); /* Light mode button */
---shadow-button-hover: ;
---shadow-button-active: ;
+--shadow-button-hover: 0px 4px 12px 0px rgba(0, 0, 0, 0.15), inset 2px 0px 8px 2px rgba(24, 24, 24, 0.25);
+--shadow-button-active: inset 2px 2px 8px 2px rgba(0, 0, 0, 0.25), 0px 1px 2px 0px rgba(0, 0, 0, 0.1);
 ```
 
 #### Hover Shadows
 
 ```css
---shadow-hover-sm: ;
---shadow-hover-md: ;
---shadow-hover-lg: ;
+--shadow-hover-sm: 0px 2px 8px 0px rgba(0, 0, 0, 0.08), 0px 1px 4px 0px rgba(0, 0, 0, 0.05);
+--shadow-hover-md: 0px 4px 12px 0px rgba(0, 0, 0, 0.1), 0px 2px 6px 0px rgba(0, 0, 0, 0.08);
+--shadow-hover-lg: 0px 8px 24px 0px rgba(0, 0, 0, 0.12), 0px 4px 12px 0px rgba(0, 0, 0, 0.1);
 
 /* List Item Hover Shadow (Light Mode) */
 --shadow-list-hover-light: 0px 1px 4px 0px rgba(0,0,0,0.05),
@@ -381,21 +381,32 @@
 
 #### Basic Card
 
-- **Padding**:
-- **Border Radius**:
-- **Background**:
-- **Shadow**:
-- **Border**:
+- **Padding**: p-6 (24px all sides)
+- **Border Radius**: rounded-[5px] (5px для основных карточек)
+- **Background**: var(--Backgrounds-surface2)
+- **Shadow**: var(--shadow-sm)
+- **Border**: outline-[1.50px] outline-offset-[-1.50px] outline-Stroke-Subtle/10
 
 **Варианты:**
--
--
--
+- **Compact Card**: p-4 (16px padding), для меньших элементов
+- **Dashboard Card**: p-6, gap-4 для внутреннего содержимого
+- **Highlighted Card**: hover:shadow-md, transition-shadow duration-200
 
 #### Пример использования
 
 ```css
+.card {
+  padding: 1.5rem; /* p-6 */
+  border-radius: 5px; /* rounded-[5px] */
+  background: var(--Backgrounds-surface2);
+  box-shadow: var(--shadow-sm);
+  outline: 1.5px solid rgba(var(--Stroke-Subtle), 0.1);
+  outline-offset: -1.5px;
+}
 
+.card:hover {
+  box-shadow: var(--shadow-md);
+}
 ```
 
 ---
@@ -413,9 +424,9 @@
 - **States**:
   - Default (Light Mode): bg-gradient from-white to-neutral-200, shadow-[inset 2px 0px 8px 2px rgba(24,24,24,0.20)], outline-[1.50px] white/60
   - Default (Dark Mode): bg-gradient from-zinc-800 to-zinc-800, shadow-[inset 2px 0px 8px 2px rgba(248,248,248,0.20)], outline-[1.50px] white/40
-  - Hover: (to be defined)
-  - Active: (to be defined)
-  - Disabled: (to be defined)
+  - Hover: scale-102, shadow-button-hover, transition-all duration-150
+  - Active: scale-98, shadow-button-active
+  - Disabled: opacity-50, cursor-not-allowed, pointer-events-none
 
 #### Icon Button (Round)
 
@@ -427,8 +438,8 @@
 - **Icon Size**: 24x24px (w-6 h-6)
 - **States**:
   - Default: (описано выше)
-  - Hover: (to be defined)
-  - Active: (to be defined)
+  - Hover: scale-105, bg-Backgrounds-highlight, transition-all duration-150
+  - Active: scale-95, bg-Backgrounds-surface1
 
 #### Segment Control Button (Tabs)
 
@@ -438,7 +449,7 @@
 - **States**:
   - Default: transparent, text-Text-Secondary
   - Active: outline-[1.50px] Stroke-Stroke2, text-Text-Primary
-  - Hover: (to be defined)
+  - Hover: bg-Backgrounds-surface2/50, text-Text-Primary, transition-colors duration-150
 
 ---
 
@@ -467,7 +478,7 @@
   - Hover: outline-shade07-50/50
   - Focus: outline-shade07-50/50, cursor visible
   - Error: outline-Primary-primary03
-  - Disabled: (to be defined)
+  - Disabled: opacity-50, cursor-not-allowed, bg-Backgrounds-surface1
 - **Icons**:
   - Eye icon (show/hide): w-6 h-6, right-[12px], top-[12px]
 
@@ -505,9 +516,9 @@
 - **Variants**:
   - **Success/Active**: bg-green-600/5, outline-green-600/20, text-Primary-primary02
   - **Error/Offline**: bg-red-400/5, outline-red-400/20, text-red-400
-  - **Warning**: (to be defined)
-  - **Info**: (to be defined)
-  - **Neutral**: (to be defined)
+  - **Warning**: bg-warning-bg, outline-warning-border, text-warning
+  - **Info**: bg-info-bg, outline-info-border, text-info
+  - **Neutral**: bg-Backgrounds-surface2, outline-Stroke-Subtle/20, text-Text-Secondary
 
 #### Trend Badge (с иконкой)
 
@@ -524,10 +535,18 @@
 
 #### Tag
 
-- **Padding**: (to be defined)
-- **Radius**: (to be defined)
-- **Font Size**: (to be defined)
-- **Close Button**: (to be defined)
+- **Padding**: px-2.5 py-1 (10px horizontal, 4px vertical)
+- **Radius**: rounded-md (8px)
+- **Font Size**: text-xs (12px), font-medium
+- **Background**: var(--Backgrounds-surface2)
+- **Border**: outline-[1.50px] outline-Stroke-Stroke2
+- **Layout**: inline-flex items-center gap-1.5
+- **Close Button**:
+  - Size: w-3 h-3 (12px)
+  - Icon: X icon
+  - Padding: p-0.5
+  - Hover: text-Text-Primary, transition-colors duration-150
+  - Position: relative, ml-1
 
 ---
 
@@ -536,18 +555,22 @@
 #### Form Layout
 
 - **Label**:
-  - Margin Bottom:
-  - Font Weight:
-  - Font Size:
+  - Margin Bottom: mb-2 (8px)
+  - Font Weight: font-semibold (600)
+  - Font Size: text-sm (14px)
+  - Color: var(--Text-Primary)
 - **Field Group**:
-  - Margin Bottom:
+  - Margin Bottom: mb-6 (24px) между полями
+  - Gap: gap-2 (8px) внутри группы
 - **Helper Text**:
-  - Margin Top:
-  - Font Size:
-  - Color:
+  - Margin Top: mt-1.5 (6px)
+  - Font Size: text-xs (12px)
+  - Color: var(--Text-Secondary)
+  - Line Height: leading-5 (20px)
 - **Error Message**:
-  - Color:
-  - Font Size:
+  - Color: var(--color-error)
+  - Font Size: text-xs (12px)
+  - Margin Top: mt-1.5 (6px)
 
 ---
 
@@ -556,17 +579,20 @@
 #### Table Structure
 
 - **Row Height**:
-  - Compact:
-  - Default:
-  - Comfortable:
-- **Cell Padding**:
+  - Compact: h-10 (40px)
+  - Default: h-12 (48px)
+  - Comfortable: h-16 (64px)
+- **Cell Padding**: px-4 py-3 (16px horizontal, 12px vertical)
 - **Header**:
-  - Background:
-  - Font Weight:
-  - Border Bottom:
-- **Row Borders**:
-- **Hover State**:
-- **Striped Rows**:
+  - Background: var(--Backgrounds-surface1)
+  - Font Weight: font-semibold (600)
+  - Font Size: text-sm (14px)
+  - Border Bottom: border-b-[1.5px] border-Stroke-Stroke2
+  - Color: var(--Text-Secondary)
+- **Row Borders**: border-b border-Stroke-Subtle/10
+- **Hover State**: bg-Backgrounds-surface2, transition-colors duration-150
+- **Striped Rows**: nth-child(even) bg-Backgrounds-surface2/50
+- **Selected Row**: bg-Primary-primary03/5, outline-[1.50px] outline-Primary-primary03/20
 
 ---
 
@@ -595,15 +621,25 @@
 - **States**:
   - Default: transparent, text-Text-Secondary
   - Active: outline-Stroke-Stroke2, text-Text-Primary
-  - Disabled: (to be defined)
+  - Disabled: opacity-40, cursor-not-allowed, pointer-events-none
+  - Hover (non-disabled): bg-Backgrounds-highlight, transition-colors duration-150
 - **Icons**: Arrow left/right icons
 
 #### Sidebar Navigation
 
-- **Width**: (to be defined)
-- **Item Height**: (to be defined)
-- **Item Padding**: (to be defined)
-- **States**: (to be defined)
+- **Width**: w-64 (256px) expanded, w-20 (80px) collapsed
+- **Background**: var(--Backgrounds-surface2)
+- **Border**: border-r border-Stroke-Subtle/10
+- **Item Height**: h-12 (48px)
+- **Item Padding**: px-4 py-3 (16px horizontal, 12px vertical)
+- **Item Layout**: flex items-center gap-3
+- **Icon**: w-5 h-5 (20px)
+- **Text**: text-sm font-medium, hidden когда collapsed
+- **States**:
+  - Default: transparent, text-Text-Secondary
+  - Hover: bg-Backgrounds-highlight, text-Text-Primary, transition-colors duration-150
+  - Active: bg-Primary-primary03/10, text-Primary-primary03, border-l-2 border-Primary-primary03
+  - Disabled: opacity-50, cursor-not-allowed
 
 ---
 
@@ -611,22 +647,32 @@
 
 #### Line Chart
 
-- **Line Width**:
-- **Point Radius**:
+- **Line Width**: 2px (default), 3px (highlighted)
+- **Point Radius**: 4px (default), 6px (hover/active)
 - **Grid Lines**:
-- **Colors**:
+  - Color: var(--Stroke-Subtle)/10
+  - Width: 0.5px
+  - Dash: [4, 4] для пунктирных линий
+- **Colors**: используйте переменные --color-chart-1 through --color-chart-8
+- **Area Fill**: gradient с opacity от 0.2 до 0 (top to bottom)
 
 #### Bar Chart
 
-- **Bar Spacing**:
-- **Border Radius**:
-- **Colors**:
+- **Bar Spacing**: gap-2 (8px) между группами, gap-1 (4px) внутри группы
+- **Border Radius**: rounded-t-sm (2px) для верха столбцов
+- **Min Bar Width**: 8px
+- **Max Bar Width**: 48px
+- **Colors**: используйте переменные --color-chart-*
+- **Hover**: opacity-80, transition-opacity duration-150
 
 #### Pie/Donut Chart
 
-- **Border Width**:
-- **Spacing**:
-- **Colors**:
+- **Border Width**: 0 (без обводки по умолчанию), 2px для hover
+- **Donut Hole**: 60% от радиуса (для donut charts)
+- **Spacing**: 2px gap между сегментами (для разделенных диаграмм)
+- **Colors**: используйте переменные --color-chart-1 through --color-chart-8
+- **Hover**: scale-105, transition-transform duration-200
+- **Legend**: gap-3, text-sm, items с gap-2
 
 ---
 
@@ -653,7 +699,16 @@
   - Dark Mode: outline-[1.50px] outline-Stroke-Subtle
 - **Container**: px-4 py-3.5, bg-Backgrounds-surface2, rounded-[90px]
 - **Placeholder**: img placeholder (placehold.co)
-- **Status Indicator**: (to be defined)
+- **Status Indicator**:
+  - Size: w-3 h-3 (12px), w-2.5 h-2.5 (10px) для маленьких аватаров
+  - Position: absolute, bottom-0, right-0
+  - Border: border-2 border-Backgrounds-surface2 (чтобы отделить от фона)
+  - Border Radius: rounded-full
+  - Colors:
+    - Online: bg-success (зеленый)
+    - Busy: bg-error (красный)
+    - Away: bg-warning (оранжевый)
+    - Offline: bg-gray-400 (серый)
 
 #### Avatar Selection State
 
@@ -722,20 +777,38 @@
 
 #### Toast Notification
 
-- **Width**: (to be defined)
-- **Padding**: (to be defined)
-- **Radius**: (to be defined)
-- **Shadow**: (to be defined)
-- **Position**: (to be defined)
-- **Variants**: (to be defined)
-- **Auto-dismiss**: (to be defined)
+- **Width**: min-w-80 max-w-96 (320px-384px)
+- **Padding**: p-4 (16px all sides), gap-3 между icon и content
+- **Radius**: rounded-lg (12px)
+- **Shadow**: var(--shadow-lg)
+- **Position**: fixed, top-4 right-4 (или bottom-4 для нижних уведомлений)
+- **Border**: outline-[1.50px] outline-offset-[-1.50px]
+- **Variants**:
+  - Success: bg-success-bg, outline-success-border, text-Primary-primary02
+  - Error: bg-error-bg, outline-error-border, text-red-400
+  - Warning: bg-warning-bg, outline-warning-border, text-warning
+  - Info: bg-info-bg, outline-info-border, text-info
+- **Auto-dismiss**: 5000ms (5 seconds) по умолчанию
+- **Icon**: w-5 h-5 (20px) слева
+- **Close Button**: w-5 h-5, absolute top-3 right-3
+- **Animation**: slide-in-right, fade-in duration-300
 
 #### Alert Banner
 
-- **Padding**: (to be defined)
-- **Border Left**: (to be defined)
-- **Background**: (to be defined)
-- **Close Button**: (to be defined)
+- **Padding**: px-4 py-3 (16px horizontal, 12px vertical)
+- **Border Left**: border-l-4 для акцента типа уведомления
+- **Border Radius**: rounded-md (8px)
+- **Background**: зависит от варианта (см. ниже)
+- **Layout**: flex items-start gap-3
+- **Variants**:
+  - Success: bg-success-bg, border-l-success
+  - Error: bg-error-bg, border-l-error
+  - Warning: bg-warning-bg, border-l-warning
+  - Info: bg-info-bg, border-l-info
+- **Icon**: w-5 h-5 (20px) слева, соответствует варианту
+- **Title**: text-sm font-semibold, mb-1
+- **Description**: text-sm text-Text-Secondary
+- **Close Button**: w-5 h-5, ml-auto, text-Text-Tertiary hover:text-Text-Primary
 
 ---
 
@@ -768,22 +841,47 @@
 
 #### Side Panel
 
-- **Width**: (to be defined)
-- **Background**: (to be defined)
-- **Shadow**: (to be defined)
-- **Padding**: (to be defined)
+- **Width**: w-96 (384px) по умолчанию, max-w-md для адаптивности
+- **Background**: var(--Backgrounds-surface2)
+- **Shadow**: var(--shadow-xl), shadow-[-10px_0_25px_-5px_rgba(0,0,0,0.1)] для левой панели
+- **Padding**: p-6 (24px)
+- **Border**: outline-[1.50px] outline-Stroke-Stroke2
+- **Position**: fixed, top-0, right-0 (или left-0), h-full
 - **Header**:
-  - Padding Bottom: (to be defined)
-  - Border Bottom: (to be defined)
+  - Padding Bottom: pb-4 (16px)
+  - Border Bottom: border-b border-Stroke-Subtle/10
+  - Title: text-xl font-semibold
+  - Close Button: absolute top-6 right-6, w-6 h-6
+- **Content**: flex-1 overflow-y-auto, py-4
+- **Footer**: pt-4, border-t border-Stroke-Subtle/10
+- **Overlay**: fixed inset-0, bg-black/40, backdrop-blur-sm
+- **Animation**: slide-in-right (или slide-in-left), duration-300
 
 #### Modal
 
-- **Max Width**: (to be defined)
-- **Background**: (to be defined)
-- **Border Radius**: (to be defined)
-- **Shadow**: (to be defined)
-- **Overlay**: (to be defined)
-- **Padding**: (to be defined)
+- **Max Width**:
+  - Small: max-w-md (448px)
+  - Medium: max-w-lg (512px)
+  - Large: max-w-2xl (672px)
+  - Full: max-w-4xl (896px)
+- **Background**: var(--Backgrounds-surface2)
+- **Border Radius**: rounded-[32px]
+- **Shadow**: var(--shadow-xl)
+- **Border**: outline-[1.50px] outline-Stroke-Stroke2
+- **Position**: fixed, top-1/2, left-1/2, transform -translate-x-1/2 -translate-y-1/2
+- **Padding**: p-6 (24px), для больших модалов p-8 (32px)
+- **Header**:
+  - Padding Bottom: pb-4
+  - Border Bottom: border-b border-Stroke-Subtle/10
+  - Title: text-2xl font-semibold
+  - Close Button: absolute top-6 right-6, w-6 h-6
+- **Content**: py-4, max-h-[60vh] overflow-y-auto
+- **Footer**:
+  - Padding Top: pt-4
+  - Border Top: border-t border-Stroke-Subtle/10
+  - Buttons: flex justify-end gap-3
+- **Overlay**: fixed inset-0, bg-black/60, backdrop-blur-sm
+- **Animation**: fade-in, scale-in duration-200
 
 ---
 
@@ -791,14 +889,26 @@
 
 #### Accordion Item
 
-- **Padding**:
-- **Border**:
-- **Border Radius**:
-- **Margin Bottom**:
+- **Padding**: p-4 (16px) для header, p-4 для content
+- **Border**: outline-[1.50px] outline-Stroke-Stroke2
+- **Border Radius**: rounded-lg (12px)
+- **Margin Bottom**: mb-2 (8px) между items
+- **Background**: var(--Backgrounds-surface2)
+- **Header**:
+  - Layout: flex justify-between items-center
+  - Title: text-base font-semibold
+  - Icon: w-5 h-5 chevron, rotate-180 когда expanded
+  - Cursor: pointer
+- **Content**:
+  - Padding Top: pt-2 (когда expanded)
+  - Max Height: 0 (collapsed), auto (expanded)
+  - Overflow: hidden
+  - Text: text-sm text-Text-Secondary
 - **States**:
-  - Collapsed:
-  - Expanded:
-  - Hover:
+  - Collapsed: max-h-0, chevron rotate-0
+  - Expanded: max-h-auto, chevron rotate-180, border-Primary-primary03/20
+  - Hover: bg-Backgrounds-highlight, transition-colors duration-150
+- **Animation**: transition-all duration-300 ease-in-out
 
 ---
 
@@ -821,9 +931,17 @@
 
 #### Spinner
 
-- **Size**: (to be defined)
-- **Color**: (to be defined)
-- **Animation**: (to be defined)
+- **Sizes**:
+  - Small: w-4 h-4 (16px)
+  - Medium: w-6 h-6 (24px)
+  - Large: w-8 h-8 (32px)
+  - XL: w-12 h-12 (48px)
+- **Color**:
+  - Primary: border-Primary-primary03
+  - Secondary: border-Text-Secondary
+  - Light: border-white (для темных фонов)
+- **Style**: border-2, border-t-transparent, rounded-full
+- **Animation**: animate-spin, duration-700 linear infinite
 
 ---
 
@@ -831,14 +949,32 @@
 
 #### Empty State Layout
 
+- **Container**:
+  - Layout: flex flex-col items-center justify-center
+  - Padding: py-16 px-8 (64px vertical, 32px horizontal)
+  - Text Align: center
+  - Min Height: min-h-96 (384px)
 - **Icon**:
+  - Size: w-16 h-16 (64px) или w-20 h-20 (80px)
+  - Color: var(--Text-Tertiary)
+  - Style: outline style, stroke-width 1.5px
 - **Heading**:
+  - Font Size: text-xl (20px)
+  - Font Weight: font-semibold (600)
+  - Color: var(--Text-Primary)
+  - Line Height: leading-7
 - **Description**:
+  - Font Size: text-sm (14px)
+  - Color: var(--Text-Secondary)
+  - Max Width: max-w-md (448px)
+  - Line Height: leading-6
 - **Action Button**:
+  - Variant: Primary button
+  - Size: Medium или Large
 - **Spacing**:
-  - Icon → Heading:
-  - Heading → Description:
-  - Description → Button:
+  - Icon → Heading: mt-6 (24px)
+  - Heading → Description: mt-2 (8px)
+  - Description → Button: mt-6 (24px)
 
 ---
 
@@ -847,17 +983,33 @@
 #### Focus Ring
 
 ```css
---focus-ring: ;
+--focus-ring: 0 0 0 3px rgba(var(--Primary-primary03), 0.2); /* Focus ring для accessibility */
+--focus-ring-offset: 2px; /* Отступ для focus ring */
+--focus-ring-color: var(--Primary-primary03); /* Цвет focus ring */
+--focus-ring-width: 2px; /* Толщина focus ring */
 ```
+
+**Использование:**
+- Применяется на интерактивные элементы при :focus-visible
+- outline: var(--focus-ring-width) solid var(--focus-ring-color)
+- outline-offset: var(--focus-ring-offset)
+- border-radius: inherit (наследуется от элемента)
 
 #### Backdrop Blur
 
 ```css
---backdrop-blur-sm: ;
---backdrop-blur-base: ;
---backdrop-blur-md: ;
---backdrop-blur-lg: ;
+--backdrop-blur-none: 0;
+--backdrop-blur-sm: blur(4px); /* Легкое размытие для subtle overlays */
+--backdrop-blur-base: blur(8px); /* Стандартное размытие для modals */
+--backdrop-blur-md: blur(12px); /* Среднее размытие */
+--backdrop-blur-lg: blur(16px); /* Сильное размытие для side panels */
+--backdrop-blur-xl: blur(24px); /* Очень сильное размытие */
 ```
+
+**Использование:**
+- Overlay для модалов: backdrop-blur-base
+- Sidebar overlay: backdrop-blur-lg
+- Glass morphism эффект: backdrop-blur-md с bg-opacity
 
 ---
 
@@ -911,15 +1063,42 @@
 #### Grid Dashboard
 
 - **Grid**:
-- **Card Spacing**:
+  - Desktop: grid-cols-4 (4 колонки для metrics), grid-cols-2 (для больших карточек)
+  - Tablet: grid-cols-2
+  - Mobile: grid-cols-1
+- **Card Spacing**: gap-6 (24px) между карточками
+- **Container Padding**: px-16 py-8 (64px horizontal, 32px vertical)
+- **Card Layout**:
+  - Metric Cards: 1 column width, min-h-32 (128px)
+  - Chart Cards: 2-4 columns width, min-h-96 (384px)
+  - Table Cards: full width (col-span-4), min-h-64 (256px)
 - **Responsive**:
+  - xl (1280px+): grid-cols-4, full dashboard
+  - lg (1024px+): grid-cols-3
+  - md (768px+): grid-cols-2
+  - sm (640px): grid-cols-1
 
 #### Sidebar + Content
 
 - **Sidebar Width**:
+  - Expanded: w-64 (256px)
+  - Collapsed: w-20 (80px)
+  - Mobile: fixed overlay, w-64
 - **Content Area**:
-- **Gap**:
+  - Margin Left: ml-64 (когда sidebar expanded), ml-20 (collapsed)
+  - Padding: p-8 (32px)
+  - Min Height: min-h-screen
+  - Background: var(--Backgrounds-surface1)
+- **Gap**: нет gap, sidebar fixed, content с margin
+- **Sidebar Style**:
+  - Background: var(--Backgrounds-surface2)
+  - Border Right: border-r border-Stroke-Subtle/10
+  - Position: fixed, left-0, top-0, h-full
+  - Z-index: z-40
 - **Responsive**:
+  - Desktop: sidebar visible, content с margin
+  - Tablet/Mobile: sidebar overlay, content full width
+  - Toggle: hamburger menu для mobile
 
 ---
 
@@ -927,23 +1106,58 @@
 
 #### Single Column Form
 
-- **Max Width**:
-- **Field Spacing**:
+- **Max Width**: max-w-md (448px) по центру
+- **Field Spacing**: space-y-6 (24px между полями)
+- **Container Padding**: p-6 или p-8 (24px или 32px)
 - **Button Group**:
+  - Layout: flex gap-3 justify-end
+  - Margin Top: mt-8 (32px от последнего поля)
+  - Primary + Secondary buttons
 - **Layout**:
+  - Container: flex flex-col
+  - Card wrapper: с border и shadow
+  - Form: w-full
 
 #### Multi Column Form
 
 - **Grid**:
+  - Desktop: grid-cols-2 gap-6
+  - Mobile: grid-cols-1
+- **Container**: max-w-4xl (896px)
 - **Full Width Fields**:
+  - Text areas: col-span-2
+  - Rich text editors: col-span-2
+  - File uploads: col-span-2
+  - Submit buttons: col-span-2
+- **Section Headers**: col-span-2, text-lg font-semibold, mb-4, mt-6
 - **Responsive**:
+  - lg (1024px+): grid-cols-2
+  - md и меньше: grid-cols-1
 
 #### Wizard / Stepper Form
 
 - **Steps Indicator**:
+  - Layout: flex justify-between items-center, mb-8
+  - Step Item: flex items-center gap-2
+  - Step Number: w-8 h-8, rounded-full, flex items-center justify-center
+  - Step Line: flex-1, h-0.5, bg-Stroke-Subtle
+  - Active Step: bg-Primary-primary03, text-white
+  - Completed Step: bg-success, text-white, с checkmark
+  - Pending Step: bg-Backgrounds-surface2, text-Text-Secondary
 - **Content Area**:
+  - Min Height: min-h-96 (384px)
+  - Padding: p-6
+  - Background: var(--Backgrounds-surface2)
+  - Border Radius: rounded-lg
 - **Navigation**:
+  - Layout: flex justify-between mt-8
+  - Back Button: Secondary button
+  - Next/Submit Button: Primary button
+  - Skip Button (optional): Ghost button
 - **Progress**:
+  - Progress Bar: h-1, rounded-full, bg-Stroke-Subtle
+  - Progress Fill: bg-Primary-primary03, transition-width
+  - Position: top of form, mb-6
 
 ---
 
@@ -951,22 +1165,55 @@
 
 #### Dashboard Card with Chart
 
+- **Card Container**:
+  - Padding: p-6 (24px)
+  - Background: var(--Backgrounds-surface2)
+  - Border Radius: rounded-[5px]
+  - Shadow: var(--shadow-sm)
+  - Border: outline-[1.50px] outline-Stroke-Subtle/10
 - **Header**:
-  - Title:
-  - Subtitle:
-  - Actions:
+  - Layout: flex justify-between items-start, mb-6
+  - Title: text-xl font-semibold text-Text-Primary
+  - Subtitle: text-sm text-Text-Secondary, mt-1
+  - Actions: dropdown или button group на правой стороне
+  - Time Range Selector: Select component (Last 7 days, Last 30 days, etc.)
 - **Chart Area**:
+  - Min Height: min-h-80 (320px)
+  - Padding: py-4
+  - Aspect Ratio: aspect-video для responsive charts
+  - Legend: positioned внизу или справа, gap-3, text-sm
 - **Footer**:
+  - Layout: flex justify-between items-center, mt-4
+  - Border Top: border-t border-Stroke-Subtle/10, pt-4
+  - Summary Stats: flex gap-6
+  - Stat Item: flex flex-col, gap-1
+  - Stat Label: text-xs text-Text-Secondary
+  - Stat Value: text-base font-semibold
+  - View Details Link: text-sm text-Primary-primary03, hover:underline
 
 #### Table with Filters
 
 - **Filter Bar**:
-  - Height:
-  - Background:
-  - Padding:
-  - Border Bottom:
+  - Height: h-16 (64px)
+  - Background: var(--Backgrounds-surface2)
+  - Padding: px-6 py-3
+  - Border Bottom: border-b border-Stroke-Subtle/10
+  - Layout: flex items-center gap-4
+  - Search Input: flex-1, max-w-md
+  - Filter Buttons: flex gap-2
+  - Action Buttons: ml-auto
 - **Table**:
+  - Background: var(--Backgrounds-surface2)
+  - Border: outline-[1.50px] outline-Stroke-Subtle/10
+  - Border Radius: rounded-[5px]
+  - Max Height: max-h-screen-minus-header, overflow-y-auto
 - **Pagination**:
+  - Layout: flex justify-between items-center
+  - Padding: px-6 py-4
+  - Border Top: border-t border-Stroke-Subtle/10
+  - Page Info: text-sm text-Text-Secondary (Showing 1-10 of 100)
+  - Navigation: flex gap-1, pagination component
+  - Items Per Page: Select component, w-20
 
 ---
 
@@ -1014,10 +1261,11 @@
 - Message: отображается под полем
 
 #### Success
-- Border: может быть зеленым (to be defined)
-- Text: может быть зеленым
-- Icon: checkmark icon
-- Message: отображается под полем
+- Border: outline-[1.50px] outline-success (зеленая обводка)
+- Background: bg-success-bg (легкий зеленый фон)
+- Text: text-success
+- Icon: checkmark icon, w-5 h-5, text-success
+- Message: text-sm text-success, mt-1.5, отображается под полем
 
 ---
 
